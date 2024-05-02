@@ -3,6 +3,8 @@ package modelo;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import com.google.gson.Gson;
+
 import DAO.DaoLibro;
 
 /**
@@ -56,11 +58,21 @@ public class Libro extends Obra{
 	 * Método que permite insertar un nuevo Libro llamando al método constructor de la clase correspondiente (y al DAO).
 	 * @return insertar Boleano que recoge si la inserción del Libro en la Base de datos se ha realizado con éxito, 
 	 * 		   de ser así, devolverá true, en caso contrario, devolverá false.
+	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
+	public boolean comprobarLibro(int Id) throws ClassNotFoundException, SQLException {
+		boolean cell=false;
+		DaoLibro dao=new DaoLibro();
+		cell=dao.comprobarIdLibro(Id);
+		return cell;
+	}
+	//FALTA COMENTAR!!!!!!!!
 	public void insertarLibro() throws ClassNotFoundException, SQLException {
+		
 			DaoLibro dao=new DaoLibro();
 			dao.insertarLibro(this);
+			
 	}
 	
 	/**
@@ -68,10 +80,21 @@ public class Libro extends Obra{
 	 * @return modif Boleano que recoge si la modificacion del Libro se ha realizado con éxito, si así ha sido, devolverá true, 
 	 * 		   en caso de que no se haya podido modificar, sea por la razón que fuere, devolverá false.
 	 */
-	public boolean modificarLibro() {
+	public void modificarLibro() {
 		boolean modif=false;
 		
-		return modif;
+	}
+	//FALTA COMENTAR !!!!!
+	public void obtenerPorId(int id) throws SQLException, ClassNotFoundException {
+		
+		DaoLibro dao = new DaoLibro();
+		Libro aux = dao.listarLibroPorId(id);
+		
+		this.setISBN(aux.getISBN());
+		this.setAutor(aux.getAutor());
+		this.setTitulo(aux.getTitulo());
+		this.setEditorial(aux.getEditorial());
+		this.setFecha_publicacion(aux.getFecha_publicacion());
 	}
 	
 	/**
@@ -83,6 +106,15 @@ public class Libro extends Obra{
 		boolean delete=false;
 		
 		return delete;
+	}
+	//FALTA COMENTAR!!!!!
+	public String dameJson() {
+		String json = "";
+		
+		Gson gson = new Gson();
+		
+		json = gson.toJson(this);
+		return json;
 	}
 	
 	/**

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Subir Libro Nuevo</title>
+</head>
+<script>
+	//Función para validar la información que se introduzca en el formulario
+	function validarFormulario(){
+		let id = document.getElementById('IdLibro').value;
+		let noma = document.getElementById('NombreAutor').value;
+   		let noml = document.getElementById('NombreLibro').value;
+   		let text=document.getElementById('Texto').value;
+   		let cat=document.getElementById('Categoria').value;
+   		let fechal=document.getElementById('FechaLibro').value;
+   		let edit = document.getElementById('Edition').value;
+		let ok = true;
+		
+		if(id == ""|| id<10000000 || id>9999999999999){
+			ok = false;
+			document.getElementById('IdLibro').style.background = "red";
+		} else {
+			document.getElementById('IdLibro').style.background = "white";
+		}
+			
+		if(noma == ""){
+			ok = false;
+			document.getElementById('NombreAutor').style.background = "red";
+		} else {
+			document.getElementById('NombreAutor').style.background = "white";
+		}
+			
+		if(noml == ""){
+			ok = false;
+			document.getElementById('NombreLibro').style.background = "red";
+		} else {
+			document.getElementById('NombreLibro').style.background = "white";
+		}
+		
+		if(text == ""){
+			ok = false;
+			document.getElementById('Texto').style.background = "red";
+		}else {
+			document.getElementById('Texto').style.background = "white";
+		}
+		
+		if(fechal == ""){
+			ok = false;
+			document.getElementById('FechaLibro').style.background = "red";
+		} else {
+			document.getElementById('FechaLibro').style.background = "white";
+		}
+		
+		if(edit == ""){
+			ok = false;
+			document.getElementById('Edition').style.background = "red";
+		}else {
+			document.getElementById('Edition').style.background = "white";
+		}
+		
+		if(cat == ""){
+			ok = false;
+			document.getElementById('Categoria').style.background = "red";
+		}else {
+			document.getElementById('Categoria').style.background = "white";
+		}
+			
+		if(ok == true){
+			
+			document.getElementById("SubirLibro").submit();
+				
+		}
+				   
+		}
+</script>
+<body>
+	<form name="SubirLibro" action="GestionLibroInsertar" method="post" id="SubirLibro" >
+		<ul type="none">
+			<label><h1>Insertar Nuevo Libro</h1></label>
+			<li><h2 alt="Numero de serie del libro, suele aparecer debajo del código de barras o dentro del mismo libro. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h2><input type="number" id="IdLibro" name="IdLibro"></li>
+			<li><h2 alt="Nombre del libro, suele aparecer en la portada.">Título del Libro: </h2><input type="text" id="NombreLibro" name="NombreLibro"></li>
+			<li><h2 alt="Nombre del autor original del libro (no del traductor ni del editor).">Nombre del autor del Libro: </h2><input type="text" id="NombreAutor" name="NombreAutor"></li>
+			<li><h2 alt="Resumen que suele aparecer en la contraportada del libro.">Abstracto del Libro: </h2><input type="text" id="Texto" name="Texto"></li>
+			<li><h2 alt="Fecha de publicación original del libro, en caso de ser muy antiguo, sirve la fecha de la primera publicación de la edición, suele aparecer en el idioma original tras la nota 'Publicación Original'.">Fecha de Publicación del Libro: </h2><input type="date" id="FechaLibro" name="FechaLibro"></li>
+			<li><h2 alt="Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.">Categoría del Libro: </h2><input type="text" id="Categoria" name="Categoria"></li><!--Sería mejor hacer un checkbox-->
+			<li><h2 alt="Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.">Editorial del Libro: </h2><input type="text" id="Edition" name="Edition"></li>
+			<li><input type="button" onclick="validarFormulario()" name="Aceptar" value="Aceptar"></li>
+		</ul>
+	</form>
+</body>
+</html>

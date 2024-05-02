@@ -19,4 +19,44 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroBorrar</display-name>
+    <servlet-name>GestionLibroBorrar</servlet-name>
+    <servlet-class>controlador.GestionLibroBorrar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroBorrar</servlet-name>
+    <url-pattern>/GestionLibroBorrar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroInsertar</display-name>
+    <servlet-name>GestionLibroInsertar</servlet-name>
+    <servlet-class>controlador.GestionLibroInsertar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroInsertar</servlet-name>
+    <url-pattern>/GestionLibroInsertar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroBuscar</display-name>
+    <servlet-name>GestionLibroBuscar</servlet-name>
+    <servlet-class>controlador.GestionLibroBuscar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroBuscar</servlet-name>
+    <url-pattern>/GestionLibroBuscar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroListar</display-name>
+    <servlet-name>GestionLibroListar</servlet-name>
+    <servlet-class>controlador.GestionLibroListar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroListar</servlet-name>
+    <url-pattern>/GestionLibroListar</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * es decir, insertarlos, mostrarlos por pantalla, borrar un "Libro" concreto o vaciar la lista generada.
  * @author Alejandro Moreno
  * @version 1.0
+ * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee implementar.
  */
 public class ListaLibro {
 

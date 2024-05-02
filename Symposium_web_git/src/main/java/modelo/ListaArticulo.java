@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * introducirlos, mostrarlos por pantalla, borrar un Articulo concreto o vaciar la lista generada.
  * @author Alejandro Moreno
  * @version 1.0
+ * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee implementar.
  */
 public class ListaArticulo {
 	

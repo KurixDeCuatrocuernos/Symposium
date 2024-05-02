@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * introducir nuevas respuestas, mostrarlas por pantalla, borrar una "Respuesta" concreta o vaciar la lista generada.
  * @author Alejandro Moreno
  * @version 1.0
+ * @deprecated No se ha llegado a implementar, pero está creada enm caso de que en un futuro se desee implementar.
  */
 public class ListaRespuesta {
 
