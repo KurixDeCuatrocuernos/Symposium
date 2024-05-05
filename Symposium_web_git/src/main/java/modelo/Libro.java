@@ -35,7 +35,7 @@ public class Libro extends Obra{
 	 * @param editorial String que recoge el nombre de la editorial a la que pertenece el Libro.
 	 * @param categoria String que recoge la/s categoría/s a la/s que pertenece un Libro concreto.
 	 */
-	public Libro(int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, String editorial, String categoria) {
+	public Libro(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, String editorial, String categoria) {
 		super( iSBN, abstracto, autor, titulo, tipo, fecha_publicacion);
 		this.Editorial=editorial;
 		this.Categoria=categoria;
@@ -61,7 +61,7 @@ public class Libro extends Obra{
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public boolean comprobarLibro(int Id) throws ClassNotFoundException, SQLException {
+	public boolean comprobarLibro(long Id) throws ClassNotFoundException, SQLException {
 		boolean cell=false;
 		DaoLibro dao=new DaoLibro();
 		cell=dao.comprobarIdLibro(Id);
@@ -79,22 +79,32 @@ public class Libro extends Obra{
 	 * Método que permite modificar un Libro preexistente en la base de datos llamando al método ---- del DAO. 
 	 * @return modif Boleano que recoge si la modificacion del Libro se ha realizado con éxito, si así ha sido, devolverá true, 
 	 * 		   en caso de que no se haya podido modificar, sea por la razón que fuere, devolverá false.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void modificarLibro() {
-		boolean modif=false;
+	public void modificarLibro(Libro l1, long IdOrigen) throws ClassNotFoundException, SQLException {
+
+		System.out.println("Estoy en la clase libro, procedo a llamar a DAOLibro");
+		//Modificamos el libro llamando al Dao
+		DaoLibro aux =new DaoLibro();
+		aux.modificarLibro(l1, IdOrigen);
+		System.out.println("Salgo de la clase Libro, vuelvo a GestionLibroModificar");
 		
 	}
 	//FALTA COMENTAR !!!!!
-	public void obtenerPorId(int id) throws SQLException, ClassNotFoundException {
+	public void obtenerPorId(long id) throws SQLException, ClassNotFoundException {
 		
 		DaoLibro dao = new DaoLibro();
 		Libro aux = dao.listarLibroPorId(id);
 		
 		this.setISBN(aux.getISBN());
 		this.setAutor(aux.getAutor());
+		this.setAbstracto(aux.getAbstracto());
 		this.setTitulo(aux.getTitulo());
 		this.setEditorial(aux.getEditorial());
+		this.setCategoria(aux.getCategoria());
 		this.setFecha_publicacion(aux.getFecha_publicacion());
+		this.setTipo("Libro");
 	}
 	
 	/**

@@ -9,7 +9,7 @@ import java.sql.Date;
  */
 public class Obra {
 	
-	protected int ISBN=0;
+	protected long ISBN=13L;
 	protected String Abstracto="";
 	protected String Autor="";
 	protected String Titulo="";
@@ -33,7 +33,7 @@ public class Obra {
 	 * @param valoracion_global Int que se inicializa a 0, porque depende de las valoraciones que hagan los usuarios en sus comentarios (@see Comentario)
 	 * @param valoraciones Int que se inicializa en 0, porque depende de las valoraciones que hagan los usurios en sus comentarios (@see Comentario) 
 	 */
-	public Obra(int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion) {
+	public Obra(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion) {
 		super();
 		this.ISBN = iSBN;
 		this.Abstracto = abstracto;
@@ -55,7 +55,7 @@ public class Obra {
 	 * @param valoracion_global Int que se inicializa a 0, porque depende de las valoraciones que hagan los usuarios en sus comentarios (@see Comentario)
 	 * @param valoraciones Int que se inicializa en 0, porque depende de las valoraciones que hagan los usurios en sus comentarios (@see Comentario) 
 	 */
-	public Obra(int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion,
+	public Obra(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion,
 			int valoracion_global, int valoraciones) {
 		super();
 		ISBN = iSBN;
@@ -68,11 +68,11 @@ public class Obra {
 		Valoraciones = valoraciones;
 	}
 	
-	public int getISBN() {
+	public long getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(int iSBN) {
+	public void setISBN(long iSBN) {
 		this.ISBN = iSBN;
 	}
 

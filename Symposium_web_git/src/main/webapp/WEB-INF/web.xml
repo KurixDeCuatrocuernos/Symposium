@@ -59,4 +59,44 @@
     <servlet-name>GestionLibroListar</servlet-name>
     <url-pattern>/GestionLibroListar</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroEditar</display-name>
+    <servlet-name>GestionLibroEditar</servlet-name>
+    <servlet-class>controlador.GestionLibroEditar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroEditar</servlet-name>
+    <url-pattern>/GestionLibroEditar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionVerficarObra</display-name>
+    <servlet-name>GestionVerficarObra</servlet-name>
+    <servlet-class>controlador.GestionVerficarObra</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionVerficarObra</servlet-name>
+    <url-pattern>/GestionVerficarObra</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionVerificarObra</display-name>
+    <servlet-name>GestionVerificarObra</servlet-name>
+    <servlet-class>controlador.GestionVerificarObra</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionVerificarObra</servlet-name>
+    <url-pattern>/GestionVerificarObra</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionLibroModificar</display-name>
+    <servlet-name>GestionLibroModificar</servlet-name>
+    <servlet-class>controlador.GestionLibroModificar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionLibroModificar</servlet-name>
+    <url-pattern>/GestionLibroModificar</url-pattern>
+  </servlet-mapping>
 </web-app>

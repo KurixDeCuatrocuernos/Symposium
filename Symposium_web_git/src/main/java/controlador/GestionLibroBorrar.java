@@ -43,8 +43,8 @@ public class GestionLibroBorrar extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		int idLibro=0;
-		idLibro=Integer.parseInt(request.getParameter("id"));
+		long idLibro=0;
+		idLibro=Long.parseLong(request.getParameter("id"));
 		System.out.println(idLibro);
 		try {
 			System.out.println("Estoy en GestionLibroBorrar");

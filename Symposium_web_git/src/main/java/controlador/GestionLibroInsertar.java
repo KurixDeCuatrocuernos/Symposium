@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import modelo.Libro;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -38,8 +39,10 @@ public class GestionLibroInsertar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int idLibro=0;	String nombre=""; String nomAutor=""; String texto=""; Date date; String cate=""; String editor=""; String typeof="";		
-		idLibro=Integer.parseInt(request.getParameter("IdLibro"));//isbn
+		boolean cell=false;
+		PrintWriter out=response.getWriter();
+		long idLibro=0;	String nombre=""; String nomAutor=""; String texto=""; Date date; String cate=""; String editor=""; String typeof="";		
+		idLibro=Long.parseLong(request.getParameter("IdLibro"));//isbn
 		nombre=request.getParameter("NombreLibro");//titulo
 		nomAutor=request.getParameter("NombreAutor");//autor
 		texto=request.getParameter("Texto");//abstract
@@ -53,15 +56,19 @@ public class GestionLibroInsertar extends HttpServlet {
 		System.out.println(l1.toString());
 
 			try {
+				cell=true;
 				l1.insertarLibro();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
+				cell=false;
 				e.printStackTrace();
 			} catch (SQLException e) {
+				cell=false;
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+		out.print(cell);
+			
 		System.out.println("Libro insertado con éxito");
 	}
 

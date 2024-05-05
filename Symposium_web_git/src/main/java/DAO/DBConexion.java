@@ -18,7 +18,7 @@ public class DBConexion {
 	public static Connection conectar() throws SQLException, ClassNotFoundException {
 		System.out.println("Estoy en getConexion() y voy a conectar con "+con);
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection(JDBC_URL, user, password);
 			if (con!=null) {
 				System.out.println("Se ha conectado correctamente a la base de datos.");
