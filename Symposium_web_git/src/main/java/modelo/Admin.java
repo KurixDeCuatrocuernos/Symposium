@@ -1,4 +1,9 @@
 package modelo;
+
+import java.sql.SQLException;
+
+import DAO.DaoAdmin;
+
 /**
  * Esta Clase Recoge los datos para generar un objeto Admin a partir de la clase 
  * Usuario (extiende dicha clase)
@@ -25,8 +30,8 @@ public class Admin extends Usuario{
 	 * @param password String que recoge la serialización de la contraseña del usuario, aunque no debería estar así.
 	 * @param telefono Int que recoge el número de teléfono del Admin.
 	 */
-	public Admin(int id, int nivel, String nombre, String apellidos, int edad, String email, String password, int telefono) {
-		super(id, nivel=50, nombre, apellidos, edad, email, password);
+	public Admin(long id, int nivel, String nombre, String apellidos, int edad, String email, int telefono) {
+		super(id, nivel=50, nombre, apellidos, edad, email);
 		this.Telefono=telefono;
 	}
 
@@ -49,15 +54,51 @@ public class Admin extends Usuario{
 		return coment;
 	}
 	
-	/**
-	 * Método que permite modificar un comentario ya existente y que ha sido generado por el mismo Admin que lo modifica. 
-	 * @return modif Boleano que recoge si la modificacion del comentario se ha realizado con éxito, si así ha sido devolverá true, 
-	 * 		   en caso de que no se haya podido modificar, sea por la razón que fuere, devolverá false.
-	 */
-	public boolean modificarComentario() {
-		boolean modif=false;
+/**
+ * Método para modificar a un admin ya existente. Verifica que todos los datos existan y los envía al dao si no hay problema.
+ * @param A Esta variable recoge un objeto Admin cuyos parámetros se utilizarán para modificar al Admin ya existente.
+ * @param ID Esta variable recoge la Id que se usará para encontrar al admin que se modificará.
+ * @throws ClassNotFoundException Si no encuentra la clase DaoAdmin lanzará un error.
+ * @throws SQLException Si no puede contactar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+ */
+	public void modificarAdmin(Admin A, long ID) throws ClassNotFoundException, SQLException {
+		boolean cell=true;
+		if (A.getNombre()=="") {
+			cell=false;
+			System.out.println("El parámetro nombre está vacío");
+		}
+		if (A.getApellidos()=="") {
+			cell=false;
+			System.out.println("El parámetro Apellidos está vacío");
+		}
+		if (A.getId()<0 || A.getId()>9999999999L) {
+			cell=false;
+			System.out.println("El Id está vacío");
+		}
+		if (A.getNivel()<50) {
+			cell=false;
+			System.out.println("No deberías estar aquí");
+		}
+		if (A.getEdad()<0 || A.getEdad()>200) {
+			cell=false;
+			System.out.println("El campo edad no puede ser menor que 0 ni mayor que 200");
+		}
+		if (A.getEmail()==null) {
+			cell=false;
+			System.out.println("No puedes no tener correo");
+		}
+		if (A.getTelefono()<0 || A.getTelefono()>99999999999L) {
+			cell=false;
+			System.out.println("Ese número no es un teléfono");
+		}
+		if (cell==true) {
+			DaoAdmin aux = new DaoAdmin();
+			aux.modificarAdmin(A, ID);
+		} else {
+			System.out.println("Comprueba los valores introducidos");
+		}
 		
-		return modif;
+		
 	}
 	
 	/**
@@ -143,9 +184,8 @@ public class Admin extends Usuario{
 	 */
 	@Override
 	public String toString() {
-		return "Admin [, Id=" + Id + ", Nivel=" + Nivel + ", Nombre=" + Nombre + ", Apellidos="
-				+ Apellidos + ", Edad=" + Edad + ", Email=" + Email + ", Password=" + Password 
-				+ "Telefono=" + Telefono + "]";
+		return "Admin [\n Id=" + Id + "\n Nivel=" + Nivel + "\n Nombre=" + Nombre + "\n Apellidos="
+				+ Apellidos + "\n Edad=" + Edad + "\n Email=" + Email + "\n Telefono=" + Telefono + "]";
 	}
 	
 	

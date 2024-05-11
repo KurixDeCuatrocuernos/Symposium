@@ -8,13 +8,13 @@ package modelo;
  */
 public class Usuario {
 	
-	protected int Id=0;
+	protected long Id=0;
 	protected int Nivel=0;
 	protected String Nombre="";
 	protected String Apellidos="";
 	protected int Edad=0;
 	protected String Email="";
-	protected String Password="";
+	
 	/**
 	 * Método constructor vacío, servirá para generar la clase sin inicializar valores 
 	 */
@@ -32,7 +32,7 @@ public class Usuario {
 	 * @param email String que recoge el correo del usuario en la aplicacion.
 	 * @param password String que recoge la serialización de la contraseña del usuario, aunque no debería estar así.
 	 */
-	public Usuario(int id, int nivel, String nombre, String apellidos, int edad, String email, String password) {
+	public Usuario(long id, int nivel, String nombre, String apellidos, int edad, String email) {
 		super();
 		Id = id;
 		Nivel=nivel;
@@ -40,14 +40,14 @@ public class Usuario {
 		Apellidos = apellidos;
 		Edad = edad;
 		Email = email;
-		Password = password;
+		
 	}
 	
-	public int getId() {
+	public long getId() {
 		return Id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		Id = id;
 	}
 	
@@ -90,13 +90,6 @@ public class Usuario {
 		Email = email;
 	}
 
-	public String getPassword() {
-		return Password;
-	}
-
-	public void setPassword(String password) {
-		Password = password;
-	}
 	/**
 	 * Método que permite registrarse a un usuario nuevo, llamando al método 
 	 * constructor e insertando los valores recogidos en un formulario, en la base de 
@@ -113,10 +106,15 @@ public class Usuario {
 	 * @return inicioSesion Boleano que recoge si el inicio de sesión se ha realizado con éxito, 
 	 * 		   si es así, devolverá true, en caso contrario, devolverá false.
 	 */
-	public boolean iniciarSesion() {
+	
+	public boolean loguearse() {
+		
 		boolean inicioSesion=false;
+		
 		return inicioSesion;
+	
 	}
+	
 	/**
 	 * Metodo que permite buscar obras por nombre, llama al método gestionarBusqueda() del DAO 
 	 * y devuelve la información que le emita dicho método.

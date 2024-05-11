@@ -57,46 +57,6 @@ public class GestionLibroBorrar extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-		/*
-		int idLibro=0;
-		PrintWriter out = response.getWriter();
-		String libro="";
-		boolean comprobar=false; 
-		idLibro=Integer.parseInt(request.getParameter("IdLibro"));
-		Libro l1=new Libro();
-		try {
-			comprobar=l1.comprobarLibro(idLibro);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		if(comprobar==true) {
-			boolean cell=false;
-			//listamos el libro
-			try {
-				l1.obtenerPorId(idLibro);
-				DaoLibro dao = null;
-				dao = new DaoLibro();
-				libro=dao.listarJson(idLibro);
-			} catch (ClassNotFoundException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("¡Se ha producido una Excepción!");
-			}
-			out.print(l1.dameJson());
-			//response.sendRedirect("http://localhost:8080/Symposium_web/BorrarLibro.html");
-			// si el usuario confirma modificamos el boleano y borramos
-						cell=Boolean.parseBoolean(request.getParameter("confirm"));
-						if (cell==true) {
-							DaoLibro dao=null;
-							dao.borrarLibro(idLibro);
-						}
-						else {
-							System.out.println("Borrado cancelado");
-						}
-		} else {
-			System.out.println("No se ha encontrado el Libro con el ISBN: "+idLibro);
-		}*/
 	
 	}
 

@@ -1,6 +1,10 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.SQLException;
+
+import DAO.DaoArticulo;
+import DAO.DaoLibro;
 
 /**
  * Esta Clase genera objetos Articulo mediante los atributos de la clase Obra (que extiende).
@@ -30,7 +34,7 @@ public class Articulo extends Obra{
 	 * @param volumenPublicacion String que recoge el lugar concreto del lugar donde se publicó el artículo (v.g. volumen, página, etc.).
 	 * @param temas String que recoge los temas principales o ideas clave de un artículo si las hubiera.
 	 */
-	public Articulo(int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, 
+	public Articulo(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, 
 					String lugarPublicacion, String volumenPublicacion, String temas) {
 		super(iSBN, abstracto, autor, titulo, tipo, fecha_publicacion);
 		this.Lugar_publicacion=lugarPublicacion;
@@ -49,7 +53,7 @@ public class Articulo extends Obra{
 	 * @param lugarPublicacion String que recoge el lugar donde se publicó el artículo (v.g. revista, universidad, dialnet, o lo que fuere).
 	 * @param temas String que recoge los temas principales o ideas clave de un artículo si las hubiera.
 	 */
-	public Articulo(int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion,
+	public Articulo(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion,
 					String lugar_publicacion, String temas) {
 		super(iSBN, abstracto, autor, titulo, tipo, fecha_publicacion);
 		this.Lugar_publicacion=lugar_publicacion;
@@ -84,22 +88,32 @@ public class Articulo extends Obra{
 	 * Método que permite insertar un nuevo Articulo en la Base de datos, llamando al método ----- del DAO).
 	 * @return insertar Boleano que recoge si la inserción se ha realizado con éxito, de ser así, devolverá true, 
 	 * 		   en caso contrario, devolverá false.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public boolean insertarArticulo() {
-		boolean insertar=false;
-		
-		return insertar;
+	public void insertarArticulo(Articulo a) throws ClassNotFoundException, SQLException {
+		System.out.println("Estoy en Articulo --> insertarArticulo()");
+		DaoArticulo aux= new DaoArticulo();
+		try {
+		aux.insertarArticulo(a);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
 	 * Método que permite modificar un Articulo preexistente en la base de datos llamando al método ---- del DAO. 
 	 * @return modif Boleano que recoge si la modificacion del Libro se ha realizado con éxito, si así ha sido, devolverá true, 
 	 * 		   en caso de que no se haya podido modificar, sea por la razón que fuere, devolverá false.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public boolean modificarArticulo() {
-		boolean modif=false;
-		
-		return modif;
+	public void modificarArticulo(Articulo a, long id) throws ClassNotFoundException, SQLException {
+		System.out.println("Estoy en la clase Articulo, procedo a llamar a DAOArticulo");
+		//Modificamos el libro llamando al Dao
+		DaoArticulo aux =new DaoArticulo();
+		aux.modificarArticulo(a, id);
+		System.out.println("Salgo de la clase Articulo, vuelvo a GestionArticuloModificar");
 	}
 	
 	/**
@@ -120,7 +134,8 @@ public class Articulo extends Obra{
 	public String toString() {
 		return "Articulo [ISBN=" + ISBN + "\n Abstracto=" + Abstracto + "\n Autor=" + Autor + "\n Titulo=" + Titulo 
 				+ "\n Fecha_publicacion=" + Fecha_publicacion + "\n Lugar_publicacion=" + Lugar_publicacion 
-				+ "\n Volumen_publicacion=" + Volumen_publicacion + "\n Temas=" + Temas + "\n Valoracion_global="+ Valoracion_global + "]";
+				+ "\n Volumen_publicacion=" + Volumen_publicacion + "\n Temas=" + Temas + "\n Valoracion_global="+ Valoracion_global 
+				+ "\n Tipo="+ Tipo+"]";
 	}
 	
 }

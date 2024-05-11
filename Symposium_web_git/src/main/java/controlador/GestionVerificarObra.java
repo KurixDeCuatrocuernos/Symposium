@@ -33,11 +33,11 @@ public class GestionVerificarObra extends HttpServlet {
 		boolean verificar=false;
 		PrintWriter out= response.getWriter();
 		verificar=false;
-		long idLibro=Long.parseLong(request.getParameter("id"));
-		System.out.println("Procedo a verificar el Id: "+idLibro);
+		long id=Long.parseLong(request.getParameter("id"));
+		System.out.println("Procedo a verificar el Id: "+id);
 		try {
 			DaoLibro aux=new DaoLibro();
-			verificar=aux.comprobarIdLibro(idLibro);//si encuentra el libro devolverá true, si no, false
+			verificar=aux.comprobarIdLibro(id);//si encuentra el libro devolverá true, si no, false
 			System.out.println("El DAO ha devuelto: "+verificar);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

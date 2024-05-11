@@ -5,22 +5,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelo.Usuario;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import DAO.DaoLibro;
+import DAO.DaoUsuario;
+
 
 /**
- * Servlet implementation class GestionLibroListar
+ * Servlet implementation class GestionUsuariosListar
  */
-public class GestionLibroListar extends HttpServlet {
+public class GestionUsuariosListar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestionLibroListar() {
+    public GestionUsuariosListar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +32,15 @@ public class GestionLibroListar extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("Estoy en GestionUsuariosListar --> doGet()");
 		try {
 			
 			PrintWriter out = response.getWriter();
 			
-			DaoLibro dao = new DaoLibro();
+			DaoUsuario dao = new DaoUsuario();
 			
-			String resultados = dao.listarLibrosJson();
+			String resultados = dao.listarUsuariosJson();
 			
 			System.out.println(resultados);
 			
@@ -51,7 +54,9 @@ public class GestionLibroListar extends HttpServlet {
 			
 			ex2.printStackTrace();
 		}
+		
 	}
+		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

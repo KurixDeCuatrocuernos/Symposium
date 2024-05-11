@@ -37,7 +37,7 @@ window.addEventListener("DOMContentLoaded", function(){
 						alert("Error al pintar el formulario")
 					});
 		} else {
-			alert("Introduce todos los datos parta poder modificar la obra");
+			alert("Introduce todos los datos para poder modificar la obra");
 		}
 	})
 	//evento escuchador para cancelar
@@ -76,6 +76,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 	
 	});
+
+})
 
 function redir(dir){
 		window.location.href = dir;
@@ -117,6 +119,7 @@ function modificarSinId(){
 	let cat = document.getElementById("Categoria").value;
 	let ed = document.getElementById("Edition").value;
 	let tip = document.getElementById("Type").value;
+	console.log(idOrigen)
 	
 	fetch('GestionLibroModificar?IdLibro='+id+'&NombreLibro='+noml+'&NombreAutor='+noma+'&Texto='+text+'&FechaLibro='+date+'&Categoria='+cat+'&Edition='+ed+'&Type='+tip+'&IdOrigen='+idOrigen)
 		.then(response => response.json())
@@ -226,20 +229,18 @@ function pintarFormulario(resultados){
 	let tip = document.getElementById("Type");
 	
 		
-	id.setAttribute("value", resultados.ISBN);
-	idOrigen= resultados.ISBN;
-	noml.setAttribute("value", resultados.Titulo);
-	noma.setAttribute("value", resultados.Autor);
-	text.setAttribute("value", resultados.Abstracto);
-	date.setAttribute("value", resultados.Fecha_publicacion);//La fecha es un tema
-	cat.setAttribute("value", resultados.Categoria);
-	ed.setAttribute("value", resultados.Editorial);
-	tip.setAttribute("value", resultados.Tipo);
-	
+	id.value = resultados.ISBN;
+    noml.value = resultados.Titulo;
+    noma.value = resultados.Autor;
+    text.value = resultados.Abstracto;
+    date.value = resultados.Fecha_publicacion;// Corrección aquí
+    cat.value = resultados.Categoria;
+    ed.value = resultados.Editorial;
+    tip.value = resultados.Tipo;
+	idOrigen=id.value;
 }
 
 function llamadaModificar(){
-	//Con XML estaría mejor
 	fetch('GestionLibroEditar', {method: 'post'})
 		.then(response => response.json())
 		.then(data => pintarFormulario(data))
@@ -249,12 +250,3 @@ function llamadaModificar(){
 				});
 }
 
-
-
-	
-	
-	
-	
-	
-	
-})

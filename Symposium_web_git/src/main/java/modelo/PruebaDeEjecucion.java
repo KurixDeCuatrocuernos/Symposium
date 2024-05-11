@@ -60,9 +60,9 @@ public class PruebaDeEjecucion {
 		
 		respuestas.listarRespuestas();
 		
-		Usuario user1= new Usuario(001, 10, "Juan", "Juanes Juanes", 11, "juanJuanes1@correo.com", "oncynw75219827hdja");
-		Usuario user2= new Usuario(002, 20, "Smith", "Smith Smith", 22, "SmithTheSmith2@correo.com", "jlkjxsr9785743vfc");
-		Usuario user3= new Usuario(003, 30, "Trinidad", "Trinity Trece", 33, "Trinidad3@correo.com", "lpon7875zvcswvj53432");
+		Usuario user1= new Usuario(001, 10, "Juan", "Juanes Juanes", 11, "juanJuanes1@correo.com");
+		Usuario user2= new Usuario(002, 20, "Smith", "Smith Smith", 22, "SmithTheSmith2@correo.com");
+		Usuario user3= new Usuario(003, 30, "Trinidad", "Trinity Trece", 33, "Trinidad3@correo.com");
 		ListaUsuario usuarios=new ListaUsuario();
 		
 		usuarios.addUsuarioLista(user1);

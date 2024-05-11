@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insertar Artículo</title>
+<script src="SubirArticulo.js"></script>
+</head>
+<body>
+	<form>
+		<ul type="none">
+			<label><h1>Insertar Nuevo Articulo</h1></label>
+			<li><h2 alt="Numero de serie del Articulo, suele aparecer debajo del código de barras o dentro del mismo libro, o bien en el mismo artículo si es publicado en una revista digital, a veces el artículo cuenta con una id propia. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN  si se trata de un artículo digital o una serie (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h2><input type="number" id="IdArticulo" name="IdArticulo"></li>
+			<li><h2 alt="Nombre del Articulo, suele aparecer en la portada.">Título del Libro: </h2><input type="text" id="NombreArticulo" name="NombreArticulo"></li>
+			<li><h2 alt="Nombre del autor original del Articulo (no del traductor ni del editor).">Nombre del autor del Libro: </h2><input type="text" id="NombreAutor" name="NombreAutor"></li>
+			<li><h2 alt="Resumen que suele aparecer al principio del artículo bajo el nombre Abstracto o Abstract, a veces, aunque muy raramente en artículos, no lo tiene, de ser el caso basta introducir lo que se quiera como resumen.">Abstracto del Libro: </h2><input type="text" id="Texto" name="Texto"></li>
+			<li><h2 alt="Fecha de publicación original del articulo, en caso de ser muy antiguo, sirve la fecha de la primera publicación de la edición, suele aparecer en el idioma original tras la nota 'Publicación Original'.">Fecha de Publicación del Libro: </h2><input type="date" id="FechaLibro" name="FechaLibro"></li>
+			<li><h2 alt="Temas clave del artículo, sulen aparecer listados tras el abstracto o en cursiva en dicho abstracto, en caso de no ser así, no es necesario poner nada">Temas del artículo: </h2><input type="text" id="Temas" name="Temas"></li><!--Sería mejor hacer un checkbox-->
+			<li><h2 alt="Se trata de poner el nombre del sitio donde está publicado el artículo, si está en una revista, el nombre de dicha revista o, si está publicado en un libro, el nombrede dicho libro, seguido de las páginas donde se encuentra (por ejemplo, 'Libro escrito, pag.1-5')">Lugar de publicación: </h2><input type="text" id="LugarPublicacion" name="LugarPublicacion"></li>
+			<li><h2 alt="En caso de que el lugar de publicación sea un conjunto de obras o una revista, ha de tener un volumen para identificar dicho lugar, es decir, si el artículo está en el número 5 de la revista x, aquí pondremos un 5 o una v en función de la numeración que tenga">Volumen de publicación: </h2><input type="text" id="VolumenPublicacion" name="VolumenPublicacion"></li>
+			<li><button type="button" id="insertarObra" class="insertarObra" name="insertarObra">Aceptar</button></li>
+			<li><button type="button" class="abort" name="abort">Cancelar</button></li>
+		</ul>
+		
+	</form>
+</body>
+</html>

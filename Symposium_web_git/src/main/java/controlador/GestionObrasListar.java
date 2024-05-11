@@ -14,13 +14,13 @@ import DAO.DaoLibro;
 /**
  * Servlet implementation class GestionLibroListar
  */
-public class GestionLibroListar extends HttpServlet {
+public class GestionObrasListar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestionLibroListar() {
+    public GestionObrasListar() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <title>Subir Libro Nuevo</title>
 </head>
-<script src="SubirObra.js"></script>
+<script src="SubirLibro.js"></script>
 <body>
-	<form name="SubirLibro" action="GestionLibroInsertar" method="post" id="SubirLibro" >
+	<form name="SubirLibro" id="SubirLibro">
 		<ul type="none">
 			<label><h1>Insertar Nuevo Libro</h1></label>
 			<li><h2 alt="Numero de serie del libro, suele aparecer debajo del código de barras o dentro del mismo libro. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h2><input type="number" id="IdLibro" name="IdLibro"></li>
@@ -17,6 +17,7 @@
 			<li><h2 alt="Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.">Categoría del Libro: </h2><input type="text" id="Categoria" name="Categoria"></li><!--Sería mejor hacer un checkbox-->
 			<li><h2 alt="Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.">Editorial del Libro: </h2><input type="text" id="Edition" name="Edition"></li>
 			<li><button type="button" id="insertarObra" class="insertarObra" name="insertarObra">Aceptar</button></li>
+			<li><button type="button" class="abort" name="abort">Cancelar</button></li>
 		</ul>
 	</form>
 </body>

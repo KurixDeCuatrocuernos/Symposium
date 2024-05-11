@@ -36,16 +36,16 @@ public class GestionLibroEditar extends HttpServlet {
 		
 		System.out.println("Estoy en GestionLibroEditar --> doGet()");
 		String json="";
-		//PrintWriter out= response.getWriter();
+		
 		long idLibro=Long.parseLong(request.getParameter("id"));
-		//Libro l1=new Libro();
-		System.out.println("He recogido la variable id: "+idLibro);
+		
 		try {
 			DaoLibro aux=new DaoLibro();
 			json=aux.listarJson(idLibro);
 			gson=json;
+			
 			System.out.println(json);
-			//out.print(json);
+			
 			doPost(request, response);
 			
 		} catch (ClassNotFoundException | SQLException e) {

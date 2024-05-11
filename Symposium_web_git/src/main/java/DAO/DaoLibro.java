@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -39,7 +41,10 @@ public class DaoLibro {
 			System.out.println("Se va a ejecutar el siguiente Statement: "+ps);
 			
 			int filas=ps.executeUpdate();
-			ps.close();
+			if (con!=null) {
+				con.close();
+				System.out.println("Se ha cerrado la conexión con la base de datos");
+			}
 			System.out.println("Modificación completada, salgo de DaoLibro");
 		}
 		else {
@@ -67,7 +72,10 @@ public class DaoLibro {
 
 			int filas=ps.executeUpdate();
 		
-			ps.close();
+			if (con!=null) {
+				con.close();
+				System.out.println("Se ha cerrado la conexión con la base de datos");
+			}
 			System.out.println("Conexión: "+con+". Cerrada");
 			
 		} else {
@@ -91,7 +99,10 @@ public class DaoLibro {
 		} else {
 			System.out.println("Se ha buscado, pero no se ha encontrado el libro con el ISBN: "+id);
 		}
-		st.close();
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
+		}
 		System.out.println("Se ha cerrado la conexión: "+con);
 		return cell;
 	}
@@ -108,18 +119,6 @@ public class DaoLibro {
 			
 			ResultSet rs=ps.executeQuery();
 			rs.next();
-			/*cogemos cada atributo de la tabla con su respectiva columna (el número hace referencia a esa columna)*/
-			//HAY QUE MANDARLO AL FRONT
-//			System.out.println("----------------------------------------------------");
-//			/*[1] ISBN int(13), [2] Abstracto text, [3] Autor varchar(50), [4] Titulo varchar(50), [5] Tipo varchar(15), 
-//			 * [6] Fecha_publicacion date, [7] Bibliografia text, [8] Categoria varchar(50), [9] Lugar_publicacion varchar(50), 
-//			 * [10] Volumen_publicacion int(5), [11] Temas text, [12] Editorial varchar(50), [13] Valoracion_global int(3)*/
-//			System.out.println("ISBN: "+rs.getObject(1));
-//			System.out.println("Titulo: "+rs.getObject(4));
-//			System.out.println("Autor: "+rs.getObject(3));
-//			System.out.println("Fecha de Publicacion: "+rs.getObject(6));
-//			System.out.println("Editorial: "+rs.getObject(12));
-//			System.out.println("----------------------------------------------------");
 			l1.setISBN(rs.getLong(1));
 			l1.setAbstracto(rs.getString(2));
 			l1.setTitulo(rs.getString(4));
@@ -129,14 +128,13 @@ public class DaoLibro {
 			l1.setCategoria(rs.getString(8));
 			l1.setEditorial(rs.getString(12));
 			
-			ps.close();
-			System.out.println("Se ha cerrado la conexión: "+con);
+			if (con!=null) {
+				con.close();
+				System.out.println("Se ha cerrado la conexión con la base de datos");
+			}
 		}
 		else {
 			System.out.println("Conecta antes al método DBConexion.conectar()");
-		}
-		if (con!=null) {
-			con.close();
 		}
 		return l1;
 	}
@@ -148,11 +146,14 @@ public class DaoLibro {
 		ps.executeUpdate();
 		System.out.println("BORRADO EJECUTADO CON ÉXITO");
 		
-		con.close();
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
+		}
 	}
 	public Libro listar(long id) throws SQLException{
 			
-			String sql = "SELECT *, Fecha_publicacion'dd-MM-yyyy' FROM symposium.obras WHERE ISBN="+id;
+			String sql = "SELECT * FROM symposium.obras WHERE ISBN="+id;
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			rs.next();
@@ -162,11 +163,14 @@ public class DaoLibro {
 			 * [6] Fecha_publicacion date, [7] Bibliografia text, [8] Categoria varchar(50), [9] Lugar_publicacion varchar(50), 
 			 * [10] Volumen_publicacion int(5), [11] Temas text, [12] Editorial varchar(50), [13] Valoracion_global int(3)*/
 			Libro u = new Libro(rs.getLong(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5), rs.getDate(6), rs.getString(12), rs.getString(8));
-				
+			if (con!=null) {
+				con.close();
+				System.out.println("Se ha cerrado la conexión con la base de datos");
+			}
 			return u;
 		}
 	public ArrayList <Libro> listarLibros() throws SQLException {
-		String sql = "SELECT ISBN, Autor, Titulo, Tipo, Fecha_publicacion, Editorial FROM symposium.obras;";
+		String sql = "SELECT ISBN, Autor, Titulo, Tipo, Fecha_publicacion, Editorial, Lugar_publicacion FROM symposium.obras;";
 		ArrayList <Libro> libros=null;
 		PreparedStatement ps = con.prepareStatement(sql);
 		
@@ -183,11 +187,22 @@ public class DaoLibro {
 			/*BD: [1] ISBN int(13), [2] Abstracto text, [3] Autor varchar(50), [4] Titulo varchar(50), [5] Tipo varchar(15), 
 			 * [6] Fecha_publicacion date, [7] Bibliografia text, [8] Categoria varchar(50), [9] Lugar_publicacion varchar(50), 
 			 * [10] Volumen_publicacion int(5), [11] Temas text, [12] Editorial varchar(50), [13] Valoracion_global int(3)*/
-			libros.add(new Libro(result.getLong("ISBN"), "", result.getString("Autor"),result.getString("Titulo"), result.getString("Tipo"),result.getDate("Fecha_publicacion"),result.getString("Editorial"),""));
+			
+			if (result.getString("Tipo").charAt(0)=='A') { //en caso de que fuera un artículo listamos su lugar de publicacion
+				libros.add(new Libro(result.getLong("ISBN"), "", result.getString("Autor"),result.getString("Titulo"), result.getString("Tipo"),result.getDate("Fecha_publicacion"),result.getString("Lugar_publicacion"),""));
+				
+			} else {
+			
+				libros.add(new Libro(result.getLong("ISBN"), "", result.getString("Autor"),result.getString("Titulo"), result.getString("Tipo"),result.getDate("Fecha_publicacion"),result.getString("Editorial"),""));
+			
+			}
 			
 			
 		}
-		
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
+		}
 		return libros;
 	}
 	

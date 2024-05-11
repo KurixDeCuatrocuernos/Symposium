@@ -9,18 +9,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import DAO.DaoArticulo;
 import DAO.DaoLibro;
 
 /**
- * Servlet implementation class GestionLibroListar
+ * Servlet implementation class GestionArticuloEditar
  */
-public class GestionLibroListar extends HttpServlet {
+public class GestionArticuloEditar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static String gson="";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestionLibroListar() {
+    public GestionArticuloEditar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,27 +30,20 @@ public class GestionLibroListar extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		System.out.println("Estoy en GestionArticuloEditar --> doPost()");
+		String json="";
+		long idArticulo=Long.parseLong(request.getParameter("id"));
+		System.out.println("He recogido la variable id: "+idArticulo);
 		try {
+			DaoArticulo aux=new DaoArticulo();
+			json=aux.listarJson(idArticulo);
+			gson=json;
+			System.out.println(json);
+			doPost(request, response);
+					
+		} catch (ClassNotFoundException | SQLException e) {
 			
-			PrintWriter out = response.getWriter();
-			
-			DaoLibro dao = new DaoLibro();
-			
-			String resultados = dao.listarLibrosJson();
-			
-			System.out.println(resultados);
-			
-			
-			out.print(resultados);
-			
-		} catch (SQLException ex) {
-			
-			ex.printStackTrace();
-		} catch (ClassNotFoundException ex2) {
-			
-			ex2.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -57,8 +51,9 @@ public class GestionLibroListar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		PrintWriter outside = response.getWriter();
+		String json=gson;
+		outside.print(json);
 	}
 
 }

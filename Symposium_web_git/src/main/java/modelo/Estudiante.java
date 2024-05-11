@@ -1,4 +1,10 @@
 package modelo;
+
+import java.sql.SQLException;
+
+import DAO.DaoEstudiante;
+import DAO.DaoUsuario;
+
 /**
  * Esta Clase Recoge los datos para generar un objeto Estudiante a partir de la clase 
  * Usuario (extiende dicha clase)
@@ -26,8 +32,8 @@ public class Estudiante extends Usuario{
 	 * @param email String que recoge el correo del Usuario en la aplicacion.
 	 * @param password String que recoge la serialización de la contraseña del Usuario, aunque no debería estar así.
 	 */
-	public Estudiante(int id, int nivel, String nombre, String apellidos, int edad, String email, String password) {
-		super(id, nivel=10, nombre, apellidos, edad, email, password);
+	public Estudiante(long id, int nivel, String nombre, String apellidos, int edad, String email) {
+		super(id, nivel=10, nombre, apellidos, edad, email);
 	}
 	/**
 	 * Método constructor con los atributos de la clase Usuario y la clase Estudiante combinados (super()+Estudios y Escuela)
@@ -41,8 +47,8 @@ public class Estudiante extends Usuario{
 	 * @param estudios String que recoge el tipo de estudios del Estudiante.
 	 * @param escuela String que recoge el lugar donde estudia o ha estudiado el Estudiante.
 	 */
-	public Estudiante(int id, int nivel, String nombre, String apellidos, int edad, String email, String password, String estudios, String escuela) {
-		super(id, nivel=10, nombre, apellidos, edad, email, password);
+	public Estudiante(long id, int nivel, String nombre, String apellidos, int edad, String email, String estudios, String escuela) {
+		super(id, nivel=10, nombre, apellidos, edad, email);
 		this.Estudios=estudios;
 		this.Escuela=escuela;
 	}
@@ -61,6 +67,20 @@ public class Estudiante extends Usuario{
 
 	public void setEscuela(String escuela) {
 		Escuela = escuela;
+	}
+	
+	public void registrarEstudiante(Estudiante e, String Con) throws ClassNotFoundException, SQLException {
+		
+		DaoEstudiante aux = new DaoEstudiante();
+		aux.insertarEstudiante(e, Con);
+		
+	}
+	
+	public void modificarEstudiante(Estudiante e, long id) throws ClassNotFoundException, SQLException {
+		
+		DaoEstudiante aux = new DaoEstudiante();
+		aux.modificarEstudiante(e, id);
+		
 	}
 	/**
 	 * Método que permite al Estudiante cerrar sesión, es decir, no aparecer con su nombre de usuario ni poder hacer lo correspondiente.
@@ -132,8 +152,8 @@ public class Estudiante extends Usuario{
 	public String toString() {
 		return "Estudiante [Id=" + Id + "\n Nivel=" + Nivel + "\n Nombre=" + Nombre 
 				+ "\n Apellidos=" + Apellidos + "\n Edad=" + Edad + "\n Email=" + Email
-				+ "\n Password=" + Password + "\n Estudios=" + Estudios 
-				+ "\n Escuela=" + Escuela + "]";
+				+ "\n Estudios=" + Estudios + "\n Escuela=" + Escuela + "]";
+		
 	}
 	
 	

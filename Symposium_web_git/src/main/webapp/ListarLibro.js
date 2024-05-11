@@ -1,7 +1,8 @@
-/**
- * 
- */
 window.addEventListener ("DOMContentLoaded", function(){
+	
+			llamada();	
+
+})
 	
 	
 	function redir(dir){
@@ -9,8 +10,7 @@ window.addEventListener ("DOMContentLoaded", function(){
 	}
 	
 	function llamada(){
-		//esto está mejor si se hace con xml
-		fetch('GestionLibroListar')
+		fetch('GestionObrasListar')
 		.then(response => response.json())
 		.then(data => pintar(data))
 	}
@@ -21,7 +21,6 @@ window.addEventListener ("DOMContentLoaded", function(){
 		
 		if (cell==true){
 		//Si es true, borramos			
-			// Mejor con xml
 			fetch('GestionLibroBorrar?id='+id,{method: 'post'})
 			.then(response => {
 				if(response.ok){
@@ -33,7 +32,7 @@ window.addEventListener ("DOMContentLoaded", function(){
 				}
 			})
 			.catch(error => {
-				console.error("Error: ",error);
+				console.log("Se ha producido el error: "+error);
 				alert("Error al borrar el libro")
 			})
 			
@@ -46,8 +45,23 @@ window.addEventListener ("DOMContentLoaded", function(){
 		
 	}
 	
-	function llamadaModificar(id) {
+	function llamadaModificarL(id) {
 		fetch('GestionLibroEditar?id='+id)
+		.then(response => {
+			if(response.ok){
+				console.log("Enviado al servlet");
+			} else {
+				alert("ERROR AL ENVIAR EL LIBRO AL SERVLET");
+			}
+		})
+		.catch(error =>{
+			console.log("Se ha producido el error: "+error);
+			alert("Error al enviar el libro al servlet");
+		})
+	}
+	
+	function llamadaModificarA(id) {
+		fetch('GestionArticuloEditar?id='+id)
 		.then(response => {
 			if(response.ok){
 				console.log("Enviado al servlet");
@@ -63,13 +77,15 @@ window.addEventListener ("DOMContentLoaded", function(){
 	
 	function pintar(resultados){
 
-		let html = "<table border=1> <tr><td><strong>ISBN</strong></td></td><td><strong>Nombre del Autor</strong></td><td><strong>Titulo</strong></td><td><strong>Editorial</strong></td><td><strong>Fecha de Publicación</strong></td><td><strong>Tipo</strong></td></tr>";
-		let rows = 0;/*Revisar si es necesario*/
+		let html = "<table border=1> <tr><td><strong>ISBN</strong></td></td><td><strong>Nombre del Autor</strong></td><td><strong>Titulo</strong></td><td><strong>Editorial / Lugar de Publicacion</strong></td><td><strong>Fecha de Publicación</strong></td><td><strong>Tipo</strong></td></tr>";
 		
 		for(let i=0;i<resultados.length;i++){
-				
-			html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modif>Edit</button></td><td><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
-			rows++; /*Revisar si es necesario*/ 
+			if (resultados[i].Tipo.charAt(0)=='A'){
+				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifA>Edit</button></td><td><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
+			}
+			else {
+				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifL>Edit</button></td><td><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
+			}
 		}	
 			
 		html += "</table>";
@@ -99,13 +115,13 @@ window.addEventListener ("DOMContentLoaded", function(){
 		
 		//meto el evento escuchador para editar tras generar el objeto y no antes.
 		
-		let modif=document.querySelectorAll("button.modif");
-		modif.forEach(bot => {
+		let modifL=document.querySelectorAll("button.modifL");
+		modifL.forEach(bot => {
 			
 			let id = bot.getAttribute("id");
-			bot.addEventListener("click", function edit(){
+			bot.addEventListener("click", function editL(){
 				
-				llamadaModificar(id);
+				llamadaModificarL(id);
 				let dir="http://localhost:8080/Symposium_web/ModificarLibro.html";
 				redir(dir);
 				
@@ -113,14 +129,29 @@ window.addEventListener ("DOMContentLoaded", function(){
 				
 		})
 		
-		let ins=document.querySelector("button.insertarObra");
-		ins.addEventListener("click", function insert(){
+		let modifA=document.querySelectorAll("button.modifA");
+		modifA.forEach(bot => {
+			
+			let id = bot.getAttribute("id");
+			bot.addEventListener("click", function editA(){
+				
+				llamadaModificarA(id);
+				let dir="http://localhost:8080/Symposium_web/ModificarArticulo.html";
+				redir(dir);
+				
+			})
+				
+		})
+		
+		let ins=document.querySelector("button.insertarLibro");
+		ins.addEventListener("click", function insertL(){
 			let dir="http://localhost:8080/Symposium_web/SubirLibro.html"
 			redir(dir);
 		})
-		
+		let insa=document.querySelector("button.insertarArticulo");
+		insa.addEventListener("click", function insertA(){
+			let dir="http://localhost:8080/Symposium_web/SubirArticulo.html"
+			redir(dir);
+		})
 	} 
 	
-		llamada();	
-
-})
