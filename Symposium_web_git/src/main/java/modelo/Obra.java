@@ -9,7 +9,7 @@ import java.sql.Date;
  */
 public class Obra {
 	
-	protected long ISBN=13L;
+	protected long ISBN;
 	protected String Abstracto="";
 	protected String Autor="";
 	protected String Titulo="";

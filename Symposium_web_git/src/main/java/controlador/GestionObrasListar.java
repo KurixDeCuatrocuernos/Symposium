@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import DAO.DaoLibro;
 
 /**
- * Servlet implementation class GestionLibroListar
+ * Servlet implementation class GestionObrasListar
  */
 public class GestionObrasListar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,7 @@ public class GestionObrasListar extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		try {
 			
 			PrintWriter out = response.getWriter();

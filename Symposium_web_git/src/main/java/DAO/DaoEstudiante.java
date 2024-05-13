@@ -92,10 +92,6 @@ public class DaoEstudiante {
 			};
 			
 		}
-		if (con!=null) {
-			con.close();
-			System.out.println("Se ha cerrado la conexión con la base de datos");
-		}
 		return ides;
 	}
 	

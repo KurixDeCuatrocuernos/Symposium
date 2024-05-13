@@ -1,15 +1,37 @@
 window.addEventListener ("DOMContentLoaded", function(){
+			
 	
-			llamada();	
+			
+	verificarAdmin();
+	
+	let ini= document.querySelector("button.IrAInicio");
+			
+	ini.addEventListener( "click", function redir3(){
+		let dir="http://localhost:8080/Symposium_web/Index.html";
+		redir(dir);
+	})
 
-})
-	
+	function verificarAdmin(){
+		fetch('GestionInicioSesion?op=1', {method:'POST'})
+	.then(response => response.json())
+	.then (respuesta => {
+		console.log(respuesta);
+		if (respuesta === true) {
+			llamada();
+		} else {
+			alert("Antes inicia sesión como Administrador")
+			let dir="http://localhost:8080/Symposium_web/IniciarSesion.html"
+			redir(dir);
+		}
+	})
+	}
 	
 	function redir(dir){
 		window.location.href = dir;
 	}
 	
 	function llamada(){
+		
 		fetch('GestionObrasListar')
 		.then(response => response.json())
 		.then(data => pintar(data))
@@ -31,10 +53,6 @@ window.addEventListener ("DOMContentLoaded", function(){
 					alert("ERROR AL BORRAR EL LIBRO");
 				}
 			})
-			.catch(error => {
-				console.log("Se ha producido el error: "+error);
-				alert("Error al borrar el libro")
-			})
 			
 		
 		} else {
@@ -53,10 +71,6 @@ window.addEventListener ("DOMContentLoaded", function(){
 			} else {
 				alert("ERROR AL ENVIAR EL LIBRO AL SERVLET");
 			}
-		})
-		.catch(error =>{
-			console.log("Se ha producido el error: "+error);
-			alert("Error al enviar el libro al servlet");
 		})
 	}
 	
@@ -142,16 +156,13 @@ window.addEventListener ("DOMContentLoaded", function(){
 			})
 				
 		})
-		
-		let ins=document.querySelector("button.insertarLibro");
+		//boton para insertar obra
+		let ins=document.getElementById("insertarLibro");
 		ins.addEventListener("click", function insertL(){
-			let dir="http://localhost:8080/Symposium_web/SubirLibro.html"
+			let dir="http://localhost:8080/Symposium_web/SubirObra.html"
 			redir(dir);
 		})
-		let insa=document.querySelector("button.insertarArticulo");
-		insa.addEventListener("click", function insertA(){
-			let dir="http://localhost:8080/Symposium_web/SubirArticulo.html"
-			redir(dir);
-		})
+		
 	} 
 	
+})

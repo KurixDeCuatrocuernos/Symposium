@@ -2,24 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Subir Libro Nuevo</title>
-<script>
-	
-</script>
+<title>Subir Obra Nueva</title>
+<script src="SubirObra.js"></script>
 </head>
 <body>
-	<form name="SubirLibro" action="GestionLibro" method="post">
+	<form name="SubirObra">
 		<ul type="none">
 			<label><h1>Insertar Nuevo Libro</h1></label>
-			<li><h2 alt="Numero de serie del libro, suele aparecer debajo del código de barras o dentro del mismo libro. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h2><input type="number" name="IdLibro"></li>
-			<li><h2 alt="Nombre del libro, suele aparecer en la portada.">Título del Libro: </h2><input type="text" name="NombreLibro"></li>
-			<li><h2 alt="Nombre del autor original del libro (no del traductor ni del editor).">Nombre del autor del Libro: </h2><input type="text" name="NombreAutor"></li>
-			<li><h2 alt="Resumen que suele aparecer en la contraportada del libro.">Abstracto del Libro: </h2><input type="text" name="Texto"></li>
-			<li><h2 alt="Fecha de publicación original del libro, en caso de ser muy antiguo, sirve la fecha de la primera publicación de la edición, suele aparecer en el idioma original tras la nota 'Publicación Original'.">Fecha de Publicación del Libro: </h2><input type="date" name="FechaLibro"></li>
-			<li><h2 alt="Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.">Categoría del Libro: </h2><input type="text" name="Categoria"></li><!--Sería mejor hacer un checkbox-->
-			<li><h2 alt="Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.">Editorial del Libro: </h2><input type="text" name="Edition"></li>
-			<li><input type="submit" value="Aceptar"></li>
+			<li><label><h2 alt="Numero de serie del libro, suele aparecer debajo del código de barras o dentro del mismo libro. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h2></label><input type="number" id="IdLibro"></li>
+			<li><label><h2 alt="Nombre del libro, suele aparecer en la portada.">Título del Libro: </h2></label><input type="text" id="NombreLibro"></li>
+			<li><label><h2 alt="Nombre del autor original del libro (no del traductor ni del editor).">Nombre del autor del Libro: </h2></label><input type="text" id="NombreAutor"></li>
+			<li><label><h2 alt="Resumen que suele aparecer en la contraportada del libro.">Abstracto del Libro: </h2></label><input type="text" id="Texto"></li>
+			<li><label><h2 alt="Fecha de publicación original del libro, en caso de ser muy antiguo, sirve la fecha de la primera publicación de la edición, suele aparecer en el idioma original tras la nota 'Publicación Original'.">Fecha de Publicación del Libro: </h2></label><input type="date" id="FechaLibro"></li>
+			<li><label alt="Tipo de obra, Artículo o Libro, cada uno tiene distintos elementos"><h2>Tipo de obra: </h2></label></li>
+			<select id="tipo"><option id="Libro" value="1" selected>Libro</option><option id="Articulo" value="2"> Articulo</option></select>
+			
 		</ul>
 	</form>
+	<form id="valoresConcretos">
+		
+	</form>
+	<button id="accept" value="Aceptar"> Aceptar </button>
+	<button id="cancel"> Cancelar </button>
 </body>
 </html>

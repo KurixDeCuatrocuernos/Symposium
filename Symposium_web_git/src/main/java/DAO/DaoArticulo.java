@@ -108,6 +108,10 @@ public class DaoArticulo {
 		
 		json = gson.toJson(this.listar(id));
 		
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrdo la conexión");
+		}
 		return json;
 	
 	}

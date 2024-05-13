@@ -54,10 +54,6 @@ window.addEventListener("DOMContentLoaded", function(){
 				alert("ERROR AL ENVIAR EL LIBRO AL SERVLET");
 			}
 		})
-		.catch(error =>{
-			console.log(error);
-			alert("Error al enviar el libro al servlet");
-		})
 	}
 	
 	function validarFormulario(){

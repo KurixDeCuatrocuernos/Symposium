@@ -1,13 +1,33 @@
 window.addEventListener("DOMContentLoaded", function(){
 	
-	llamada();
+	let ini= document.querySelector("button.IrAInicio");
+	verificarAdmin();
 	
-});
+	ini.addEventListener( "click", function redir3(){
+		let dir="http://localhost:8080/Symposium_web/Index.html";
+		redir(dir);
+	})
+	
+
 
 function redir(dir){
 	
 	window.location.href = dir;
 
+}
+
+function verificarAdmin(){
+	fetch('GestionInicioSesion?op=1', {method:'POST'})
+	.then(response => response.json())
+	.then (respuesta => {
+		if (respuesta === true) {
+			llamada();
+		} else {
+			alert("Antes inicia sesión como Administrador")
+			let dir="http://localhost:8080/Symposium_web/IniciarSesion.html"
+			redir(dir);
+		}
+	})
 }
 
 function llamada(){
@@ -129,3 +149,5 @@ function llamadaModificarU(id) {
 		alert("Error al enviar el Usuario al servlet");
 	});
 }
+
+});

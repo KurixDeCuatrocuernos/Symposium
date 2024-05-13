@@ -169,4 +169,34 @@
     <servlet-name>GestionUsuarioModificar</servlet-name>
     <url-pattern>/GestionUsuarioModificar</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionObrasListar</display-name>
+    <servlet-name>GestionObrasListar</servlet-name>
+    <servlet-class>controlador.GestionObrasListar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionObrasListar</servlet-name>
+    <url-pattern>/GestionObrasListar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionObraBuscar</display-name>
+    <servlet-name>GestionObraBuscar</servlet-name>
+    <servlet-class>controlador.GestionObraBuscar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionObraBuscar</servlet-name>
+    <url-pattern>/GestionObraBuscar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionInicioSesion</display-name>
+    <servlet-name>GestionInicioSesion</servlet-name>
+    <servlet-class>controlador.GestionInicioSesion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionInicioSesion</servlet-name>
+    <url-pattern>/GestionInicioSesion</url-pattern>
+  </servlet-mapping>
 </web-app>
