@@ -40,7 +40,7 @@ function llamada(){
 
 function pintar(resultados){
 
-	let html = "<table border=1> <tr><td><strong>IDUsuario</strong></td></td><td><strong>Nombre de Usuario</strong></td><td><strong>Nivel</strong></td></tr>";
+	let html = "<table border=1 class=tablaListado> <tr><th><strong>IDUsuario</strong></th><th><strong>Nombre de Usuario</strong></th><th><strong>Nivel</strong></th><th colspan=2>Acción</th></tr>";
 	let lvl="";
 	for(let i=0;i<resultados.length;i++){
 		
@@ -54,7 +54,7 @@ function pintar(resultados){
 			lvl="Usuario baneado"
 		}
 			
-		html += "<tr class=fila"+resultados[i].Id+"><td>"+resultados[i].Id+"</td><td>"+resultados[i].Nombre+" "+resultados[i].Apellidos+"</td><td id=Nivel>"+lvl+"</td><td><button id="+resultados[i].Id+"  type=button class=modifU>Modificar</button></td><td><button type=button class=borrarU id="+resultados[i].Id+">Eliminar Usuario</button></td></tr>"
+		html += "<tr class=fila"+resultados[i].Id+"><td>"+resultados[i].Id+"</td><td>"+resultados[i].Nombre+" "+resultados[i].Apellidos+"</td><td id=Nivel>"+lvl+"</td><td><button id="+resultados[i].Id+"  type=button class=modifU>Modificar</button><button type=button class=borrarU id="+resultados[i].Id+">Eliminar Usuario</button></td></tr>"
 
 	}	
 			

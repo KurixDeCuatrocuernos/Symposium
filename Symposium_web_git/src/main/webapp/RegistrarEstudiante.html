@@ -4,24 +4,32 @@
 <meta charset="UTF-8">
 <title>Registrar Estudiante</title>
 <script src="RegistrarEstudiante.js"></script>
+<link rel="stylesheet" href="styles/Forms.css">
 </head>
 <body>
-	<form id="RegistrarUsuario" name="RegistrarUsuario">
-		<ul type="none">
-			<label><h1>Registrar Usuario</h1></label>
-			<li><h2 alt="">Nombre: </h2><input type="text" id="Name" name="Name"></li>
-			<li><h2>Apellidos: </h2><input type="text" id="Surname" name="Surname"></li>
-			<li><h2>Edad: </h2><input type="text" id="Age" name="Age"></li>
-			<li><h2>Email: </h2><input type="text" id="Mail" name="Mail"></li>
-			<button type="button" id="Comp" name="Comp">Comprobar</button>
-			<li><h2>Contraseña: </h2><input type="password" id="Contra" name="Contra"></li>
-			<li><h2>Repite la Contraseña: </h2><input type="password" id="Repeat" name="Repeat"></li>
-			<button type="button" id="Aceptar" class="Aceptar" name="Aceptar">Aceptar</button>
-			
-		</ul>
-	</form>
-	<div>
-		<a href="IniciarSesion.html">¿Ya tienes una cuenta? Inicia sesión aquí</a>
-	</div>
+	<header class="encabezado">
+
+	</header>
+	<section class="contenido">
+		<div class="formulario">
+			<form id="RegistrarUsuario" name="RegistrarUsuario">
+				<strong>Registrar Usuario</strong>
+				<label><h1 alt="">Nombre: </h1><input type="text" id="Name" name="Name"></label>
+				<label><h1>Apellidos: </h1><input type="text" id="Surname" name="Surname"></label>
+				<label><h1>Edad: </h1><input type="text" id="Age" name="Age"></label>
+				<label><h1>Email: </h1><input type="text" id="Mail" name="Mail"></label>
+				<button type="button" id="Comp" name="Comp">Comprobar</button>
+				<label><h1>Contraseña: </h1><input type="password" id="Contra" name="Contra"></label>
+				<label><h1>Repite la Contraseña: </h1><input type="password" id="Repeat" name="Repeat"></label>
+				<button type="button" id="Aceptar" class="Aceptar" name="Aceptar">Aceptar</button>
+			</form>
+		</div>
+		<div class="enlaces">
+			<a href="IniciarSesion.html">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+		</div>
+	</section>
+	<footer class="footer">
+
+	</footer>
 </body>
 </html>

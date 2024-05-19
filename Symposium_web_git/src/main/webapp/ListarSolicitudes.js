@@ -14,9 +14,9 @@ window.addEventListener("DOMContentLoaded", function() {
 	}
 	
 	function pintarSolicitudes(datos){
-		let html="<table border=1> <tr><td>ID Usuario</td><td>Nombre del Titulo</td><td>Lugar de expedición del titulo</td><td>Fecha de expedición del titulo</td></tr>";
+		let html="<table border=1 class=tablaListado> <tr><th>ID Usuario</th><th>Nombre del Titulo</th><th>Lugar de expedición del titulo</th><th>Fecha de expedición del titulo</th><th colspan=2>Acción</th></tr>";
 		for(let i=0; i<datos.length;i++){
-			html+="<tr class=fila"+datos[i].IdUsuario+"><td>"+datos[i].IdUsuario+"</td><td>"+datos[i].Titulo_estudios+"</td><td>"+datos[i].Lugar_estudios+"</td><td>"+datos[i].Fecha_titulo+"</td> <td><button id="+datos[i].IdUsuario+" class=accept name=accept>Aceptar</button></td><td><button id="+datos[i].IdUsuario+" class=deny name=deny>Denegar</button></td></tr>"
+			html+="<tr class=fila"+datos[i].IdUsuario+"><td>"+datos[i].IdUsuario+"</td><td>"+datos[i].Titulo_estudios+"</td><td>"+datos[i].Lugar_estudios+"</td><td>"+datos[i].Fecha_titulo+"</td> <td><button id="+datos[i].IdUsuario+" class=accept name=accept>Aceptar</button><button id="+datos[i].IdUsuario+" class=deny name=deny>Denegar</button></td></tr>"
 		}
 		html += "</table>"
 		tabla.innerHTML=html;

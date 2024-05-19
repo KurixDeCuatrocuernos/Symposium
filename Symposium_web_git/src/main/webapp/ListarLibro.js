@@ -91,14 +91,14 @@ window.addEventListener ("DOMContentLoaded", function(){
 	
 	function pintar(resultados){
 
-		let html = "<table border=1> <tr><td><strong>ISBN</strong></td></td><td><strong>Nombre del Autor</strong></td><td><strong>Titulo</strong></td><td><strong>Editorial / Lugar de Publicacion</strong></td><td><strong>Fecha de Publicación</strong></td><td><strong>Tipo</strong></td></tr>";
+		let html = "<table border=1 class=tablaListado> <tr><th><strong>ISBN</strong></th><th><strong>Nombre del Autor</strong></th><th><strong>Titulo</strong></th><th><strong>Editorial / Lugar de Publicacion</strong></th><th><strong>Fecha de Publicación</strong></th><th><strong>Tipo</strong></th><th colspan=2>Acción</th></tr>";
 		
 		for(let i=0;i<resultados.length;i++){
 			if (resultados[i].Tipo.charAt(0)=='A'){
-				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifA>Edit</button></td><td><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
+				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifA>Edit</button><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
 			}
 			else {
-				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifL>Edit</button></td><td><button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
+				html += "<tr class=fila"+resultados[i].ISBN+"><td>"+resultados[i].ISBN+"</td><td>"+resultados[i].Autor+"</td><td>"+resultados[i].Titulo+"</td><td>"+resultados[i].Editorial+"</td><td>"+resultados[i].Fecha_publicacion+"</td><td>"+resultados[i].Tipo+"</td><td><button id="+resultados[i].ISBN+" type=button class=modifL>Edit</button> <button type=button class=borrar id="+resultados[i].ISBN+">Delete</button></td></tr>"
 			}
 		}	
 			

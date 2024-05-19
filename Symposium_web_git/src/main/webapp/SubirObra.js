@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	
 	let cancel = document.getElementById("cancel");
 	cancel.addEventListener("click", function cancel(){
-		let dir = "http://localhost:8080/Symposium_web.html"
+		let dir = "http://localhost:8080/Symposium_web/Index.html"
 		redir(dir);
 	})
 	
@@ -35,13 +35,13 @@ window.addEventListener("DOMContentLoaded", function(){
 	});
 	
 	function accionLibro(){
-		html = "<ul type=none><li><label><h2 alt=Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.>Categoría del Libro: </h2></label><input type=text id=Categoria name=Categoria></li><li><label><h2 alt=Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.>Editorial del Libro: </h2></label><input type=text id=Edition name=Edition></li></ul>"
+		html = "<label><h1 alt=Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.>Categoría del Libro: </h1><input type=text id=Categoria name=Categoria></label><label><h1 alt=Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.>Editorial del Libro: </h1><input type=text id=Edition name=Edition></label>"
 		document.getElementById("valoresConcretos").innerHTML=html
 		console.log("Insertarás un libro");
 	}
 	
 	function accionArticulo(){
-		html="<ul type=none><li><label><h2 alt=Temas clave del artículo, sulen aparecer listados tras el abstracto o en cursiva en dicho abstracto, en caso de no ser así, no es necesario poner nada>Temas del artículo: </h2></label><input type=text id=Temas name=Temas></li><li><label><h2 alt=Se trata de poner el nombre del sitio donde está publicado el artículo, si está en una revista, el nombre de dicha revista o, si está publicado en un libro, el nombre de dicho libro, seguido de las páginas donde se encuentra (por ejemplo: Libro escrito, pag.1-5)>Lugar de publicación: </h2></label><input type=text id=LugarPublicacion name=LugarPublicacion></li><li><label><h2 alt=En caso de que el lugar de publicación sea un conjunto de obras o una revista, ha de tener un volumen para identificar dicho lugar, es decir, si el artículo está en el número 5 de la revista x, aquí pondremos un 5 o una v en función de la numeración que tenga>Volumen de publicación: </h2></label><input type=text id=VolumenPublicacion name=VolumenPublicacion></li></ul>";
+		html="<label><h1 alt=Temas clave del artículo, sulen aparecer listados tras el abstracto o en cursiva en dicho abstracto, en caso de no ser así, no es necesario poner nada>Temas del artículo: </h1><input type=text id=Temas name=Temas></label><label><h1 alt=Se trata de poner el nombre del sitio donde está publicado el artículo, si está en una revista, el nombre de dicha revista o, si está publicado en un libro, el nombre de dicho libro, seguido de las páginas donde se encuentra (por ejemplo: Libro escrito, pag.1-5)>Lugar de publicación: </h1><input type=text id=LugarPublicacion name=LugarPublicacion></label><label><h1 alt=En caso de que el lugar de publicación sea un conjunto de obras o una revista, ha de tener un volumen para identificar dicho lugar, es decir, si el artículo está en el número 5 de la revista x, aquí pondremos un 5 o una v en función de la numeración que tenga>Volumen de publicación: </h1><input type=text id=VolumenPublicacion name=VolumenPublicacion></label>";
 		document.getElementById("valoresConcretos").innerHTML=html;
 		console.log("Insertarás un articulo");
 	}

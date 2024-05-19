@@ -19,16 +19,11 @@ button{
 
 }
 
-#botones{
-    background-color: rgba(221, 195, 195, 0.123);
-}
-
 #listado{
     height: 100vh;
     width: 100vw;
     display: grid;
     text-align: center;
-    background-color: rgba(221, 195, 195, 0.123);
     justify-self: center;
 }
 

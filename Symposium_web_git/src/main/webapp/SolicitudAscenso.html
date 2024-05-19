@@ -4,18 +4,29 @@
 <meta charset="UTF-8">
 <title>Solicitar Ascenso a Titulado</title>
 <script src="SolicitudAscenso.js"></script>
+<link rel="stylesheet" href="styles/Forms.css">
 </head>
 <body>
-	<form id="solicitudTitulado">
-		<ul type="none" >
-			<li><label alt="Nombre del título en cuestión, aparece en el propio título, por ejemplo: Licenciado en ciencias sociales">Titulo: </label><input type="text" id="titulo"></li>
-			<li><label alt="Lugar donde se expidió el titulo">Lugar de expedición del titulo:</label><input type="text" id="LugarTitulo"></li>
-			<li><label alt="Fecha en que se expidió el titulo">Fecha de expedición del titulo: </label><input type="date" id="fechaTitulo"></li>
-		<!--<li><label alt="Imagen de la contraportada del titulo, donde figura su localización en caso de que se necesite verificar la información proporcionada">Imagen del titulo:</label><input type="file" id="fileTitle"></li>-->		
-		</ul>
-	</form>
-	
-	<button id="accept">Aceptar</button>
-	<button id="cancel">Cancelar</button>
+	<header class="encabezado">
+
+	</header>
+
+	<section class="contenido">
+		<div class="formulario">
+			<form id="solicitudTitulado">
+				<strong>Solicitud de ascenso al rango Titulado</strong>
+				<label alt="Nombre del título en cuestión, aparece en el propio título, por ejemplo: Licenciado en ciencias sociales">Titulo: <input type="text" id="titulo"></label>
+				<label alt="Lugar donde se expidió el titulo">Lugar de expedición del titulo:<input type="text" id="LugarTitulo"></label>
+				<label alt="Fecha en que se expidió el titulo">Fecha de expedición del titulo: <input type="date" id="fechaTitulo"></label>
+			</form>
+		</div>
+		<div class="botones">
+			<button id="accept">Aceptar</button>
+			<button id="cancel">Cancelar</button>
+		</div>
+	</section>
+	<footer class="footer">
+
+	</footer>
 </body>
 </html>
