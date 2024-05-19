@@ -91,6 +91,8 @@ public class DaoEstudiante {
 				lim++;
 			};
 			
+		} else {
+			System.out.println("Conecta antes al método DBConexion.conectar()");
 		}
 		return ides;
 	}
@@ -124,11 +126,7 @@ public class DaoEstudiante {
 			}
 				
 		} while (cell==false);
-			
-		if (con!=null) {
-			con.close();
-			System.out.println("Se ha cerrado la conexión con la base de datos");
-		}			
+						
 		return id;
 	}
 	

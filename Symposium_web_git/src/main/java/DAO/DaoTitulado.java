@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Date;
 
+import modelo.SolicitudAscenso;
 import modelo.Titulado;
 
 public class DaoTitulado {
@@ -15,6 +18,26 @@ public class DaoTitulado {
 			
 		this.con= DBConexion.conectar();
 		
+	}
+	
+	public void acenderEstudianteATitulado(SolicitudAscenso s) throws SQLException {
+		System.out.println("Estoy en DaoTitulado --> acenderEstudianteATitulado()");
+		if (con!=null) {
+			LocalDate fechaOrigen= s.getFecha_titulo();
+			Date fecha= Date.valueOf(fechaOrigen);
+			String sql="UPDATE symposium.usuarios SET Titulo_estudios=?,Lugar_titulo=?, Fecha_titulo=?, Nivel=30 WHERE ID=?";
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setString(1, s.getTitulo_estudios());
+			ps.setString(2, s.getLugar_estudios());
+			ps.setDate(3, fecha);
+			ps.setLong(4, s.getIdUsuario());
+			int filas=ps.executeUpdate();
+			
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
+		} else {
+			System.out.println("ERROR, Conecta antes con el método DBConexion.conectar()");
+		}
 	}
 	
 	public void modificarTitulado(Titulado T, long ID) throws SQLException {
@@ -39,11 +62,9 @@ public class DaoTitulado {
 			ps.setLong(10, ID);
 			System.out.println("Se va a ejecutar el siguiente Statement: "+ps);
 			int filas=ps.executeUpdate();
-			if (con!=null) {
-				con.close();
-				System.out.println("Se ha cerrado la conexión con la base de datos");
-			}
-				System.out.println("Modificación completada, salgo de DaoLibro");
+			
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
 		} else {
 			System.out.println("ERROR, Conecta antes con el método DBConexion.conectar()");
 		}

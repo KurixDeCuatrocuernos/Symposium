@@ -43,7 +43,7 @@ public class GestionObraBuscar extends HttpServlet {
 		Articulo a = new Articulo();
 		PrintWriter out=response.getWriter();
 		switch (choice) {
-			case 1: {
+			case 1: {//recoger busqueda
 				ID=0;
 				IDES.removeAll(IDES);
 				System.out.println("Estoy en doGet() --> Case 1");
@@ -73,13 +73,13 @@ public class GestionObraBuscar extends HttpServlet {
 					out.print(cell);
 					
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				
 				break;
 			}
-			case 2: {
+			case 2: {//recoger numero de resultados
 				System.out.println("Estoy en doGet() --> Case 2");
 				boolean cell=false;
 				System.out.println(ID);
@@ -92,7 +92,7 @@ public class GestionObraBuscar extends HttpServlet {
 				out.print(cell);
 				break;
 			}
-			case 3: {
+			case 3: { // devolver varios resultados
 				System.out.println("Estoy en doGet() --> Case 3");
 				String titulos = "";
 				try {
@@ -103,13 +103,13 @@ public class GestionObraBuscar extends HttpServlet {
 					
 					System.out.println(titulos);
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				out.print(titulos);
 				break;
 			}
-			case 4: {
+			case 4: { //recoger un resultado
 				ID= Long.parseLong(request.getParameter("id"));
 				break;
 			}
@@ -146,6 +146,7 @@ public class GestionObraBuscar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Estoy en GestionObraBuscar --> doPost()");
+		System.out.println("La ID es: "+ID);
 		String devolver="";
 		String tipo="";
 		PrintWriter out = response.getWriter();
@@ -154,11 +155,17 @@ public class GestionObraBuscar extends HttpServlet {
 			DaoArticulo aax = new DaoArticulo();
 			tipo = aux.comprobarTipo(ID);
 			System.out.println("Se ha recogido: "+tipo);
-			if (tipo.charAt(0)=='L'||tipo.charAt(0)=='l') {
+			try {
+				if (tipo.charAt(0)=='L'||tipo.charAt(0)=='l') {
 				devolver = aux.listarJson(ID);
-			} else {
-				devolver = aax.listarJson(ID);
+				} else {
+					devolver = aax.listarJson(ID);
+				}
+			} catch (StringIndexOutOfBoundsException stringBoundsEx) {
+				devolver="La búsqueda está vacía, vuelve a buscar";
+				stringBoundsEx.printStackTrace();
 			}
+			
 			System.out.println(devolver.toString());
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

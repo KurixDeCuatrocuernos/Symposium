@@ -57,7 +57,7 @@ public class GestionEstudianteInsertar extends HttpServlet {
 			try {
 				e.registrarEstudiante(e, Con);
 			} catch (ClassNotFoundException | SQLException e1) {
-				// TODO Auto-generated catch block
+				cell=false;
 				e1.printStackTrace();
 			}
 		}

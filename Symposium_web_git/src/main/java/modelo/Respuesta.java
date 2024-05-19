@@ -8,7 +8,6 @@ package modelo;
 public class Respuesta {
 	private int Fecha_respuesta=0;
 	private int Id_respuesta=0;
-	private int Valor_respuesta=0;
 	private String Texto="";
 	/**
 	 * Método constructor vacío.
@@ -23,11 +22,10 @@ public class Respuesta {
 	 * @param valor_respuesta Int que se inicializa a 0, porque depende de las valoraciones posteriores (aunque es un elemento que forma parte del objeto).
 	 * @param texto String que recoge el contenido de la respuesta (su extensión puede ser considerable).
 	 */
-	public Respuesta(int fecha_respuesta, int id_respuesta, int valor_respuesta, String texto) {
+	public Respuesta(int fecha_respuesta, int id_respuesta, String texto) {
 		super();
 		Fecha_respuesta = fecha_respuesta;
 		Id_respuesta = id_respuesta;
-		Valor_respuesta = valor_respuesta;
 		Texto = texto;
 	}
 
@@ -45,14 +43,6 @@ public class Respuesta {
 
 	public void setId_respuesta(int id_respuesta) {
 		Id_respuesta = id_respuesta;
-	}
-
-	public int getValor_respuesta() {
-		return Valor_respuesta;
-	}
-
-	public void setValor_respuesta(int valor_respuesta) {
-		Valor_respuesta = valor_respuesta;
 	}
 
 	public String getTexto() {
@@ -104,7 +94,7 @@ public class Respuesta {
 	@Override
 	public String toString() {
 		return "Respuesta [Fecha_respuesta=" + Fecha_respuesta + "\n Id_respuesta=" 
-	+ Id_respuesta + "\n Valor_respuesta=" + Valor_respuesta + "\n Texto=" + Texto + "]";
+	+ Id_respuesta + "\n Texto=" + Texto + "]";
 	}
 	
 	

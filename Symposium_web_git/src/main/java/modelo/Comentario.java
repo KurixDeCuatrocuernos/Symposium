@@ -1,17 +1,21 @@
 package modelo;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+
 /**
  * Esta clase permite generar objetos Comentario, aunque necesite del Id del usuario que escribe el comentario y el ISBN de la obra que comenta.
  * @author Alejandro Moreno
  * @version 1.0
  */
 public class Comentario {
-	private int Fecha_comentario=0;
+	private LocalDateTime Fecha_comentario;
 	private String Titulo="";
 	private String Texto="";
 	private int Valoracion_obra=0;
 	private int Valoracion_comentario=0;
-	private int IdAutorComentario=0;
-	private int ISBN_obra=0;
+	private long IdAutorComentario=0;
+	private long ISBN_obra=0;
 	/**
 	 * Método constructor vacío.
 	 */
@@ -31,22 +35,52 @@ public class Comentario {
 	 * @param idAutorComentario Int que recoge la Id del usuario que redacta el comentario.
 	 * @param isbn_obra Int que recoge el ISBN de la obra a la que pertenece ese comentario.
 	 */
-	public Comentario(int fecha_comentario, String titulo, String texto, int valoracion_obra, int valoracion_comentario,
-			int idAutorComentario, int isbn_obra) {
+	public Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, int valoracion_comentario,
+			long idAutorComentario, long isbn_obra) {
+		Fecha_comentario = fecha_comentario;
+		Titulo = titulo;
+		Texto = texto;
+		IdAutorComentario = idAutorComentario;
+		ISBN_obra=isbn_obra;
+	}
+	
+	/**
+	 * Método constructor sin el parámetro Valoración_comentario
+	 	 * @param fecha_comentario Int que recoge la fecha (y hora) en que se publica un Comentario.
+	 * @param titulo String que recoge el titulo que el usuario desee poner al Comentario.
+	 * @param texto String que recoge el contenido del Comentario (su extensión puede ser considerable)
+	 * @param valoracion_comentario Int que recoge la valoración del comentario, se inicializa en 0,
+	 * 		  porque depende de la votación que hagan el resto de usuarios.
+	 * @param idAutorComentario Int que recoge la Id del usuario que redacta el comentario.
+	 * @param isbn_obra Int que recoge el ISBN de la obra a la que pertenece ese comentario.
+	 */
+
+	public Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, long idAutorComentario,
+			long iSBN_obra) {
+		super();
 		Fecha_comentario = fecha_comentario;
 		Titulo = titulo;
 		Texto = texto;
 		Valoracion_obra = valoracion_obra;
-		Valoracion_comentario = valoracion_comentario;
 		IdAutorComentario = idAutorComentario;
-		ISBN_obra=isbn_obra;
+		ISBN_obra = iSBN_obra;
 	}
-
-	public int getFecha_comentario() {
+	
+	
+	
+	public Comentario(String titulo, String texto, int valoracion_obra, long idAutorComentario, long iSBN_obra) {
+		super();
+		Titulo = titulo;
+		Texto = texto;
+		Valoracion_obra = valoracion_obra;
+		IdAutorComentario = idAutorComentario;
+		ISBN_obra = iSBN_obra;
+	}
+	public LocalDateTime getFecha_comentario() {
 		return Fecha_comentario;
 	}
 
-	public void setFecha_comentario(int fecha_comentario) {
+	public void setFecha_comentario(LocalDateTime fecha_comentario) {
 		Fecha_comentario = fecha_comentario;
 	}
 
@@ -82,18 +116,18 @@ public class Comentario {
 		Valoracion_comentario = valoracion_comentario;
 	}
 
-	public int getIdAutorComentario() {
+	public long getIdAutorComentario() {
 		return IdAutorComentario;
 	}
 
-	public void setIdAutorComentario(int idAutorComentario) {
+	public void setIdAutorComentario(long idAutorComentario) {
 		IdAutorComentario = idAutorComentario;
 	}
 	
-	public int getISBN_obra() {
+	public long getISBN_obra() {
 		return ISBN_obra;
 	}
-	public void setISBN_obra(int iSBN_obra) {
+	public void setISBN_obra(long iSBN_obra) {
 		ISBN_obra = iSBN_obra;
 	}
 	

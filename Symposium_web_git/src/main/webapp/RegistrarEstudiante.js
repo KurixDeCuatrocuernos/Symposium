@@ -7,8 +7,6 @@ window.addEventListener("DOMContentLoaded", function(){
 	but.addEventListener("click", function accept(){
 		verificar();
 	});
-
-});
 	
 	function enviarFormulario(){
 		let Name = document.getElementById("Name").value;
@@ -18,8 +16,27 @@ window.addEventListener("DOMContentLoaded", function(){
 		let Pass = document.getElementById("Contra").value;
 		//cambiar a XML
 		fetch ('GestionEstudianteInsertar?&Name='+Name+'&Surname='+SurN+'&Age='+Age+'&Mail='+Mail+'&Pass='+Pass)
-		.then (response => response.json)
-		.then (data => console.log(data))
+		.then (response => response.json())
+		.then (data => {
+			if (data===true){
+				fetch('GestionInicioSesion?Alias='+Name+'&mail='+Mail+'&pass='+Pass)
+				.then(response => response.json())
+				.then(respuesta => {
+					if (respuesta === true){
+						alert("Has iniciado sesión");
+						let dir="http://localhost:8080/Symposium_web/Index.html";
+						redir(dir);
+					} else {
+						alert("Error al iniciar sesión, vuelve a intentarlo más tarde");
+						let dir="http://localhost:8080/Symposium_web/Index.html";
+						redir(dir);
+					}
+				})
+			} else {
+				alert("Error al registrar un nuevo usuario, no es culpa tuya, inténtalo de nuevo más tarde, si persiste ponte en contacto con un administrador");
+				console.log("Error al registrar al usuario revisa el fetch y/o el servlet")
+			}
+		})
 		
 	}
 	
@@ -80,5 +97,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 	}
 	
+	function redir(dir){
+		window.location.href=dir;
+	}
 	
-	
+});

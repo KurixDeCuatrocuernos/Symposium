@@ -199,4 +199,34 @@
     <servlet-name>GestionInicioSesion</servlet-name>
     <url-pattern>/GestionInicioSesion</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionComentarioInsertar</display-name>
+    <servlet-name>GestionComentarioInsertar</servlet-name>
+    <servlet-class>controlador.GestionComentarioInsertar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionComentarioInsertar</servlet-name>
+    <url-pattern>/GestionComentarioInsertar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionValoraciones</display-name>
+    <servlet-name>GestionValoraciones</servlet-name>
+    <servlet-class>controlador.GestionValoraciones</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionValoraciones</servlet-name>
+    <url-pattern>/GestionValoraciones</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GestionSolicitud</display-name>
+    <servlet-name>GestionSolicitud</servlet-name>
+    <servlet-class>controlador.GestionSolicitud</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionSolicitud</servlet-name>
+    <url-pattern>/GestionSolicitud</url-pattern>
+  </servlet-mapping>
 </web-app>

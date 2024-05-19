@@ -20,14 +20,14 @@ function verificarBusqueda(){
 			} else {
 				//se ha encontrado al menos 1 obra, por lo que afinamos más
 				fetch('GestionObraBuscar?op=2')
-				.then(response => {
-					console.log(response);
-					if (response === true) {
+				.then(response => response.json())
+				.then (resultado => {
+					console.log(resultado);
+					if (resultado === false) {
 						// hay más de una obra
 						recogerObras();
 					} else {
-						// sólo hay una obra
-						
+						// sólo hay una obra 
 						let dir = "http://localhost:8080/Symposium_web/PaginaObra.html"
 						redir(dir);
 					}

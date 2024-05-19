@@ -84,7 +84,7 @@ public class DaoUsuario {
 			ps.setString(2, email);
 			ps.setString(3, Pass);
 			ResultSet rs= ps.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				cell=true;
 			}
 			con.close();
@@ -115,8 +115,9 @@ public class DaoUsuario {
 	
 	public ArrayList <Usuario> listarUsuarios() throws SQLException {
 		ArrayList <Usuario> usuarios=null;
+		System.out.println("Estoy en DaoUsuario --> listarUsuarios()");
 		if (con!=null) {
-			System.out.println("Estoy en DaoUsuario --> listarUsuarios()");
+			
 			String sql = "SELECT ID, Nivel, Nombre, Apellidos, Edad, Email FROM symposium.usuarios;";
 			PreparedStatement ps = con.prepareStatement(sql);
 

@@ -1,5 +1,8 @@
 package modelo;
-	/**
+
+import java.time.LocalDate;
+
+/**
 	 * Esta clase permite a un Estudiante generar una solicitud para ser "ascendido" a Titulado, 
 	 * que un Admin debe confirmar o denegar.  
 	 * @author Alejandro Moreno
@@ -7,10 +10,10 @@ package modelo;
 	 */
 public class SolicitudAscenso {
 	
-	private int IdUsuario=0;
+	private long IdUsuario=0;
 	private String Titulo_estudios="";
 	private String Lugar_estudios="";
-	private int Fecha_titulo=0;
+	private LocalDate Fecha_titulo;
 	private String Titulo_img;
 	/**
 	 * Método constructor vacío.
@@ -27,7 +30,7 @@ public class SolicitudAscenso {
 	 * @param titulo_img String que recoge la ruta de la imagen del título, que sirve al Admin 
 	 * 		  correspondiente para cotejar los datos introducidos.
 	 */
-	public SolicitudAscenso(int idUsuario, String titulo_estudios, String lugar_estudios, int fecha_titulo,
+	public SolicitudAscenso(long idUsuario, String titulo_estudios, String lugar_estudios, LocalDate fecha_titulo,
 			String titulo_img) {
 		super();
 		IdUsuario = idUsuario;
@@ -36,12 +39,27 @@ public class SolicitudAscenso {
 		Fecha_titulo = fecha_titulo;
 		Titulo_img = titulo_img;
 	}
+	
+	/**
+	 * Método Constructor sin el parámetro titulo_img.
+	 * @param idUsuario Int que recoge la id de usuario del solicitante.
+	 * @param titulo_estudios String que recoge el nombre del título de los estudios del solicitante. 
+	 * @param lugar_estudios String que recoge el nombre del lugar donde se expidió el título del solicitante. 
+	 * @param fecha_titulo Int que recoge la fecha de expedición del título del solicitante.
+	 */
 
-	public int getIdUsuario() {
+	public SolicitudAscenso(long idUsuario, String titulo_estudios, String lugar_estudios, LocalDate fecha_titulo) {
+		super();
+		IdUsuario = idUsuario;
+		Titulo_estudios = titulo_estudios;
+		Lugar_estudios = lugar_estudios;
+		Fecha_titulo = fecha_titulo;
+	}
+	public long getIdUsuario() {
 		return IdUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(long idUsuario) {
 		IdUsuario = idUsuario;
 	}
 
@@ -61,11 +79,11 @@ public class SolicitudAscenso {
 		Lugar_estudios = lugar_estudios;
 	}
 
-	public int getFecha_titulo() {
+	public LocalDate getFecha_titulo() {
 		return Fecha_titulo;
 	}
 
-	public void setFecha_titulo(int fecha_titulo) {
+	public void setFecha_titulo(LocalDate fecha_titulo) {
 		Fecha_titulo = fecha_titulo;
 	}
 

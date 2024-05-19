@@ -39,10 +39,17 @@ public class GestionInicioSesion extends HttpServlet {
 		DaoUsuario aux;
 		sesion=request.getSession();
 		boolean conectado=true;
-		String name=request.getParameter("Alias");
-		String correo= request.getParameter("mail");
-		String contra= Cifrado.encriptar(request.getParameter("pass"));
-		String respuesta="";
+		String name="";String correo="";String contra="";String respuesta="";
+		
+		try {
+			name=request.getParameter("Alias");
+			correo= request.getParameter("mail");
+			contra= Cifrado.encriptar(request.getParameter("pass"));
+		} catch (Exception ex) {
+			conectado=false;
+			respuesta="Error a recoger los parámetros de javaScript, revisa el fetch y/o la solicitud";
+			ex.printStackTrace();
+		}
 		
 		if (name=="") {
 			conectado=false;
@@ -75,8 +82,6 @@ public class GestionInicioSesion extends HttpServlet {
 						aux=new DaoUsuario();
 						Usuario U=new Usuario();
 						U=aux.recogerCredenciales(name, correo, contra);
-						//¡¡¡¡¡HAY QUE BORRAR ESTE TO STRING!!!!!:
-						System.out.println(U.toString());
 						//Puede que necesite más atributos, por ahora lo dejo así
 						sesion.setAttribute("ide", U.getId());
 						sesion.setAttribute("Nivel", U.getNivel());
@@ -87,6 +92,9 @@ public class GestionInicioSesion extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+			} else {
+				System.out.println("No se encontró a ese usuario");
+				conectado=false;
 			}
 			
 		}
@@ -102,41 +110,76 @@ public class GestionInicioSesion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		int choice = Integer.parseInt(request.getParameter("op"));
-		
+		boolean cell=false;
 		
 		switch (choice) {
 			case 1: {
 				//verificar Admin
-				boolean cell=false;
+				cell=false;
 				if (sesion==null) {
 					//si sesión es null no se ha iniciado sesión
-					out.print(cell);
+					cell=false;
 				} else {
-					//no funciona si empleo el parseo lago: Integer.parseInt(), por lo que empleo el simple.
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
 					int lvl = (int) sesion.getAttribute("Nivel");
-					if (lvl < 49) {
-						//Si el nivel es menor de 49 no es admin y por tanto no tiene acceso
-						cell=false;
-						out.print(cell);
-					} else {
-						//Si el nivel es mayor de 49 es admin y tiene acceso
+					if (lvl > 49) {
+						//Si el nivel es mayor de 49 es admin.
 						cell=true;
-						out.print(cell);
 					}
 					
 				}
+				out.print(cell);
 				break;
 			}
 			case 2: {
 				//verificar Titulado
+				cell=false;
+				if (sesion==null) {
+					//si sesión es no se ha iniciado sesión, por lo que no modifico
+					cell=false;
+				} else {
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
+					int lvl = (int) sesion.getAttribute("Nivel");
+					if (lvl>29&&lvl<50) {
+						//si lvl es mayor de 29 y menor que 50 es titulado
+						cell=true;
+					}
+				}
+				out.print(cell);
 				break;
 			}
 			case 3: {
 				//verificar Estudiante
+				if (sesion==null) {
+					//si sesión es igual a null no se ha iniciado sesión, por lo que modifico a false.
+					cell=false;
+				} else {
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
+					int lvl = (int) sesion.getAttribute("Nivel");
+					if (lvl>9 && lvl<30) {
+						//si es mayor de 9 y menor que 30 es estudiante.
+						cell=true;
+					}
+				}
+				out.print(cell);
 				break;
 			}
 			case 4: {
 				//verificar Estudiante o Titulado
+				cell=false;
+				if (sesion==null) {
+					//si sesión es no se ha iniciado sesión, por lo que no modifico
+					cell=false;
+				} else {
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
+					int lvl = (int) sesion.getAttribute("Nivel");
+					if (lvl > 9 && lvl < 49) {
+						//Si el nivel es mayor que 9 y menor de 49 o bien es Estudiante o bien es Titulado y, por tanto, tiene acceso
+						cell=true;
+					} 
+						
+				}
+				out.print(cell);
 				break;
 			}
 			case 5: {
@@ -150,8 +193,60 @@ public class GestionInicioSesion extends HttpServlet {
 				}
 				break;
 			}
+			case 6: {
+				//verificar Admin o Titulado
+				cell=false;
+				if (sesion==null) {
+					//si sesión es no se ha iniciado sesión, por lo que no modifico
+					cell=false;
+				} else {
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
+					int lvl = (int) sesion.getAttribute("Nivel");
+					if (lvl > 29) {
+						//Si el nivel es mayor que 29, o bien es Administrador, o bien es Titulado y, por tanto, tiene acceso
+						cell=true;
+					} 
+				}
+				out.print(cell);
+				break;
+			}
+			case 7: {
+				//verificar Admin o Estudiante
+				cell=false;
+				if (sesion==null) {
+					//si sesión es no se ha iniciado sesión, por lo que no modifico
+					cell=false;
+				} else {
+					//no funciona si empleo el parseo largo: Integer.parseInt(), por lo que empleo el simple.
+					int lvl = (int) sesion.getAttribute("Nivel");
+					if ((lvl > 9 && lvl < 30) || lvl<49) {
+						//Si el nivel es mayor que 9 y menor que 30, es Estudiante y si es mayor que 49 es Administrador y, por tanto, tiene acceso
+						cell=true;
+					} 
+				}
+				out.print(cell);
+				break;
+			}
+			case 8: {
+				//este apartado devuelve el nivel del usuario
+				int lvl= 0;
+				if (sesion != null) {
+					lvl=(int) sesion.getAttribute("Nivel");
+				}
+				out.print(lvl);
+				break;
+			}
+			case 9: {
+				//verificar sesión
+				cell=false;
+				if (sesion != null) {
+					cell=true;
+				}
+				out.print(cell);
+				break;
+			}
 			default: {
-				
+				System.out.println("ERROR AL ELEGIR LA OPCIÓN: op, en JavaScript, revisa el Fetch");
 				break;
 			}
 		}

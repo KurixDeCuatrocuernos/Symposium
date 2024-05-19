@@ -7,10 +7,14 @@ window.addEventListener("DOMContentLoaded", function(){
 	let accept = document.getElementById("subm");
 	let cancel= document.getElementById("cancel");
 	
+	revisarSesion();
+	
 	accept.addEventListener("click", function subm(){
 		console.log("verificando información")
 		verificarDatos();	
 	})
+	
+	
 	
 	cancel.addEventListener("click", function cerrar(){
 		console.log("redirijo al inicio");
@@ -19,7 +23,21 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 	})	
 	
+	function revisarSesion() {
+		fetch ('GestionInicioSesion?op=9', {method:'POST'})
+		.then(response => response.json())
+		.then(devolver =>{
+			console.log(devolver);
+			if (devolver == true){
+				alert("Ya has iniciado sesión");
+				let dir="http://localhost:8080/Symposium_web/Index.html";
+				redir(dir);
+			}
+		})
+	}
+	
 	function verificarDatos() {
+		
 		let mensaje="";
 		let verificarTexto="@symposium.com";
 		let ok=true;
