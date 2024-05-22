@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Listar Libros</title>
+<script src="ListarLibro.js"></script>
+<link rel="stylesheet" href="styles/Tablas.css">
+</head>
+<body>
+	<header class="encabezado">
+
+	</header>
+	
+	<section>
+		<div id="botones">
+			<button id="insertarLibro" type="button" class="insertarLibro" name="insertarLibro">Añadir Obra</button>
+			<button class="IrAInicio">Ir a Inicio</button>
+		</div>
+		
+		<div id="listado">
+
+			
+			<!--Esta tabla hay que borrarla-->
+			<table border="1" class="tablaListado"> 
+				<tr><th><strong>ISBN</strong></th><th><strong>Nombre del Autor</strong></th><th><strong>Titulo</strong></th><th><strong>Editorial / Lugar de Publicacion</strong></th><th><strong>Fecha de Publicación</strong></th><th><strong>Tipo</strong></th><th colspan="2">Acciones</th></tr>
+				<tr><td>12345678</td><td>Escritor1</td><td>Libro1</td><td>Editorial1</td><td>1/1/1111</td><td>Libro</td><td><button>Modificar</button></td><td><button>Borrar</button></td></tr>
+				<tr><td>12345678</td><td>Escritor2</td><td>Libro2</td><td>Editorial2</td><td>2/2/2222</td><td>Libro</td><td><button>Modificar</button></td><td><button>Borrar</button></td></tr>
+				<tr><td>12345678</td><td>Escritor3</td><td>Articulo1</td><td>Editorial3</td><td>1/1/1111</td><td>Articulo</td><td><button>Modificar</button></td><td><button>Borrar</button></td></tr>
+				<tr><td>12345678</td><td>Escritor4</td><td>Libro3</td><td>Editorial4</td><td>3/3/3333</td><td>Libro</td><td><button>Modificar</button></td><td><button>Borrar</button></td></tr>
+				<tr><td>12345678</td><td>Escritor5</td><td>Articulo2</td><td>Revista1</td><td>2/2/2222</td><td>Articulo</td><td><button>Modificar</button></td><td><button>Borrar</button></td></tr>
+			</table>
+		</div>
+	</section>
+</body>
+</html>
