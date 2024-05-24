@@ -77,18 +77,15 @@ public class DaoEstudiante {
 	public ArrayList<Long> seleccionarIdes() throws SQLException {
 		System.out.println("Estoy en DaoEstudiante --> seleccionarIdes()");
 		ArrayList <Long> ides = new ArrayList <Long>();
-		int lim=0;
 		if (con != null) {
 			String sql = "SELECT ID FROM symposium.usuarios;";	
 			System.out.println("Se ha establecido la conexión: "+con);
 			PreparedStatement ps= con.prepareStatement(sql);
 			System.out.println("Statement preparado");
 			ResultSet rs = ps.executeQuery();
-			lim=1;
 			System.out.println(rs);
 			while (rs.next()) {
-				ides.add(rs.getLong(1));
-				lim++;
+				ides.add(rs.getLong("ID"));
 			};
 			
 		} else {
@@ -102,10 +99,11 @@ public class DaoEstudiante {
 		System.out.println("Estoy en DaoEstudiante --> generarId()");
 		long id=0; boolean cell=false; int lim=0;
 		ArrayList <Long> ides = seleccionarIdes();
-		System.out.println(ides);
+		System.out.println("las ides recogidas son: "+ides.toString());
 		do {
 				
-			id = (int) Math.floor(Math.random()*10000000000L);	
+			id = (long) Math.floor(Math.random()*10000000000L);
+			System.out.println("se ha generado la id: "+id);
 			cell=true;
 			lim=0;
 			if (id<0 || id>10000000000L) {
@@ -115,8 +113,9 @@ public class DaoEstudiante {
 			} else {
 					
 				do {
-						
+					System.out.println(ides.get(lim)+" vs "+id);	
 					if (id==ides.get(lim)) {
+						
 						cell=false;
 					}
 					lim++;
@@ -126,7 +125,7 @@ public class DaoEstudiante {
 			}
 				
 		} while (cell==false);
-						
+		System.out.println("se va a usar la ide: "+id);
 		return id;
 	}
 	

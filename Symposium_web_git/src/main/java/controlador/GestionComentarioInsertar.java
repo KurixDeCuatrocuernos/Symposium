@@ -153,12 +153,43 @@ public class GestionComentarioInsertar extends HttpServlet {
 					break;
 				}
 				case 3: {//modificar comentario
+					
 					try {
 						idAutor= (long) sesion2.getAttribute("ide");
 						ide= Long.parseLong(request.getParameter("obra")); 
 					} catch (NumberFormatException numEx) {
 						numEx.printStackTrace();
 					}
+					String titl=""; String content=""; int value=0; int year=0; int mes=0; int day=0; int hora=0; int min=0; int sec=0;
+					LocalDateTime fecha= LocalDateTime.now();
+					try {
+						titl=request.getParameter("Titulo");
+						content=request.getParameter("Text");
+						value=Integer.parseInt(request.getParameter("Valor"));
+						year=Integer.parseInt(request.getParameter("Year"));
+						mes=Integer.parseInt(request.getParameter("mes"));
+						day=Integer.parseInt(request.getParameter("dia"));
+						hora=Integer.parseInt(request.getParameter("hora"));
+						min=Integer.parseInt(request.getParameter("min"));
+						sec=Integer.parseInt(request.getParameter("sec"));
+						fecha=LocalDateTime.of(year, mes, day, hora, min, sec);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					/*Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, long idAutorComentario,
+					long iSBN_obra)*/
+					Comentario C=new Comentario(fecha, titl, content, value, idAutor, ide);
+
+					
+					try {
+						DaoComentario aux = new DaoComentario();
+						aux.modificarComentario(C);
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
 					break;
 				}
 				case 4: { //listar comentarios de estudiantes
@@ -239,6 +270,71 @@ public class GestionComentarioInsertar extends HttpServlet {
 					}
 					out.print(result);
 					
+					break;
+				}
+				case 8: { //buscar comentario por id e isbn
+					respuesta=false;
+					try {
+						idAutor= (long) sesion2.getAttribute("ide");
+						ide= Long.parseLong(request.getParameter("obra")); 
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					
+					DaoComentario aux;
+					try {
+						aux = new DaoComentario();
+						respuesta=aux.comprobarComentario(idAutor, ide);
+						//si existe devolverá false, si no existe, true;
+					} catch (ClassNotFoundException | SQLException e) {
+						e.printStackTrace();
+					}
+					System.out.println("AL BUSCAR COMENTARIOS SE DEVUELVE: "+respuesta);
+					out.print(respuesta);
+					break;
+				}
+				case 9: { //listar comentarios Titulados para Index
+					Comentario C= new Comentario();
+					String json="";
+					try {
+						json=C.listarComentariosConObraPorIntervalo(29, 50);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					out.print(json);
+					break;
+				}
+				case 10: {
+					Comentario C= new Comentario();
+					String json="";
+					try {
+						json=C.listarComentariosConObraPorIntervalo(9, 30);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					out.print(json);
+					break;
+				}
+				case 11: { // Listar comentarios Titulados más nuevos
+					Comentario C= new Comentario();
+					String json="";
+					try {
+						json=C.listarComentariosConObraPorIntervaloYTiempo(29, 50);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					out.print(json);
+					break; 
+				}
+				case 12: { // listar comentarios de estudiantes más nuevos
+					Comentario C= new Comentario();
+					String json="";
+					try {
+						json=C.listarComentariosConObraPorIntervaloYTiempo(9, 30);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					out.print(json);
 					break;
 				}
 				default: {

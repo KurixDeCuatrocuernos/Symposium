@@ -1,7 +1,10 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+
+import DAO.DaoComentario;
 
 /**
  * Esta clase permite generar objetos Comentario, aunque necesite del Id del usuario que escribe el comentario y el ISBN de la obra que comenta.
@@ -16,6 +19,9 @@ public class Comentario {
 	private int Valoracion_comentario=0;
 	private long IdAutorComentario=0;
 	private long ISBN_obra=0;
+	private String Alias="";
+	private String TituloObra="";
+	private String AutorObra="";
 	/**
 	 * Método constructor vacío.
 	 */
@@ -46,7 +52,7 @@ public class Comentario {
 	
 	/**
 	 * Método constructor sin el parámetro Valoración_comentario
-	 	 * @param fecha_comentario Int que recoge la fecha (y hora) en que se publica un Comentario.
+	 * @param fecha_comentario Int que recoge la fecha (y hora) en que se publica un Comentario.
 	 * @param titulo String que recoge el titulo que el usuario desee poner al Comentario.
 	 * @param texto String que recoge el contenido del Comentario (su extensión puede ser considerable)
 	 * @param valoracion_comentario Int que recoge la valoración del comentario, se inicializa en 0,
@@ -66,7 +72,28 @@ public class Comentario {
 		ISBN_obra = iSBN_obra;
 	}
 	
+	/**
+	 * Método con todos los valores para listar un comentario
+	 * @param fecha_comentario Int que recoge la fecha (y hora) en que se publica un Comentario.
+	 * @param titulo String que recoge el titulo que el usuario desee poner al Comentario.
+	 * @param texto String que recoge el contenido del Comentario (su extensión puede ser considerable)
+	 * @param valoracion_comentario Int que recoge la valoración del comentario, se inicializa en 0,
+	 * 		  porque depende de la votación que hagan el resto de usuarios.
+	 * @param idAutorComentario Int que recoge la Id del usuario que redacta el comentario.
+	 * @param isbn_obra Int que recoge el ISBN de la obra a la que pertenece ese comentario.
+	 * @param alias nombre del usuario.
+	 */
 	
+	public Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, long idAutorComentario, long iSBN_obra, String alias) {
+		super();
+		Fecha_comentario = fecha_comentario;
+		Titulo = titulo;
+		Texto = texto;
+		Valoracion_obra = valoracion_obra;
+		IdAutorComentario = idAutorComentario;
+		ISBN_obra = iSBN_obra;
+		Alias = alias;
+	}
 	
 	public Comentario(String titulo, String texto, int valoracion_obra, long idAutorComentario, long iSBN_obra) {
 		super();
@@ -75,6 +102,35 @@ public class Comentario {
 		Valoracion_obra = valoracion_obra;
 		IdAutorComentario = idAutorComentario;
 		ISBN_obra = iSBN_obra;
+	}
+	
+	
+	/**
+	 * Metodo constructor para la clase comentario, para cuando es necesario listar toda la información de un comentario (titulo de la obra y del comentador)
+	 * 
+	 * @param fecha_comentario Int que recoge la fecha (y hora) en que se publica un Comentario.
+	 * @param titulo String que recoge el titulo que el usuario desee poner al Comentario.
+	 * @param texto String que recoge el contenido del Comentario (su extensión puede ser considerable)
+	 * @param valoracion_comentario Int que recoge la valoración del comentario, se inicializa en 0,
+	 * 		  porque depende de la votación que hagan el resto de usuarios.
+	 * @param idAutorComentario Int que recoge la Id del usuario que redacta el comentario.
+	 * @param isbn_obra Int que recoge el ISBN de la obra a la que pertenece ese comentario.
+	 * @param alias nombre del usuario.
+	 * @param tituloObra nombre de la obra a la que hace referencia el comentario.
+	 * @param autorObra nombre del autor de la obra.
+	 */
+	public Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, long idAutorComentario, 
+			long iSBN_obra, String alias, String tituloObra, String autorObra) {
+		super();
+		Fecha_comentario = fecha_comentario;
+		Titulo = titulo;
+		Texto = texto;
+		Valoracion_obra = valoracion_obra;
+		IdAutorComentario = idAutorComentario;
+		ISBN_obra = iSBN_obra;
+		Alias = alias;
+		TituloObra = tituloObra;
+		AutorObra=autorObra;
 	}
 	public LocalDateTime getFecha_comentario() {
 		return Fecha_comentario;
@@ -127,10 +183,56 @@ public class Comentario {
 	public long getISBN_obra() {
 		return ISBN_obra;
 	}
+	
 	public void setISBN_obra(long iSBN_obra) {
 		ISBN_obra = iSBN_obra;
 	}
+
+	public String getAlias() {
+		return Alias;
+	}
 	
+	public void setAlias(String alias) {
+		Alias = alias;
+	}
+	
+	public String getTituloObra() {
+		return TituloObra;
+	}
+	
+	public void setTituloObra(String tituloObra) {
+		TituloObra = tituloObra;
+	}
+	
+	public String getAutorObra() {
+		return AutorObra;
+	}
+	
+	public void setAutorObra(String autorObra) {
+		AutorObra = autorObra;
+	}
+	
+	public String listarComentariosConObraPorIntervaloYTiempo(int tipomin, int tipomax) throws ClassNotFoundException {
+		String datos="";
+		try {
+			DaoComentario aux=new DaoComentario();
+			datos=aux.listarJsonPorTiempo(tipomin, tipomax);
+		} catch(SQLException SQLex) {
+			SQLex.printStackTrace();
+		}
+		return datos;
+	}
+	
+	public String listarComentariosConObraPorIntervalo(int tipomin, int tipomax) throws ClassNotFoundException {
+		String datos="";
+		try {
+			DaoComentario aux=new DaoComentario();
+			datos=aux.listarJsonPorTipo(tipomin, tipomax);
+		} catch(SQLException SQLex) {
+			SQLex.printStackTrace();
+		}
+		return datos;
+	}
 	/**
 	 * Método que permite introducir un comentario en la Base de datos, 
 	 * llamando al método ----- del DAO.

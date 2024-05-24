@@ -5,11 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelo.Cifrado;
 import modelo.Estudiante;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+
+import DAO.DaoUsuario;
 
 /**
  * Servlet implementation class GestionEstudianteInsertar
@@ -69,8 +72,31 @@ public class GestionEstudianteInsertar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		String email="";
+		PrintWriter out=response.getWriter();
+		DaoUsuario aux;
+		boolean cell=false;
+		try {
+			email=request.getParameter("mail");
+		} catch (Exception ex) {
+			
+			ex.printStackTrace();
+		}
+		if (email!="") {
+			try {
+				aux=new DaoUsuario();
+				cell=aux.verificarCorreo(email);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}else {
+			System.out.println("El parámetro no se ha podido recoger, error: ");
+		}
+		
+		out.print(cell);
+		
 	}
 
 }

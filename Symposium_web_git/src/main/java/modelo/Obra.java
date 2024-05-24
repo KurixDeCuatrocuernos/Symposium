@@ -1,6 +1,9 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.SQLException;
+
+import DAO.DaoObra;
 
 /**
  * Clase que genera las propiedades comunes para las clases Libro y Artículo.
@@ -46,7 +49,7 @@ public class Obra {
 	}
 	/**
 	 * Método constructor con todas las variables que heredarán las subclases Libro y Artículo.
-	* @param iSBN Int que recoge el núnero de serie (Identificador numérico único) de una obra escrita (sea física o digital).
+	 * @param iSBN Int que recoge el núnero de serie (Identificador numérico único) de una obra escrita (sea física o digital).
 	 * @param abstracto String que recoge el resumen de una Obra (su extension es considerable).
 	 * @param autor String que recoge el nombre y apellidos del autor de la obra.
 	 * @param titulo String que recoge el título de la obra.
@@ -66,6 +69,20 @@ public class Obra {
 		Fecha_publicacion = fecha_publicacion;
 		Valoracion_global = valoracion_global;
 		Valoraciones = valoraciones;
+	}
+	
+	
+	/**
+	 * Método constructor para el buscador de obras
+	 * @param iSBN Int que recoge el núnero de serie (Identificador numérico único) de una obra escrita (sea física o digital).
+	 * @param titulo String que recoge el título de la obra.
+	 * @param tipo String que recoge de qué tipo de obra se trata (Libro o Articulo).
+	 */
+	public Obra(long iSBN, String titulo, String tipo) {
+		super();
+		ISBN = iSBN;
+		Titulo = titulo;
+		Tipo = tipo;
 	}
 	
 	public long getISBN() {
@@ -127,6 +144,22 @@ public class Obra {
 	}
 	public void setValoraciones(int valoraciones) {
 		Valoraciones = valoraciones;
+	}
+	
+	public String buscarObras(String texto){
+		String datos="";
+		DaoObra auo;
+		try {
+			auo = new DaoObra();
+			datos=auo.listarObrasJson(texto);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return datos;
 	}
 	
 }

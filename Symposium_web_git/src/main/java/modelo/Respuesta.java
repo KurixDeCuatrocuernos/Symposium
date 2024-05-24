@@ -4,6 +4,7 @@ package modelo;
  * o respuesta a la que responde.
  * @author Alejandro Moreno
  * @version 1.0
+ * @deprecated
  */
 public class Respuesta {
 	private int Fecha_respuesta=0;

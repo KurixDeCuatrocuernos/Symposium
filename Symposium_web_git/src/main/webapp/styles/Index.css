@@ -63,15 +63,36 @@
     margin-right: 10px;
     border-radius: 15%;
 }
+    /* autocompletar buscador */ 
+#sugerencias{
+	width:auto;
+	border-radius: 20%;
+    background-color: antiquewhite;
+    color: black;
+    z-index: 1000;
+    position:absolute;
+    top: 83px;
+}
+
+#sugerencias > p{
+    background-color: inherit;
+    color: inherit;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
 
 #BuscarObra{
     height:40px;
     background-color: inherit;
     cursor: pointer;
+    
 }
 
 .usuarioZona{
     display: flex;
+    min-width: 315px;
+    min-height: 110px;
     flex-direction: row;
     background-color: inherit;
     align-items: center;
@@ -80,6 +101,8 @@
 
 .textoUser{
     display: flex;
+    min-width: 140px;
+    max-height: 100px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -102,6 +125,8 @@
 }
 
 #InicioSesion{
+	min-width: 135px;
+    max-height: 28px;
     background-color: inherit;
     font-size: 25px;
     color:whitesmoke;
@@ -253,21 +278,23 @@ button{
     width: 80%;
     margin: 2%;
     padding: 10px;
-    background-color: rgb(128, 128, 255);;
-    
+    background-color: rgb(128, 128, 255);
+    display: grid;
 }
 
 .tituloObra{
     font-size: 50px;
     text-align: center;
-    text-justify:distribute;
     background-color: inherit;
+    align-self: center;
+    justify-self: center;
 }
 
 .autorObra{
     font-size: 25px;
     text-align:end;
     background-color: inherit;
+    align-self: flex-end;
 }
 
 .comentarioDeObra{
@@ -293,5 +320,34 @@ button{
     margin: 2%;
     padding: 10px;
     background-color: rgb(128, 128, 255);;
+    display: grid;
+    
+}
+
+.tituloComentario{
+	background-color: inherit;
+	font-size: 30px;
+	justify-self: center;   
+}
+
+.textoComentario{
+    background-color: inherit;
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+	font-size: 20px;
+	text-align: justify;
+}
+
+.autorComentario{
+    background-color: inherit;
+    font-size: large;
+    align-self: flex-end;
+}
+
+.fechaComentario{
+    background-color: inherit;
+    justify-self:right;
+    align-self: flex-end;
 }
 

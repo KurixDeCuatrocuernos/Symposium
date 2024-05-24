@@ -21,9 +21,139 @@ public class DaoComentario {
 	Connection con=null;
 	
 	public DaoComentario() throws SQLException, ClassNotFoundException {
-		
+
 		this.con = DBConexion.conectar();
 		
+	}
+	
+	public ArrayList<Comentario> listarComentariosPorTiempo(int tipomin, int tipomax) throws SQLException {
+		ArrayList<Comentario> comentarios=new ArrayList<Comentario>();
+		System.out.println("Estoy en DaoComentario --> listarComentariosPorTipo()");
+		if (con!=null) {
+			String sql="SELECT c.Titulo as 'TituloC', c.Texto as 'TextoC', c.Fecha_comentario as 'Fecha', u.Nombre as 'Alias', u.Nivel as 'Level', o.Titulo as'TituloO', o.Autor as'AutorO' FROM symposium.comentarios c, symposium.obras o, symposium.usuarios u WHERE c.ISBN=o.ISBN and c.ID=u.ID and u.Nivel>? and u.Nivel<? order by Fecha_comentario";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setInt(1, tipomin);
+			ps.setInt(2, tipomax);
+			ResultSet rs =ps.executeQuery();
+			Comentario c;
+			LocalDateTime fecha=LocalDateTime.now();
+			int lim=0;
+			while(rs.next()&& lim<1) {
+				c=new Comentario();
+				try {
+					fecha= rs.getTimestamp("Fecha").toLocalDateTime();
+				} catch(NumberFormatException NFex) {
+					NFex.printStackTrace();
+				} catch (SQLException exSQL) {
+					exSQL.printStackTrace();
+				}
+				
+				try {
+					c.setAlias(rs.getString("Alias"));
+					c.setTituloObra(rs.getString("TituloO"));
+					c.setAutorObra(rs.getString("AutorO"));
+					c.setTitulo(rs.getString("TituloC"));
+					c.setTexto(rs.getString("TextoC"));
+					c.setFecha_comentario(fecha);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				comentarios.add(c);
+				lim++;
+			}
+			con.close();
+			System.out.println("Se ha cerrado la conexión");
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
+		return comentarios;
+	}
+	
+	public ArrayList<Comentario> listarComentariosPorTipo(int tipomin, int tipomax) throws SQLException{
+		ArrayList<Comentario> comentarios=new ArrayList<Comentario>();
+		System.out.println("Estoy en DaoComentario --> listarComentariosPorTipo()");
+		if (con!=null) {
+			String sql="SELECT c.Titulo as 'TituloC', c.Texto as 'TextoC', c.Fecha_comentario as 'Fecha', u.Nombre as 'Alias', u.Nivel as 'Level', o.Titulo as'TituloO', o.Autor as'AutorO' FROM symposium.comentarios c, symposium.obras o, symposium.usuarios u WHERE c.ISBN=o.ISBN and c.ID=u.ID and u.Nivel>? and u.Nivel<?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setInt(1, tipomin);
+			ps.setInt(2, tipomax);
+			ResultSet rs =ps.executeQuery();
+			Comentario c;
+			LocalDateTime fecha=LocalDateTime.now();
+			while(rs.next()) {
+				c=new Comentario();
+				try {
+					fecha= rs.getTimestamp("Fecha").toLocalDateTime();
+				} catch(NumberFormatException NFex) {
+					NFex.printStackTrace();
+				} catch (SQLException exSQL) {
+					exSQL.printStackTrace();
+				}
+				
+				try {
+					c.setAlias(rs.getString("Alias"));
+					c.setTituloObra(rs.getString("TituloO"));
+					c.setAutorObra(rs.getString("AutorO"));
+					c.setTitulo(rs.getString("TituloC"));
+					c.setTexto(rs.getString("TextoC"));
+					c.setFecha_comentario(fecha);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				comentarios.add(c);
+			}
+			con.close();
+			System.out.println("Se ha cerrado la conexión");
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
+		return comentarios;
+	}
+	
+	public void modificarComentario(Comentario c) throws SQLException {
+		System.out.println("Estoy en DaoComentario --> modificarComentario()");
+		if (con!=null) {
+			Timestamp fechaF = new Timestamp(0);
+			if (c.getFecha_comentario()!=null) {
+				fechaF= Timestamp.valueOf(c.getFecha_comentario());
+				System.out.println(fechaF);
+			}
+			try {
+				String sql="UPDATE symposium.comentarios SET Fecha_comentario=?, Texto=?, Titulo=? WHERE ID=? AND ISBN=?";
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setTimestamp(1,fechaF);
+				ps.setString(2, c.getTexto());
+				ps.setString(3, c.getTitulo());
+				ps.setLong(4, c.getIdAutorComentario());
+				ps.setLong(5, c.getISBN_obra());
+				int rs=ps.executeUpdate();
+				if (rs>1) {
+					System.out.println("Update Comentario ejecutado con exito");
+				}
+			} catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+			
+			try {
+				String sql="UPDATE symposium.valoraciones SET Fecha_valoracion=?, Valor=? WHERE ID=? AND ISBN=?";
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setTimestamp(1,fechaF);
+				ps.setInt(2, c.getValoracion_obra());
+				ps.setLong(3, c.getIdAutorComentario());
+				ps.setLong(4, c.getISBN_obra());
+				int rs=ps.executeUpdate();
+				if (rs>1) {
+					System.out.println("Update Valoracion ejecutado con exito");
+				}
+			} catch (SQLException ex2) {
+				ex2.printStackTrace();
+			}
+			
+			con.close();
+			System.out.println("Se ha cerrado la conexión");
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
 	}
 	
 	public boolean comprobarComentario(long id, long isbn) throws SQLException {
@@ -35,8 +165,7 @@ public class DaoComentario {
 			ps.setLong(1,id);
 			ps.setLong(2, isbn);
 			ResultSet rs= ps.executeQuery();
-			
-			while(rs.next()) {
+			if(rs.next()) {
 					exis=false;
 					System.out.println("Hay un resultado");
 			}
@@ -102,22 +231,37 @@ public class DaoComentario {
 		}
 	}
 	
-	public ArrayList <Comentario> listarComentarios(long id, int tipo) throws SQLException{
+	public void borrarComentariosUser(long ide) throws SQLException {
+		if(!con.isClosed()) {
+			System.out.print("Borrando comentarios del usuario...");
+			String sql="DELETE FROM symposium.comentarios WHERE ID=?";
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setLong(1, ide);
+			int filas=ps.executeUpdate();
+			if(filas>0) {
+				System.out.println("Se han borrado los comentarios con éxito");
+			} else {
+				System.out.println("No había comentarios que borrar");
+			}
+			con.close();
+			System.out.println("Se ha cerrado la conexión");
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
+	}
+	
+	public ArrayList <Comentario> listarComentariosPorIsbn(long id, int tipo) throws SQLException{
 		System.out.println("Estoy en DaoComentario --> listarComentarios()");
-		ArrayList <Comentario> comentarios=null;
+		ArrayList <Comentario> comentarios= new ArrayList<Comentario>();
 		if (con!=null) {
 			System.out.println(tipo);
-			String sql = "SELECT DISTINCT c.ID, c.ISBN, c.Fecha_comentario, c.Texto, c.Titulo, v.valor FROM symposium.comentarios c, symposium.valoraciones v WHERE v.ID=c.ID and c.ID in (SELECT ID FROM symposium.usuarios WHERE Nivel=?)";
+			String sql = "SELECT c.ID, c.ISBN, c.Fecha_comentario, c.Texto, c.Titulo, v.valor, u.nombre FROM symposium.comentarios c, symposium.valoraciones v, symposium.usuarios u WHERE v.ISBN=c.ISBN AND c.ISBN=? AND v.ID=c.ID and c.ID=u.ID and u.ID IN (SELECT ID FROM symposium.usuarios WHERE Nivel=?);";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, tipo);
+			ps.setLong(1, id);
+			ps.setInt(2, tipo);
 			ResultSet result = ps.executeQuery();
 
 			while(result.next()) {
-				
-				if(comentarios == null) {
-					
-					comentarios = new ArrayList<Comentario>();
-				}
 				//comentarios(ID numeric(10) not null,ISBN numeric(13) not null,
 				//			  Fecha_comentario datetime not null,Texto text not null,
 				//			  Titulo varchar(80),
@@ -129,7 +273,7 @@ public class DaoComentario {
 				LocalDateTime fecha= fechaOrigen.toLocalDateTime();
 				System.out.println(fecha);
 				
-				comentarios.add(new Comentario(fecha, result.getString("Titulo"), result.getString("Texto"), result.getInt("valor"), result.getLong("ID"), result.getLong("ISBN")));
+				comentarios.add(new Comentario(fecha, result.getString("Titulo"), result.getString("Texto"), result.getInt("valor"), result.getLong("ID"), result.getLong("ISBN"), result.getString("nombre")));
 			}
 			
 			con.close();
@@ -196,7 +340,7 @@ public class DaoComentario {
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 		
 		try {
-			json = gson.toJson(this.listarComentarios(id, tipo));
+			json = gson.toJson(this.listarComentariosPorIsbn(id, tipo));
 		} catch (InaccessibleObjectException ex) {
 			System.out.println("NO SE HA PODIDO CONVERTIR A Json");
 		}
@@ -204,14 +348,14 @@ public class DaoComentario {
 		
 		if (con!=null) {
 			con.close();
-			System.out.println("Se ha cerrado la conexión");
+			System.out.println("Se ha cerrado la conexión en gson");
 		}
 		
 		return json;
 	
 	}
 	
-public String listarJsonUser(long id) throws SQLException {
+	public String listarJsonUser(long id) throws SQLException {
 		
 		String json = "";	
 		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
@@ -224,11 +368,43 @@ public String listarJsonUser(long id) throws SQLException {
 		
 		if (con!=null) {
 			con.close();
-			System.out.println("Se ha cerrado la conexión");
+			System.out.println("Se ha cerrado la conexión en gson");
 		}
 		
 		return json;
 	
+	}
+	
+	public String listarJsonPorTiempo(int tipomin, int tipomax) throws SQLException {
+		String json = "";	
+		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
+		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
+		try {
+			json = gson.toJson(this.listarComentariosPorTiempo(tipomin, tipomax));
+		} catch (InaccessibleObjectException ex) {
+			System.out.println("NO SE HA PODIDO CONVERTIR A Json");
+		}
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrado la conexión en gson");
+		}
+		return json;
+	}
+	
+	public String listarJsonPorTipo(int tipomin, int tipomax) throws SQLException {
+		String json = "";	
+		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
+		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
+		try {
+			json = gson.toJson(this.listarComentariosPorTipo(tipomin, tipomax));
+		} catch (InaccessibleObjectException ex) {
+			System.out.println("NO SE HA PODIDO CONVERTIR A Json");
+		}
+		if (con!=null) {
+			con.close();
+			System.out.println("Se ha cerrado la conexión en gson");
+		}
+		return json;
 	}
 	
 }

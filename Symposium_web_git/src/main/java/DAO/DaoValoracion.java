@@ -70,6 +70,25 @@ public class DaoValoracion {
 		}
 	}
 	
+	public void borrarValoracionesUser(long ide) throws SQLException {
+		if(!con.isClosed()) {
+			System.out.print("Borrando valoraciones del usuario...");
+			String sql="DELETE FROM symposium.valoraciones WHERE ID=?";
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setLong(1, ide);
+			int filas=ps.executeUpdate();
+			if(filas>0) {
+				System.out.println("Se han borrado las valoraciones con éxito");
+			} else {
+				System.out.println("No había valoraciones que borrar");
+			}
+			con.close();
+			System.out.println("Se ha cerrado la conexión");
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
+	}
+	
 	public int listarValoracionesPorTipo(long isbn, int tipomin, int tipomax) throws SQLException {
 		System.out.println("Estoy en DaoValoraciones --> listarValoracionesPorTipo()");
 		int resultado=0;
@@ -80,7 +99,6 @@ public class DaoValoracion {
 			ps.setInt(2, tipomin);
 			ps.setInt(3, tipomax);
 			ResultSet rs=ps.executeQuery();
-			
 			while (rs.next()) {
 				System.out.println(rs.getInt("result"));
 				resultado=rs.getInt("result");

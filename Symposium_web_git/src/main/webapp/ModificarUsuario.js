@@ -1,5 +1,185 @@
 window.addEventListener("DOMContentLoaded", function() {
 	
+	// Encabezado y navbar
+	let iniS= document.getElementById("InicioSesion");
+	let home= document.getElementById("logo");
+	let dir="";
+	
+	home.addEventListener("click", function home(){
+		dir="http://localhost:8080/Symposium_web/Index.html";
+		redir(dir);
+	});
+
+	iniS.addEventListener("click", function redir1(){
+		dir="http://localhost:8080/Symposium_web/IniciarSesion.html"
+		redir(dir);
+	})
+	
+	recogerUsuario();
+	avisoAdmin();
+	pintarAscensoEs();
+	pintarCierre();
+	
+	let buscador = document.getElementById("buscar");
+	
+	buscador.addEventListener("keyup", function(){
+		pedirSugerencias(buscador.value);
+	})
+	
+	function peticion(inputUser){
+		let solicitud = new XMLHttpRequest();
+		
+		let url = "./GestionObraBuscar?solic="+inputUser;
+		
+		solicitud.addEventListener("load", mostrar);
+		solicitud.open('GET',url, true); // si es true será asíncrono, si es false, no
+		solicitud.send();
+		
+	}
+	
+	function mostrar(event){
+		let datos = event.target;
+		let html="";
+		for(let i=0; i<datos.response.length; i++){
+			html+="<p>"+datos.response[i]+"</p>";
+		}
+		if (datos.status == 200){
+			let sugerencias = JSON.parse(datos.responseText); 
+			let html = "";
+            for (let i = 0; i < sugerencias.length; i++) {
+                html += "<p class=resultadoB id="+sugerencias[i].ISBN+" name="+sugerencias[i].Tipo+">" + sugerencias[i].Titulo + "</p>";
+            }
+			document.getElementById("sugerencias").innerHTML=html;
+		} else {
+			console.log("Fallo: "+datos.status+" en la petición XML");
+		}
+		let vinculos=document.querySelectorAll("p.resultadoB");
+		vinculos.forEach (bot =>{
+			bot.addEventListener("click", function showOpper(){
+				let dir="./PaginaObra.html?viewkey="+bot.getAttribute("id")+"&viewtype="+bot.getAttribute("name");
+				redir(dir);
+			});
+		})
+	}
+	
+	function pedirSugerencias(str){
+		if(str.length==0){
+			document.getElementById("sugerencias").innerHTML="";
+		} else {
+			peticion(str);
+		}
+	}
+	
+	function recogerUsuario(){
+		fetch('GestionInicioSesion?op=8', {method:'POST'})
+		.then(response => response.json())
+		.then(tipo => pintarUsuario(tipo))
+	}
+	
+	function pintarUsuario(tipo){
+		let user="";
+		if(tipo<10){
+			user="ANÓNIMO";
+		} else if (tipo>9 && tipo<30){
+			user="ESTUDIANTE";
+		} else if (tipo>29&&tipo<50){
+			user="TITULADO";
+		}else if (tipo>49){
+			user="ADMINISTRADOR";
+		}
+		let place=document.getElementById("usuarioType");
+		place.innerHTML=user;
+	}
+	
+	function imprimirListados(){
+		
+		let place= document.getElementById("botonesAdmin");
+		let html="<button id=ListaUsers>Listado de Usuarios</button><button id=ListarObras>Listado de Obras</button>";
+		place.innerHTML=html;
+		
+		let lisU= document.getElementById("ListaUsers");
+		lisU.addEventListener("click", function redir2(){
+			dir="http://localhost:8080/Symposium_web/ListarUsuarios.html"
+			redir(dir);
+		})
+		let lisO= document.getElementById("ListarObras");
+		lisO.addEventListener("click", function redir3(){
+			dir="http://localhost:8080/Symposium_web/ListarLibro.html"
+			redir(dir);
+		})
+	}
+	
+	function pintarCierre() {
+		fetch('GestionInicioSesion?op=9', {method:'POST'})
+		.then(response => response.json())
+		.then(devuelto => {
+			if(devuelto === true){
+				html="<button id=CerrarSesion>Cerrar Sesión</button>";
+				
+				document.getElementById("botonCerrarSesion").innerHTML+=html;
+				
+				let cerS= document.getElementById("CerrarSesion");
+				
+				cerS.addEventListener("click", function closeSes(){
+					cerrarSesion();
+				})
+			}
+		})
+		
+	}
+	
+	function cerrarSesion() {
+		let cell = confirm("¿Estás seguro de que quieres cerrar la sesión?");
+		console.log(cell);
+		if (cell == true){
+			fetch('GestionInicioSesion?op=5', {method:'POST'})
+			setTimeout(function(){
+				dir = "http://localhost:8080/Symposium_web/Index.html"; 
+				redir(dir);
+			}, 100);//esperamos 100 milisegundos
+					
+		} else {
+			dir="http://localhost:8080/Symposium_web/Index.html"; 
+			redir(dir);
+		}
+	}
+	
+	function avisoAdmin(){
+		fetch('GestionInicioSesion?op=9', {method:'POST'})
+		.then(response => response.json())
+		.then(sesion => {
+			if (sesion==true){
+				console.log(sesion)
+				fetch('GestionInicioSesion?op=1', {method:'POST'})
+				.then(response => response.json())
+				.then(admin => {
+					if (admin===true){
+						imprimirListados();
+					}
+				})
+			}
+		})
+	}
+	
+	function pintarAscensoEs(){
+		fetch('GestionInicioSesion?op=3', {method:'POST'})
+		.then(response => response.json())
+		.then(sesion => {
+			if (sesion===true){
+				let html="<button id=solicitarAscenso>Solicitar ascenso a Titulado</button>";
+				document.getElementById("botonEstudiante").innerHTML+=html;
+				
+				let ascen = document.getElementById("solicitarAscenso");
+				ascen.addEventListener("click", function solicitud(){
+					let dir="http://localhost:8080/Symposium_web/SolicitudAscenso.html"
+					redir(dir);
+				})	
+			}
+		})
+	}
+
+	// CONTENIDO
+
 	recogerFormulario();
 	accionEstudio();
 	let select = document.getElementById("Nivel");
@@ -26,9 +206,15 @@ window.addEventListener("DOMContentLoaded", function() {
 		
 	});
 
+	let canc=this.document.querySelector("button.abort");
+	canc.addEventListener("click", function cancel(){
+		let dir="http://localhost:8080/Symposium_web/ListarLibro.html";
+		redir(dir);
+	});
+
 	function accionEstudio(){
 		
-		html = "<ul type=none><li><h2 alt=Escuela del estudiante>Estudios del estudiante: </h2><input type=text id=Studies class=Studies name=Studies></li> <li><h2 alt=Escuela donde estudia actualmente o ha estudiado el estudiante>Escuela del estudiante: </h2><input type=text id=School class=School name=School></li></ul>";
+		html = "<form><label><h1 alt=Escuela del estudiante>Estudios del estudiante: </h1><input type=text id=Studies class=Studies name=Studies></label> <label><h1 alt=Escuela donde estudia actualmente o ha estudiado el estudiante>Escuela del estudiante: </h1><input type=text id=School class=School name=School></label></form>";
 		document.getElementById("valoresConcretos").innerHTML = html;
 		console.log("Has seleccionado: Estudiante");
 	
@@ -36,7 +222,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	
 	function accionTitulo() {
 		//falta añadir el archivo, si me da tiempo lo implementaré
-		html="<ul type=none><li><h2 alt=Nombre del título que tiene el usuario titulado (por ejemplo, Licenciado en ciencias sociales y humanidades, o Titulado en Desarrollo de aplicaciones web)>Nombre del Titulo: </h2><input type=text id=Titulo class=Titulo name=Titulo></li><li><h2 alt=Nombre del lugar donde se expidió el título, puede ser un Instituto o una Universidad> Lugar de obtención del titulo: </h2><input type=text id=Lugar class=Lugar name=Lugar></li><li><h2 alt=Año de expedición del título>Año de obtención del Titulo: </h2><input type=int id=Year class=Year name=Year></li></ul>";
+		html="<Form><label><h1 alt=Nombre del título que tiene el usuario titulado (por ejemplo, Licenciado en ciencias sociales y humanidades, o Titulado en Desarrollo de aplicaciones web)>Nombre del Titulo: </h1><input type=text id=Titulo class=Titulo name=Titulo></label><label><h1 alt=Nombre del lugar donde se expidió el título, puede ser un Instituto o una Universidad> Lugar de obtención del titulo: </h1><input type=text id=Lugar class=Lugar name=Lugar></label><label><h1 alt=Año de expedición del título>Año de obtención del Titulo: </h1><input type=int id=Year class=Year name=Year></label></form>";
 		document.getElementById("valoresConcretos").innerHTML = html;
 		console.log("Has seleccionado: Titulado");
 		
@@ -44,7 +230,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	
 	function accionAdmin() {
 		
-		html="<ul type=none><li><h2 alt=Número de teléfono para contactar con el administrador en cuestión>Número de Telefono de contacto: </h2><input type=number id=Telf class=Telf name=Telf></li></ul>";
+		html="<form><label><h1 alt=Número de teléfono para contactar con el administrador en cuestión>Número de Telefono de contacto: </h1><input type=number id=Telf class=Telf name=Telf></label></form>";
 		document.getElementById("valoresConcretos").innerHTML = html;
 		console.log("Has seleccionado: Administrador");
 		

@@ -24,6 +24,61 @@ public class DaoUsuario {
 	
 	}
 	
+	public boolean comprobarBorrado(long id) throws SQLException {
+		System.out.println("Comprobando borrado");
+		boolean borrar=true;
+		String sql="SELECT * FROM symposium.comentarios WHERE ID=?";
+		PreparedStatement ps=con.prepareStatement(sql);
+		ps.setLong(1, id);
+		ResultSet rs=ps.executeQuery();
+		if(rs.next()) {
+			borrar=false;
+		}
+		sql="SELECT * FROM symposium.solicitudes WHERE ID=?";
+		ps=con.prepareStatement(sql);
+		ps.setLong(1, id);
+		rs=ps.executeQuery();
+		if(rs.next()) {
+			borrar=false;
+		}
+		if (borrar==true) {
+			System.out.println("se puede borrar al usuario");
+		} else {
+			System.out.println("para borrar al usuario antes hay que borrar su informión, procedo a borrarla");
+		}
+		return borrar;
+	}
+	
+	public boolean verificarCorreo(String mail) throws SQLException {
+		System.out.println("Estoy en DaoUsuario --> verificarCorreo()");
+		boolean cell=false;
+		ArrayList<String> correos = new ArrayList<String>();
+		if (con!=null) {
+			String sql="SELECT Email FROM symposium.usuarios";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				correos.add(rs.getString(1));
+			}
+			if (correos.size()>1) {
+				cell=true;
+				for(int i=0;i<correos.size();i++) {
+					if(correos.get(i).equals(mail)) {
+						cell=false;
+					}
+				}
+			} else {
+				System.out.println("No se han encontrado correos en la base de datos");
+			}
+			con.close();
+			System.out.println("Se ha cerrado la conexión con la base de datos");
+		} else {
+			System.out.println("ERROR, conecta antes con la base de datos y asegurate de haber introducido correctamente los datos");
+		}
+		
+		return cell;
+	}
+	
 	public Usuario recogerCredenciales(String nombre, String Correo, String Contra) throws SQLException {
 		Usuario U=new Usuario();
 		if(con!= null && nombre!= "" && Correo!= "" && Contra!="") {

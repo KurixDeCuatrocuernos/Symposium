@@ -6,14 +6,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import modelo.Estudiante;
+import modelo.Cifrado;
 import modelo.Usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-import DAO.DaoEstudiante;
+import com.google.gson.Gson;
+
 import DAO.DaoUsuario;
 
 /**
@@ -243,6 +244,21 @@ public class GestionInicioSesion extends HttpServlet {
 					cell=true;
 				}
 				out.print(cell);
+				break;
+			}
+			case 10: { //sacar nombre del usuario 
+				String json="";
+				if (sesion != null) {
+					
+					Gson gson=new Gson();
+					try {
+						json = gson.toJson(sesion.getAttribute("name"));
+					} catch (Exception  ex) {
+						ex.printStackTrace();
+					}
+				}
+				System.out.println("Nombre recogido: "+json);
+				out.print(json);
 				break;
 			}
 			default: {

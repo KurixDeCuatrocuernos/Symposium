@@ -7,11 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelo.Articulo;
 import modelo.Libro;
+import modelo.Obra;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
 
 import DAO.DaoArticulo;
 import DAO.DaoLibro;
@@ -21,8 +24,6 @@ import DAO.DaoLibro;
  */
 public class GestionObraBuscar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static long ID;
-    private static ArrayList <Long> IDES= new ArrayList <Long>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,108 +38,12 @@ public class GestionObraBuscar extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("Estoy en GestionObraBuscar --> doGet()");
-		DaoLibro aux;
-		int choice = Integer.parseInt(request.getParameter("op"));
-		Libro l = new Libro();
-		Articulo a = new Articulo();
 		PrintWriter out=response.getWriter();
-		switch (choice) {
-			case 1: {//recoger busqueda
-				ID=0;
-				IDES.removeAll(IDES);
-				System.out.println("Estoy en doGet() --> Case 1");
-				//aquí se buca la isbn y se genera el objeto libro/articulo que se mostrará en case 2 
-				ArrayList <Long> idesObra = new ArrayList<Long>();
-				String Titulo=request.getParameter("title"); 
-				boolean cell=false;
-				try {
-					aux = new DaoLibro();
-					idesObra=aux.comprobarObraPorNombre(Titulo);
-					System.out.println("ID devuelta= "+ID);
-					System.out.println("Tamaño del Array: "+idesObra.size());
-					if (idesObra.size()<1) {
-						cell=false;
-						System.out.println("No se encontró Id");
-					} else if (idesObra.size() == 1) {
-						cell=true;
-						System.out.println("Se encontró una Id");
-						
-						ID=idesObra.get(0);
-						System.out.println(ID);
-					} else {
-						cell=true;
-						System.out.println("Se encontró más de una Id");
-						IDES = idesObra;
-					}
-					out.print(cell);
-					
-				} catch (ClassNotFoundException | SQLException e) {
-					
-					e.printStackTrace();
-				}
-				
-				break;
-			}
-			case 2: {//recoger numero de resultados
-				System.out.println("Estoy en doGet() --> Case 2");
-				boolean cell=false;
-				System.out.println(ID);
-				if (ID == 0) {
-					// si ID es 0 significa que hay más de una obra 
-					cell=false;
-				} else {
-					cell=true;
-				}
-				out.print(cell);
-				break;
-			}
-			case 3: { // devolver varios resultados
-				System.out.println("Estoy en doGet() --> Case 3");
-				String titulos = "";
-				try {
-					//En este caso inicializo el Dao y luego lo creo para no tener problemas al cerrar y abrir la conexión con la base de datos 
-					aux = new DaoLibro();
-					
-					titulos = aux.listarJsonConcatenado(IDES);
-					
-					System.out.println(titulos);
-				} catch (ClassNotFoundException | SQLException e) {
-					
-					e.printStackTrace();
-				}
-				out.print(titulos);
-				break;
-			}
-			case 4: { //recoger un resultado
-				ID= Long.parseLong(request.getParameter("id"));
-				break;
-			}
-			case 5: {
-				boolean cell=false;
-				long ide= Long.parseLong(request.getParameter("id"));
-				try {
-					aux= new DaoLibro();
-					if (aux.comprobarTipo(ide).charAt(0)=='L'||aux.comprobarTipo(ide).charAt(0)=='l') {
-						cell=true;
-					} else {
-						cell=false;
-					}
-
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				out.print(cell);
-				
-				break;
-			}
-			default: {
-				System.out.println("No se encontró esa opción");
-				break;
-			}
-		}
-		
-		
+		Obra o = new Obra();
+		String petic = request.getParameter("solic");
+		String obras="";
+		obras=o.buscarObras(petic);
+		out.print(obras);
 	}
 
 	/**
@@ -146,33 +51,52 @@ public class GestionObraBuscar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Estoy en GestionObraBuscar --> doPost()");
-		System.out.println("La ID es: "+ID);
-		String devolver="";
+		long idelibro=0;
 		String tipo="";
+		DaoLibro dll;
+		DaoArticulo dla;
+		String resultado="";
 		PrintWriter out = response.getWriter();
+		boolean recoger=true;
 		try {
-			DaoLibro aux = new DaoLibro();
-			DaoArticulo aax = new DaoArticulo();
-			tipo = aux.comprobarTipo(ID);
-			System.out.println("Se ha recogido: "+tipo);
-			try {
-				if (tipo.charAt(0)=='L'||tipo.charAt(0)=='l') {
-				devolver = aux.listarJson(ID);
-				} else {
-					devolver = aax.listarJson(ID);
-				}
-			} catch (StringIndexOutOfBoundsException stringBoundsEx) {
-				devolver="La búsqueda está vacía, vuelve a buscar";
-				stringBoundsEx.printStackTrace();
-			}
-			
-			System.out.println(devolver.toString());
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			idelibro=Long.parseLong(request.getParameter("viewkey"));
+			tipo=request.getParameter("viewtype");
+		} catch (NumberFormatException NumForEx) {
+			recoger=false;
+			NumForEx.printStackTrace();
 		}
-		ID=0;
-		out.print(devolver);
+		if (recoger==true) {
+			if (tipo.charAt(0)=='L'||tipo.charAt(0)=='l') {
+				try {
+					dll=new DaoLibro();
+					resultado=dll.listarJson(idelibro);
+					System.out.println(resultado);
+				} catch (ClassNotFoundException | SQLException e) {
+					recoger=false;
+					System.out.println("Error al listar el libro");
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					dla= new DaoArticulo();
+					resultado=dla.listarJson(idelibro);
+				} catch (ClassNotFoundException | SQLException e) {
+					recoger=false;
+					System.out.println("Error al listar el libro");
+					e.printStackTrace();
+				}
+			}
+		} else {
+			System.out.println("la Información no es válida revisa la url");
+		}
+		if(recoger==true) {
+			out.print(resultado);
+		}else {
+			Gson gson= new Gson();
+			resultado=gson.toJson("emptyness");
+			System.out.println("Modificado a vacío");
+			out.print(resultado);
+		}
 		
 	}
 

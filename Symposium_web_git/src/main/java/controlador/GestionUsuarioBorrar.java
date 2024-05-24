@@ -8,7 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import DAO.DaoComentario;
+import DAO.DaoSolicitud;
 import DAO.DaoUsuario;
+import DAO.DaoValoracion;
 
 /**
  * Servlet implementation class GestionUsuarioBorrar
@@ -40,11 +43,30 @@ public class GestionUsuarioBorrar extends HttpServlet {
 		System.out.println("Estoy en GestionUsuarioBorrar --> doPost()");
 		long ide=Long.parseLong(request.getParameter("id"));
 		System.out.println(ide);
+		boolean borrar=true;
 		try {
 			
 			DaoUsuario u=new DaoUsuario();
-			u.borrarUsuario(ide);
-			
+			borrar=u.comprobarBorrado(ide);
+			if (borrar==true) {
+				u.borrarUsuario(ide);
+			} else {
+				//borramos los comentarios, solicitudes y valoraciones de ese usuario.
+				try {
+					DaoComentario auxc=new DaoComentario();
+					auxc.borrarComentariosUser(ide);
+					DaoValoracion auxv=new DaoValoracion();
+					auxv.borrarValoracionesUser(ide);
+					DaoSolicitud auxs=new DaoSolicitud();
+					auxs.borrarSolicitud(ide);
+				} catch (Exception ex) {
+					borrar=false;
+					ex.printStackTrace();
+				}
+				if (borrar==true) {
+					u.borrarUsuario(ide);
+				}
+			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

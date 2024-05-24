@@ -222,18 +222,24 @@ public class DaoLibro {
 		}
 	}
 	public Libro listar(long id) throws SQLException{
-		Libro u =new Libro();
+		System.out.println("Estoy en DaoLibro --> listar()");
+		Libro u=new Libro();
 		if (con!=null) {
 			String sql = "SELECT * FROM symposium.obras WHERE ISBN="+id;
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
+			if (rs.next()) {
+				u = new Libro(rs.getLong(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5), rs.getDate(6), rs.getString(12), rs.getString(8));
+				System.out.println("libro insertado");
+			} else {
+				System.out.println("No hay objetos con esa id");
+			}
+			
 			/*Libro int iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, String editorial, 
 			 * String categoria*/
 			/*BD: [1] ISBN int(13), [2] Abstracto text, [3] Autor varchar(50), [4] Titulo varchar(50), [5] Tipo varchar(15), 
 			 * [6] Fecha_publicacion date, [7] Bibliografia text, [8] Categoria varchar(50), [9] Lugar_publicacion varchar(50), 
 			 * [10] Volumen_publicacion int(5), [11] Temas text, [12] Editorial varchar(50), [13] Valoracion_global int(3)*/
-			u = new Libro(rs.getLong(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5), rs.getDate(6), rs.getString(12), rs.getString(8));
 				
 			con.close();
 			System.out.println("Se ha cerrado la conexión con la base de datos");
@@ -289,7 +295,7 @@ public class DaoLibro {
 	 */
 	public ArrayList<Libro> listarObrasPorIdes(ArrayList<Long> ides) throws SQLException{
 		ArrayList <Libro> libros = new ArrayList<Libro>();
-		if (con!=null) {
+		if (!con.isClosed()) {
 			String sql = "SELECT ISBN, Titulo, Autor FROM symposium.obras WHERE ISBN=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			for (int i=0; i<ides.size(); i++) {
@@ -303,7 +309,6 @@ public class DaoLibro {
 					libros.add(l);
 				}
 			}
-			System.out.println(libros.toString());
 		} else {
 			System.out.println("Conecta antes al método DBConexion.conectar()");
 		}

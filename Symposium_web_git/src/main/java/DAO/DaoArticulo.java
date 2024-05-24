@@ -82,18 +82,20 @@ public class DaoArticulo {
 	}
 	
 	public Articulo listar(long id) throws SQLException{
-		Articulo u= new Articulo();
+		Articulo a= new Articulo();
 		if (con!=null) {
 			String sql = "SELECT * FROM symposium.obras WHERE ISBN="+id;
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
+			if(rs.next()) {
+				a = new Articulo(rs.getLong(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5), rs.getDate(6), rs.getString(9), rs.getString(10), rs.getString(11));
+				System.out.println("articulo insertado");
+			}
 			/*Articulo(long iSBN, String abstracto, String autor, String titulo, String tipo, Date fecha_publicacion, 
 						String lugarPublicacion, String volumenPublicacion, String temas)*/
 			/*BD: [1] ISBN int(13), [2] Abstracto text, [3] Autor varchar(50), [4] Titulo varchar(50), [5] Tipo varchar(15), 
 			 * [6] Fecha_publicacion date, [7] Bibliografia text, [8] Categoria varchar(50), [9] Lugar_publicacion varchar(50), 
 			 * [10] Volumen_publicacion int(5), [11] Temas text, [12] Editorial varchar(50), [13] Valoracion_global int(3)*/
-			u = new Articulo(rs.getLong(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5), rs.getDate(6), rs.getString(9), rs.getString(10), rs.getString(11));
 			
 			con.close();
 			System.out.println("Se ha cerrado la conexión con la base de datos");
@@ -101,7 +103,7 @@ public class DaoArticulo {
 		}else {
 			
 		}
-		return u;
+		return a;
 	}
 	
 	public String listarJson(long id) throws SQLException {
@@ -112,7 +114,7 @@ public class DaoArticulo {
 		
 		if (con!=null) {
 			con.close();
-			System.out.println("Se ha cerrdo la conexión");
+			System.out.println("Se ha cerrado la conexión");
 		}
 		
 		return json;
