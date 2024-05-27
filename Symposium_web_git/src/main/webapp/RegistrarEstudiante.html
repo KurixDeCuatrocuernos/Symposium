@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registrar Estudiante</title>
+<script src="RegistrarEstudiante.js"></script>
+<link rel="stylesheet" href="styles/Forms.css">
+</head>
+<body>
+	<header class="encabezado">
+		<div class="logo" id="logo">
+			<img src="Icons/IconoWeb.png" alt="Imagen de Symposium" id="logoWeb">
+			<strong><h1> Symposium Web </h1></strong>
+		</div>
+		<div class="barraDeBusqueda">
+			<input type="text" id="buscar" class="buscar" name="buscar" autocomplete="off">
+			<img src="Icons/lupa.png" alt="buscador" id="BuscarObra" class="BuscarObra" name="BuscarObra">
+			<div id="sugerencias" class="sugerencias">
+				<!--Aquí aparecen las sugerencias, hasta 5-->
+			</div>
+		</div>
+		<div class="usuarioZona">
+			<div class="textoUser">
+				<strong id="InicioSesion">Iniciar Sesión</strong>
+				<div id="usuarioType"></div>
+				<div id="botonCerrarSesion">
+					<!--se pinta al iniciar sesión
+					<button>Cerrar Sesión</button>
+					-->
+				</div>
+			</div>
+			
+			<!--<a href="RegistrarEstudiante.html">Registrarse</a>-->
+			<img src="Icons/usuario.png" alt="Icono de Usuario" id="IconoUsuario">
+			<img src="Icons/engranaje.png" alt="Icono de Ajustes" id="IconoAjustes">
+		</div>
+	</header>
+	<nav class="navbar">
+		<div id="botonesAdmin">
+			
+		</div>
+		<div id="botonEstudiante">
+
+		</div>
+	</nav>
+	<section class="contenido">
+		<div class="formulario">
+			<form id="RegistrarUsuario" name="RegistrarUsuario">
+				<strong>Registrar Usuario</strong>
+				<label><h1 alt="">Nombre: </h1><input type="text" id="Name" name="Name"></label>
+				<label><h1>Apellidos: </h1><input type="text" id="Surname" name="Surname"></label>
+				<label><h1>Edad: </h1><input type="text" id="Age" name="Age"></label>
+				<label><h1>Email: </h1><input type="text" id="Mail" name="Mail"></label>
+				<button type="button" id="Comp" class="Comp" name="Comp">Comprobar</button>
+				<label><h1>Contraseña: </h1><input type="password" id="Contra" name="Contra"></label>
+				<label><h1>Repite la Contraseña: </h1><input type="password" id="Repeat" name="Repeat"></label>
+				
+			</form>
+		</div>
+		<div class="botones">
+			<button type="button" id="Aceptar" class="Aceptar" name="Aceptar">Aceptar</button>
+			<button type="button" id="cancel" class="cancel" name="cancel">Cancelar</button>
+		</div>
+		<div class="enlaces">
+			<a href="IniciarSesion.html">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+		</div>
+	</section>
+	<footer class="footer">
+
+	</footer>
+</body>
+</html>

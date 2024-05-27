@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Modificar Usuario</title>
+<script src="ModificarUsuario.js"></script>
+<link rel="stylesheet" href="styles/Forms.css">
+</head>
+<body>
+	<header class="encabezado">
+		<div class="logo" id="logo">
+			<img src="Icons/IconoWeb.png" alt="Imagen de Symposium" id="logoWeb">
+			<strong><h1> Symposium Web </h1></strong>
+		</div>
+		<div class="barraDeBusqueda">
+			<input type="text" id="buscar" class="buscar" name="buscar" autocomplete="off">
+			<img src="Icons/lupa.png" alt="buscador" id="BuscarObra" class="BuscarObra" name="BuscarObra">
+			<div id="sugerencias" class="sugerencias">
+				<!--Aquí aparecen las sugerencias, hasta 5-->
+			</div>
+		</div>
+		<div class="usuarioZona">
+			<div class="textoUser">
+				<strong id="InicioSesion">Iniciar Sesión</strong>
+				<div id="usuarioType"></div>
+				<div id="botonCerrarSesion">
+					<!--se pinta al iniciar sesión
+					<button>Cerrar Sesión</button>
+					-->
+				</div>
+			</div>
+			
+			<!--<a href="RegistrarEstudiante.html">Registrarse</a>-->
+			<img src="Icons/usuario.png" alt="Icono de Usuario" id="IconoUsuario">
+			<img src="Icons/engranaje.png" alt="Icono de Ajustes" id="IconoAjustes">
+		</div>
+	</header>
+	<nav class="navbar">
+		<div id="botonesAdmin">
+			
+		</div>
+		<div id="botonEstudiante">
+
+		</div>
+	</nav>
+	<section class="contenido">
+		<div class="formulario">
+			<form id="UsuarioModificar" >
+				<strong>ModificarLibro</strong>
+				<label><h1 alt="Nombre del usuario">Nombre del Usuario: </h1><input type="text" id="Nombre" class="Nombre" name="Nombre"></label>
+				<label><h1 alt="Apellido del usuario">Apellidos del Usuario: </h1><input type="text" id="Apellidos" class="Apellidos" name="Apellidos"></label>
+				<label><h1 alt="Edad del usuario">Edad del Usuario: </h1><input type="Age" id="Age" name="Age"></label>
+				<label><h1 alt="Correo electrónico del usuario">Email del Usuario: </h1><input type="Email" id="Email" name="Email"></label>
+				<label><h1 alt="Correo electrónico del usuario">Email del Usuario: </h1><input type="Email" id="Email" name="Email"></label>
+				<label>
+				<h1>Nivel: </h1>
+				<select id="Nivel"><option id="Student" value="10" selected> Estudiante </option><option id="Titled" value="30">Titulado </option><option id="Admin" value="50">Administrador </option></select>
+				</label>
+			</form>
+			<form id="valoresConcretos">
+			<!--Este apartado se rellena en función del Nivel elegido-->
+			</form>
+		</div>
+		<div class="botones">
+			<button id="Accept" class="Accept" name="Accept">Aceptar</button>
+			<button id="abort" class="abort" name="abort">Cancelar</button>
+		</div>
+	</section>
+	<footer class="footer">
+
+	</footer>
+</body>
+</html>

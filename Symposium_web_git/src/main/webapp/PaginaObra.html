@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mostrar Obra</title>
+<script src="PaginaObra.js"></script>
+<link rel="stylesheet" href="styles/PaginaObra.css">
+</head>
+<body>
+
+	<header class="encabezado">
+		<div class="logo" id="logo">
+			<img src="Icons/IconoWeb.png" alt="Imagen de Symposium" id="logoWeb">
+			<strong><h1> Symposium Web </h1></strong>
+		</div>
+		<div class="barraDeBusqueda">
+			<input type="text" id="buscar" class="buscar" name="buscar" autocomplete="off">
+			<img src="Icons/lupa.png" alt="buscador" id="BuscarObra" class="BuscarObra" name="BuscarObra">
+			<div id="sugerencias" class="sugerencias">
+				<!--Aquí aparecen las sugerencias, hasta 5-->
+			</div>
+		</div>
+		<div class="usuarioZona">
+			<div class="textoUser">
+				<strong id="InicioSesion">Iniciar Sesión</strong>
+				<div id="usuarioType"></div>
+				<div id="botonCerrarSesion">
+					<!--se pinta al iniciar sesión
+					<button>Cerrar Sesión</button>
+					-->
+				</div>
+			</div>
+			
+			<!--<a href="RegistrarEstudiante.html">Registrarse</a>-->
+			<img src="Icons/usuario.png" alt="Icono de Usuario" id="IconoUsuario">
+			<img src="Icons/engranaje.png" alt="Icono de Ajustes" id="IconoAjustes">
+		</div>
+	</header>
+	<nav class="navbar">
+		<div id="botonesAdmin">
+			
+		</div>
+		<div id="botonEstudiante">
+
+		</div>
+	</nav>
+	<section class="contenido">
+		<div class="Obra">
+			<div class="titulo">
+				<img id="imagenLibro" src="Icons/libro-cerrado.png" alt="Icono de libro tomado de FlatIcons: https://www.flaticon.es/resultados?word=libro">
+				<h1 id="Titl"></h1>
+				<p id="valorGlobal"></p>
+			</div>
+			<div id="DatosObra">
+					<h3>Autor: </h3>
+					<p id="Author"></p>
+					<h3>ISBN/ISSN: </h3>
+					<p id="NumLibro"></p>
+					<h3>Fecha de Publicación: </h3>
+					<p id="Fecha"></p>
+			</div>
+			<div class="sinopsis">
+				<h3>Sinopsis: </h3>
+				<p id="Text"></p>
+			</div>
+			<div id="DatosEspecificos">
+				<p id="categoria"></p>
+			</div>
+		</div>
+		
+		<div id="newComentario">
+			<!-- Esto se rellena en js
+			<form><label><strong>Titulo: </strong><input type=text id=tituloComentario></label><label><strong>Valoracion: </strong><input type=number id=valorComentario></label><label><strong>Comentario: </strong><input type=text id=textoComentario></label><button id=check>Enviar</button></form>
+			-->
+		</div>
+		<div id="comentariosTitulados">
+			<p id="valorTitulados"></p> 
+			<h2>Comentarios Titulados: </h2>
+			
+			<div class="textoT">
+				<!--<img src="Icons/usuario.png" alt="Imagen de Usuario tomada e flaticon: https://www.flaticon.es/resultados?word=libro"><div class="grueso"><strong>El mejor libro que he leído</strong><p >Qué bueno es este libro </p><p id="dateT">1/1/1111</p></div><p class="name">José Juan</p><p class="lvl">Titulado</p><p class="valor">100</p>-->
+			</div>
+		</div>
+		<div id="comentariosEstudiantes">
+			<p id="valorEstudiantes"></p>
+			<h2>Comentarios Estudiantes: </h2>
+
+			<div class="textoE">
+				<!--<img src="Icons/usuario.png" alt="Imagen de Usuario tomada e flaticon: https://www.flaticon.es/resultados?word=libro"><div class="grueso"><strong>El mejor libro que he leído</strong><p>Qué bueno es este libro</p><p id="dateE">1/1/1111</p></div><p class="name">José Juan</p><p class="lvl">Estudiante</p><p class="valor">100</p>-->
+			</div>
+		</div>
+	</section>
+	<footer class="footer">
+		
+	</footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Editar Libro</title>
+<script src="ModificarLibro.js"></script>
+<link rel="stylesheet" href="styles/Forms.css">
+</head>
+<body>
+	<header class="encabezado">
+		<div class="logo" id="logo">
+			<img src="Icons/IconoWeb.png" alt="Imagen de Symposium" id="logoWeb">
+			<strong><h1> Symposium Web </h1></strong>
+		</div>
+		<div class="barraDeBusqueda">
+			<input type="text" id="buscar" class="buscar" name="buscar" autocomplete="off">
+			<img src="Icons/lupa.png" alt="buscador" id="BuscarObra" class="BuscarObra" name="BuscarObra">
+			<div id="sugerencias" class="sugerencias">
+				<!--Aquí aparecen las sugerencias, hasta 5-->
+			</div>
+		</div>
+		<div class="usuarioZona">
+			<div class="textoUser">
+				<strong id="InicioSesion">Iniciar Sesión</strong>
+				<div id="usuarioType"></div>
+				<div id="botonCerrarSesion">
+					<!--se pinta al iniciar sesión
+					<button>Cerrar Sesión</button>
+					-->
+				</div>
+			</div>
+			<!--<a href="RegistrarEstudiante.html">Registrarse</a>-->
+			<img src="Icons/usuario.png" alt="Icono de Usuario" id="IconoUsuario">
+			<img src="Icons/engranaje.png" alt="Icono de Ajustes" id="IconoAjustes">
+			
+		</div>
+	</header>
+	<nav class="navbar">
+		<div id="botonesAdmin">
+			
+		</div>
+		<div id="botonEstudiante">
+
+		</div>
+	</nav>
+	<section class="contenido">
+		<div class="formulario">
+			<form id="LibroModificar" >
+				<strong>ModificarLibro</strong>
+				<label><h1 alt="Numero de serie del libro, suele aparecer debajo del código de barras o dentro del mismo libro. Se trata de un número compuesto de 10 dígitos para libros anteriores a 2007 (por ejemplo: xx-xxxx-xxx-x), 13 dígitos para libros posteriores a 2007 (por ejemplo: xxx-xx-xxxx-xxx-x)  y 8 dígitos para el ISSN (por ejemplo: xxxx-xxxx).">ISBN/ISSN: </h1><input type="number" id="IdLibro" class="IdLibro" name="IdLibro"></label>
+				<button type="button" class="verify" name="verify">Comprobar</button>
+				<label><h1 alt="Nombre del libro, suele aparecer en la portada.">Título del Libro: </h1><input type="text" id="NombreLibro" name="NombreLibro"></label>
+				<label><h1 alt="Nombre del autor original del libro (no del traductor ni del editor).">Nombre del autor del Libro: </h1><input type="text" id="NombreAutor" name="NombreAutor"></label>
+				<label><h1 alt="Resumen que suele aparecer en la contraportada del libro.">Abstracto del Libro: </h1><input type="text" id="Texto" name="Texto"></label>
+				<label><h1 alt="Fecha de publicación original del libro, en caso de ser muy antiguo, sirve la fecha de la primera publicación de la edición, suele aparecer en el idioma original tras la nota 'Publicación Original'.">Fecha de Publicación del Libro: </h1><input type="date" id="FechaLibro" name="FechaLibro"></label>
+				<label><h1 alt="Categoría de la obra, es subjetiva, pero puede ser algo como Epistemología, Ética y/o Metafísica.">Categoría del Libro: </h1><input type="text" id="Categoria" name="Categoria"></label>
+				<label><h1 alt="Empresa que Edita y publica el libro, depende en gran medida del Libro en cuestión, suele tener un icono concreto y a veces aparece en la primera página.">Editorial del Libro: </h1><input type="text" id="Edition" name="Edition"></label>
+				<label><h1 alt="Este apartado modifica el tipo de obra, sólo admite los valores Libro o Artículo">Tipo: </h1><input type="text" name="Type" id="Type"></label>
+			</form>
+		</div>
+		
+		<div class="botones">
+			<button type="button" class="modificar" name="modificar">Aceptar</button>
+			<button type="button" class="abort" name="abort">Cancelar</button>
+		</div>
+	</section>
+	<footer class="footer">
+
+	</footer>
+	
+
+</body>
+</html>
