@@ -8,22 +8,40 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
-import modelo.Admin;
-import modelo.Estudiante;
-import modelo.Libro;
-import modelo.Titulado;
 import modelo.Usuario;
-
+/**
+ * Esta clase sirve para el acceso a la DB de cara al objeto Usuario, ya sea insertarlo, modificarlo, listarlo, o borrarlo.
+ * @see Usuario
+ * @author Alejandro Moreno
+ * @version 1.0
+ */
 public class DaoUsuario {
 	
 	Connection con=null;
-	
+	/**
+	 * Método constructor de la clase, en caso de que el parámetro con sea null iniciará el método conectar() de la clase DBConexion.
+	 * @see DBonexion
+	 * @throws ClassNotFoundException si no encuentra la clase DaoComentario lanzará un error.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public DaoUsuario() throws SQLException, ClassNotFoundException {
 		
-		this.con= DBConexion.conectar();
+		if(this.con==null) {
+			this.con= DBConexion.conectar();
+		} else {
+			System.out.println("Error al conectar, antes conecta con DBConexion");
+		}
+		
 	
 	}
-	
+	/**
+	 * Método que sirve para verificar si se puede borrar a un Usuario o antes hay que borrar sus Comentarios y/o Solicitudes de la DB.
+	 * Para ello, toma un long que recoge la ID del Usuario en cuestión y comprueba si existe algún Comentario o Solicitud con esa ID en la DB.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param id long que recoge la ID del Usuario que se procederá a borrar
+	 * @return devuelve true si no encuentra ni comentarios ni solicitudes con esa ID en la DB y false si encuentra alguno.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public boolean comprobarBorrado(long id) throws SQLException {
 		System.out.println("Comprobando borrado");
 		boolean borrar=true;
@@ -48,7 +66,14 @@ public class DaoUsuario {
 		}
 		return borrar;
 	}
-	
+	/**
+	 * Método que sirve verifica si un Email existe ya en la DB.
+	 * Para ello, toma un String que recoge un correo insertado por el usuario y lo busca en la DB.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param mail String que recoge en correo que se procederá a buscar.
+	 * @return devuelve true si el email no está ya en la DB y false si lo encuentra.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public boolean verificarCorreo(String mail) throws SQLException {
 		System.out.println("Estoy en DaoUsuario --> verificarCorreo()");
 		boolean cell=false;
@@ -78,7 +103,17 @@ public class DaoUsuario {
 		
 		return cell;
 	}
-	
+	/**
+	 * Método que sirve para recoger <em> todos los parámetros de un Usuario</em> a partir de un nombre, email y contraseña.
+	 * Para ello, Toma un String que recoge el nombre del usuario, otro String que recoge el Email y otro String que recoge la encriptación de la contraseña.
+	 * @see Cifrado
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param nombre String que recoge el nombre del Usuario.
+	 * @param Correo String que recoge el correo electrónico del Usuario.
+	 * @param Contra String que recoge la encriptación de la contraseña del Usuario.
+	 * @return devuelve un Usuario que contiene los parámetros que se hayan encontrado en la DB.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public Usuario recogerCredenciales(String nombre, String Correo, String Contra) throws SQLException {
 		Usuario U=new Usuario();
 		if(con!= null && nombre!= "" && Correo!= "" && Contra!="") {
@@ -94,7 +129,7 @@ public class DaoUsuario {
 				U.setNombre(rs.getString("Nombre"));
 				U.setApellidos(rs.getString("Apellidos"));
 				U.setEdad(rs.getInt("Edad"));
-				U.setEmail(rs.getString("Edad"));
+				U.setEmail(rs.getString("Email"));
 				U.setNivel(rs.getInt("Nivel"));
 			}
 			con.close();
@@ -104,7 +139,17 @@ public class DaoUsuario {
 		}
 		return U;
 	}
-	
+	/**
+	 * Método que sirve para recoger el tipo de Usuario a partir de un nombre, correo y contraseña.
+	 * Para ello, toma un String que recoge el nombre, otro que recoge un correo electrónico y otro que recoge la encriptación de una contraseña, 
+	 * y con ellos busca en la DB a un Usuario, si existe.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param nom String que recoge el nombre del Usuario.
+	 * @param mail String que recoge el correo electrónico del Usuario.
+	 * @param pass String que recoge la encriptación de la contraseña del Usuario.
+	 * @return devuelve el tipo de Usuario, es decir, un número que representa si se trata de un Estudiante, Titulado o Admin. 
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public int recogerTipo(String nom, String mail, String pass) throws SQLException {
 		int tipo=0;
 		if (con != null && nom!= "" && mail!= "" && pass!="") {
@@ -127,7 +172,16 @@ public class DaoUsuario {
 		
 		return tipo;
 	}
-	
+	/**
+	 * Método que sirve para comprobar si existe en la DB un Usuario o no.
+	 * Para ello, toma un String que recoge el nombre del Usuario, otro que recoge el correo electrónico y otro que recoge la encriptación de la contraseña que servirán para buscar en la DB.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param nombre String que recoge el nombre del Usuario.
+	 * @param email String que recoge el correo electrónico del Usuario.
+	 * @param Pass String que recoge la encriptación de la contraseña del Usuario.
+	 * @return devuelve un boleano en función de si existe un usuario con esos parámetros, si existe devolverá true, si no, devolverá false.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public boolean comprobarCredenciales(String nombre, String email, String Pass) throws SQLException {
 		boolean cell=false;
 		if (con!=null && nombre!= "" && email!= "" && Pass!="") {
@@ -149,7 +203,13 @@ public class DaoUsuario {
 		}
 		return cell;
 	}
-	
+	/**
+	 * Método que sirve para borrar a un Usuario preexistente en la DB.
+	 * Para ello, toma un long que recoge la Id del usuario que se procederá a borrar.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param Id long que recoge la Id del usuario.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public void borrarUsuario(long Id) throws SQLException {
 		if (con!=null) {
 			System.out.println("Estoy en DaoUsuario --> borrarUsuario()");
@@ -167,7 +227,12 @@ public class DaoUsuario {
 		}
 		
 	}
-	
+	/**
+	 * Método que sirve para listar todos los Usuarios que hay en la DB.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @return devuelve un ArrayList que contiene los Usuarios (que contienen los valores) que se han recogido de la DB.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public ArrayList <Usuario> listarUsuarios() throws SQLException {
 		ArrayList <Usuario> usuarios=null;
 		System.out.println("Estoy en DaoUsuario --> listarUsuarios()");
@@ -184,9 +249,9 @@ public class DaoUsuario {
 					
 					usuarios = new ArrayList<Usuario>();
 				}
-				//Usuarios( ID numeric(10) not null, Nivel int(3) not null, Nombre varchar(50) not null, Apellidos varchar(50) not null,
-				//Usuario(int id, int nivel, String nombre, String apellidos, int edad, String email)
 				
+				// Orden y Tipo de las columnas de la DB:
+				// Usuarios( ID numeric(10) not null, Nivel int(3) not null, Nombre varchar(50) not null, Apellidos varchar(50) not null,
 				
 					usuarios.add(new Usuario(result.getLong("ID"), result.getInt("Nivel"),result.getString("Nombre"), result.getString("Apellidos"), result.getInt("Edad"), result.getString("Email")));
 
@@ -200,7 +265,19 @@ public class DaoUsuario {
 		
 		return usuarios;
 	}
-	
+	/**
+	 * Método que sirve para recoger el nivel de Usuario y llamar a los métodos listar() correspondientes de cada tipo.
+	 * Para ello, toma un long que recoge la Id del Usuario, y con ella busca el nivel del usuario correspondiente y redirige al método listar() de cada clase.
+	 * Adicionalmente, convierte el resultado de cada método listar() a Json.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @see DaoAdmin 
+	 * @see DaoEstudiante
+	 * @see DaoTitulado
+	 * @param id long que recoge la id del Usuario.
+	 * @return devuelve un String que recoge la conversión a Json del resultado de cada método listar
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 * @throws ClassNotFoundException si no encuentra la clase DaoComentario lanzará un error.
+	 */
 	public String listarJson(long id) throws SQLException, ClassNotFoundException {
 		
 		DaoAdmin ad=new DaoAdmin();
@@ -213,11 +290,11 @@ public class DaoUsuario {
 		ResultSet rs = ps.executeQuery();
 		
 		rs.next();
-		
-//		Usuarios(ID numeric(10) not null, Nivel int(3) not null, Nombre varchar(50) not null, Apellidos varchar(50) not null, Edad int(2) not null,
-//				Email varchar(50) not null, Pass_word varchar(50) not null, Estudios varchar(50), Escuela varchar(50), Telefono int(9),
-//				Titulo_estudios varchar(50), Lugar_titulo varchar(50), Fecha_titulo date, Titulo_img varchar(50));
-//		Usuario(int id, int nivel, String nombre, String apellidos, int edad, String email)
+		// Orden y Tipo de la DB:
+		// Usuarios(ID numeric(10) not null, Nivel int(3) not null, Nombre varchar(50) not null, Apellidos varchar(50) not null, Edad int(2) not null,
+		//			Email varchar(50) not null, Pass_word varchar(50) not null, Estudios varchar(50), Escuela varchar(50), Telefono int(9),
+		//			Titulo_estudios varchar(50), Lugar_titulo varchar(50), Fecha_titulo date, Titulo_img varchar(50));
+
 		if (rs.getInt("Nivel")>49) {
 			
 			json = gson.toJson(ad.listar(id));
@@ -242,7 +319,12 @@ public class DaoUsuario {
 		return json;
 	
 	}
-	
+	/**
+	 * Método que sirve para convertir a Json el resultado del método listarUsuario() de la clase DaoUsuario.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @return devuelve un String que recoge la conversión a Json del resultado del método listarUsuario().
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public String listarUsuariosJson() throws SQLException {
 		System.out.println("Estoy en DaoUsuario --> listarUsuariosJson()");
 

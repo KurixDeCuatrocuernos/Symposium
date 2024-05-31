@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -15,17 +14,41 @@ import com.google.gson.GsonBuilder;
 
 import modelo.Comentario;
 import modelo.LocalDateTimeAdapter;
-
+/**
+ * Esta clase sirve para el acceso a la DB de cara al objeto Comentario, ya sea insertarlo, modificarlo, listarlo, o borrarlo.
+ * @see Comentario
+ * @author Alejandro Moreno
+ * @version 1.0
+ */
 public class DaoComentario {
 	
 	Connection con=null;
 	
+	/**
+	 * Método constructor de la clase, en caso de que el parámetro con sea null iniciará el método conectar() de la clase DBConexion.
+	 * @see DBonexion
+	 * @throws ClassNotFoundException si no encuentra la clase DaoComentario lanzará un error.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error. 
+	 */
 	public DaoComentario() throws SQLException, ClassNotFoundException {
-
-		this.con = DBConexion.conectar();
+		
+		if (this.con==null) {
+			this.con = DBConexion.conectar();
+		} else {
+			System.out.println("Ya estabas conectado");
+		}
 		
 	}
 	
+	/**
+	 * Método que sirve para listar los comentarios insertados <em>más nuevos</em> de la DB. 
+	 * Para ello recoge un int máximo y otro mínimo que sirve para filtrar el tipo de usuario.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param tipomin int que recoge el valor minimo que se filtrará. 
+	 * @param tipomax int que recoge el valor máximo que se filtrará. 
+	 * @return devuelve un ArrayList que contiene los comentarios (que a su vez contienen los valores) que se mostrarán.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error. 
+	 */
 	public ArrayList<Comentario> listarComentariosPorTiempo(int tipomin, int tipomax) throws SQLException {
 		ArrayList<Comentario> comentarios=new ArrayList<Comentario>();
 		System.out.println("Estoy en DaoComentario --> listarComentariosPorTipo()");
@@ -69,6 +92,14 @@ public class DaoComentario {
 		return comentarios;
 	}
 	
+	/**
+	 * Método que sirve para mostrar los comentarios que haya en la DB filtrando el tipo de Usuario que los ha creado a partir de un valor mínimo y máximo.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param tipomin int que recoge el valor minimo que se filtrará. 
+	 * @param tipomax int que recoge el valor máximo que se filtrará. 
+	 * @return devuelve un ArrayList que contiene los comentarios (que a su vez contienen los valores) que se mostrarán.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public ArrayList<Comentario> listarComentariosPorTipo(int tipomin, int tipomax) throws SQLException{
 		ArrayList<Comentario> comentarios=new ArrayList<Comentario>();
 		System.out.println("Estoy en DaoComentario --> listarComentariosPorTipo()");
@@ -110,6 +141,13 @@ public class DaoComentario {
 		return comentarios;
 	}
 	
+	/**
+	 * Método que sirve para modificar un comentario preexistente en la DB. 
+	 * Para ello toma un objeto Comentario que contiene los valores que se modificarán.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param c Comentario que recoge los valores que se modificarán.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public void modificarComentario(Comentario c) throws SQLException {
 		System.out.println("Estoy en DaoComentario --> modificarComentario()");
 		if (con!=null) {
@@ -156,6 +194,14 @@ public class DaoComentario {
 		}
 	}
 	
+	/**
+	 * Método que comprueba si existe o no un comentario, es decir, si da la convergencia de la Id de un usuario y el ISBN/ISSN de una Obra en la DB.
+	 * El proceso se realiza mediante un PreparedStatement. 
+	 * @param id long que recoge la Id de un Usuario que se usará para buscar el comentario.
+	 * @param isbn long que recoge el ISBN/ISSN de una Obra, que se usará para buscar el comentario
+	 * @return devuelve un boleano en función de si se encuentra o no el comentario en la DB, si lo encuentra devolverá false, si no lo encuentra, devolverá true. 
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public boolean comprobarComentario(long id, long isbn) throws SQLException {
 		System.out.println("Comprobando Comentario...");
 		boolean exis =true;
@@ -183,6 +229,13 @@ public class DaoComentario {
 		return exis;
 	}
 	
+	/**
+	 * Método que sirve para insertar un comentario nuevo en la DB. 
+	 * Para ello toma un objeto Comentario que contiene los valores que se insertarán en la DB.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @param C Comentario que contiene los valores que se insertarán.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public void insertarComentario(Comentario C) throws SQLException {
 		
 		System.out.println("Estoy en DaoComentario --> insertarComentario()");
@@ -202,7 +255,7 @@ public class DaoComentario {
 			ps.setString(5, C.getTitulo());
 			
 			int filas = ps.executeUpdate();
-			System.out.println("Se ha ejecutado el Statement para comentario correctamente");
+			System.out.println("Se ha ejecutado el Statement para comentario correctamente: "+filas);
 			con.close();
 			System.out.println("Se ha cerrado la conexión");
 			
@@ -211,8 +264,14 @@ public class DaoComentario {
 		}
 	}
 	
-	
-	
+	/**
+	 * Método que sirve para borrar un Comentario preexistente en la DB. 
+	 * Para ello toma un long que recoge la Id del Usuario que redacta el Comentario y un long que recoge la ISBN/ISSN de la Obra que copmenta el Comentario.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @param id long que recoge la id del Usuario que ha redactado el Comentario que se procederá a borrar.
+	 * @param isbn long que recoge la ISBN/ISSN de la Obra que comenta el Comentario que sprocederá a borrar.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public void borrarComentario(long id, long isbn) throws SQLException {
 		System.out.println("Estoy en DaoComentario --> borrarComentario()");
 		if (con!= null) {
@@ -222,7 +281,7 @@ public class DaoComentario {
 			ps.setLong(1, id);
 			ps.setLong(2, isbn);
 			int filas= ps.executeUpdate();
-			System.out.println("comentario borrado");
+			System.out.println("comentario borrado: "+filas);
 			
 			con.close();
 			System.out.println("Se ha cerrado la conexión");
@@ -231,6 +290,13 @@ public class DaoComentario {
 		}
 	}
 	
+	/**
+	 * Método que sirve para borrar todos los copmentarios de un mismo usuario de la DB. 
+	 * Para ello, toma un long que recoge la id del usuario cuyos comentarios se eliminarán.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @param ide long que recoge la Id del Usuario cuyos comentarios se procederá a borrar.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public void borrarComentariosUser(long ide) throws SQLException {
 		if(!con.isClosed()) {
 			System.out.print("Borrando comentarios del usuario...");
@@ -250,6 +316,15 @@ public class DaoComentario {
 		}
 	}
 	
+	/**
+	 * Método que sirve para listar los Comentarios que pertenecen a una misma Obra y tipo de Usuario. 
+	 * Para ello, toma un long que recoge la ISBN/ISSN de una Obra y un long que recoge el nivel de los Usuarios que tengan un comentario de dicha obra.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @param id long que recoge la ISBN/ISSN de la Obra cuyos comentarios se listarán.
+	 * @param tipo int que recoge el nivel de Usuario, cuyos comentarios se listarán
+	 * @return devuelve un ArrayList que contiene los comentarios (que a su vez contienen los valores) que se mostrarán.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public ArrayList <Comentario> listarComentariosPorIsbn(long id, int tipo) throws SQLException{
 		System.out.println("Estoy en DaoComentario --> listarComentarios()");
 		ArrayList <Comentario> comentarios= new ArrayList<Comentario>();
@@ -262,12 +337,11 @@ public class DaoComentario {
 			ResultSet result = ps.executeQuery();
 
 			while(result.next()) {
-				//comentarios(ID numeric(10) not null,ISBN numeric(13) not null,
-				//			  Fecha_comentario datetime not null,Texto text not null,
-				//			  Titulo varchar(80),
-				//Comentario(LocalDateTime fecha_comentario, String titulo, 
-				//           String texto, int valoracion_obra, long idAutorComentario,
-				//			 long iSBN_obra)
+				
+				// Orden y tipo de las  Columnas en DB
+				// comentarios(ID numeric(10) not null,ISBN numeric(13) not null,
+				//			   Fecha_comentario datetime not null,Texto text not null,
+				//			   Titulo varchar(80),
 				
 				Timestamp fechaOrigen = result.getTimestamp("Fecha_comentario");
 				LocalDateTime fecha= fechaOrigen.toLocalDateTime();
@@ -285,6 +359,14 @@ public class DaoComentario {
 		return comentarios;
 	}
 	
+	/**
+	 * Método que sirve para listar todos los comentarios de un mismo Usuario.
+	 * Para ello toma un long que recoge la Id del Usuario cuyos comentarios se listarán.
+	 * El proceso se realiza mediante un PreparedStatement.
+	 * @param id long que recoge la Id que se usará para buscar los comentarios en la DB.
+	 * @return devuelve un ArrayList que contiene los comentarios que se hayan encontrado.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public ArrayList <Comentario> listarComentariosUser(long id) throws SQLException{
 		System.out.println("Estoy en DaoComentario --> listarComentariosUser()");
 		ArrayList <Comentario> comentarios=null;
@@ -300,14 +382,13 @@ public class DaoComentario {
 				if(comentarios == null) {
 					
 					comentarios = new ArrayList<Comentario>();
-				}
-				//comentarios(ID numeric(10) not null,ISBN numeric(13) not null,
-				//			  Fecha_comentario datetime not null,Texto text not null,
-				//			  Titulo varchar(80),
-				//Comentario(LocalDateTime fecha_comentario, String titulo, 
-				//           String texto, int valoracion_obra, long idAutorComentario,
-				//			 long iSBN_obra)
+				} 
 				
+				// Orden y tipo de las  Columnas en DB
+				// comentarios(ID numeric(10) not null,ISBN numeric(13) not null,
+				//			   Fecha_comentario datetime not null,Texto text not null,
+				//			   Titulo varchar(80),
+		
 				Timestamp fechaOrigen = result.getTimestamp("Fecha_comentario");
 				LocalDateTime fecha = fechaOrigen.toLocalDateTime();
 				System.out.println(fecha);
@@ -333,10 +414,18 @@ public class DaoComentario {
 		return comentarios;
 	}
 	
+	/**
+	 * Método que sirve para convertir el resultado que devuelve el método listarComentariosPorISBN() de la clase DaoComentario a Json.
+	 * Para ello, toma un long que recoge la ISBN/ISSN de una Obra y un long que recoge el nivel de Usuario que se usarán en el método listarComentariosPorIsbn().
+	 * @param id long que recoge la ISBN/ISSN que se mandará al método: listarComentariosPorIsbn() de la clase DaoComentario.
+	 * @param tipo int que recoge el nivel de Usuario que se mandará al método: listarComentariosPorIsbn() de la clase DaoComentario.
+	 * @return devuelve un String que recoge la conversión a Json del resultado del método: listarComentariosPorIsbn() de la clase DaoComentario.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public String listarJson(long id, int tipo) throws SQLException {
 		
 		String json = "";	
-		
+		// Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo (básicamente, esto le permite a gson leer los parámetros de dicha clase).
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 		
 		try {
@@ -355,10 +444,17 @@ public class DaoComentario {
 	
 	}
 	
+	/**
+	 * Método que sirve para convertir el resultado del método: listarComentariosUser() de la clase DaoComentario, a Json.
+	 * Para ello, toma un long que recoge la Id del usuario que se mandará al método listarComentariosUser(). 
+	 * @param id long que recoge la Id de Usuario que se mandará al método: listarComentariosUser() de la clase DaoComentario.
+	 * @return devuelve un String que recoge la conversión del resultado del método: listarComentariosUser() de la clase DaoComentario.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public String listarJsonUser(long id) throws SQLException {
 		
 		String json = "";	
-		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
+		// Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo (básicamente, esto le permite a gson leer los parámetros de dicha clase).
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 		try {
 			json = gson.toJson(this.listarComentariosUser(id));
@@ -375,9 +471,17 @@ public class DaoComentario {
 	
 	}
 	
+	/**
+	 * Método que sirve para convertir el resultado del método: listarComentariosPorTiempo() de la clase DaoComentario, a Json.
+	 * Para ello, toma un int que recoge el nivel mínimo y otro int con el nivel máximo de usuario que mandará al método: listarComentariosPorTiempo().
+	 * @param tipomin int que recoge el nivel mínimo que se usará en el método: listarComentariosPorTiempo().
+	 * @param tipomax int que recoge el nivel máximo que se usará en el método: listarComentariosPorTiempo().
+	 * @return devuelve un String que recoge la conversión a Json del resultado que devuelve el método: listarComentariosPorTiempo().
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public String listarJsonPorTiempo(int tipomin, int tipomax) throws SQLException {
 		String json = "";	
-		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
+		// Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo (básicamente, esto le permite a gson leer los parámetros de dicha clase).
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 		try {
 			json = gson.toJson(this.listarComentariosPorTiempo(tipomin, tipomax));
@@ -391,9 +495,17 @@ public class DaoComentario {
 		return json;
 	}
 	
+	/**
+	 * Método que sirve para convertir el resultado del método: listarComentariosPorTipo() de la clase DaoComentario, a Json.
+	 * Para ello, toma un int que recoge el nivel mínimo y otro int con el nivel máximo de usuario que mandará al método: listarComentariosPorTipo().
+	 * @param tipomin int que recoge el nivel mínimo que se usará en el método: listarComentariosPorTipo().
+	 * @param tipomax int que recoge el nivel máximo que se usará en el método: listarComentariosPorTipo().
+	 * @return devuelve un String que recoge la conversión a Json del resultado que devuelve el método: listarComentariosPorTipo().
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error.
+	 */
 	public String listarJsonPorTipo(int tipomin, int tipomax) throws SQLException {
 		String json = "";	
-		//Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo
+		// Inicializo el Gson con el Adaptador para la clase LocalDateTime que está en el modelo (básicamente, esto le permite a gson leer los parámetros de dicha clase).
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 		try {
 			json = gson.toJson(this.listarComentariosPorTipo(tipomin, tipomax));

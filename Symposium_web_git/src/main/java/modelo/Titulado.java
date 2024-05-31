@@ -16,21 +16,25 @@ public class Titulado extends Usuario{
 	private String Lugar_titulo="";
 	private int Fecha_titulo;
 	private String Titulo_img="";
+	
 	/**
 	 * Método constructor vacío.
 	 */
 	public Titulado() {
 		super();
 	}
+	
 	/**
 	 * Método constructor de la clase Titulado, a excepción de la variable imagen.
-	 * @param id int que recoge un numero entero único (autoincremental). 
+	 * @param id long que recoge un número entero único que se genera en el método generarId() de la clase DaoEstudiante.
+	 * @see DaoEstudiante
 	 * @param nivel int que recoge el nivel de privilegios del Usuario (servirá de filtro para más cosas).
 	 * @param nombre String que recoge el nombre del Usuario.
 	 * @param apellidos String que recoge los apellidos del Usuario.
 	 * @param edad int que recoge la edad del Usuario.
 	 * @param email String que recoge el correo del Usuario en la aplicacion.
-	 * @param password String que recoge la serialización de la contraseña del Usuario, aunque no debería estar así.
+	 * @param password String que recoge la encriptación de la contraseña del Usuario, mediante el método encriptar() de la clase Cifrado.
+	 * @see Cifrado
 	 * @param tituloEstudios String que recoge el tipo de título que tiene un Usuario Titulado, v.g. Licenciado en Bellas Artes.
 	 * @param lugarTitulo String que recoge lugar donde se expidió el titulo del Usuario Titulado.
 	 * @param fechaTitulo int que recoge la fecha de expedición del título del Usuario Titulado.
@@ -41,15 +45,18 @@ public class Titulado extends Usuario{
 		this.Lugar_titulo=lugarTitulo;
 		this.Fecha_titulo=fechaTitulo;
 	}
+	
 	/**
 	 * Método constructor de la clase 
-	 * @param id int que recoge un numero entero único (autoincremental). 
+	 * @param id long que recoge un número entero único que se genera en el método generarId() de la clase DaoEstudiante.
+	 * @see DaoEstudiante 
 	 * @param nivel int que recoge el nivel de privilegios del Usuario (servirá de filtro para más cosas).
 	 * @param nombre String que recoge el nombre del Usuario.
 	 * @param apellidos String que recoge los apellidos del Usuario.
 	 * @param edad int que recoge la edad del Usuario.
 	 * @param email String que recoge el correo del Usuario en la aplicacion.
-	 * @param password String que recoge la serialización de la contraseña del Usuario, aunque no debería estar así.
+	 * @param password String que recoge la encriptación de la contraseña del Usuario, mediante el método encriptar() de la clase Cifrado.
+	 * @see Cifrado
 	 * @param tituloEstudios String que recoge el tipo de título que tiene un Usuario Titulado, v.g. Licenciado en Bellas Artes.
 	 * @param lugarTitulo String que recoge lugar donde se expidió el titulo del Usuario Titulado.
 	 * @param fechaTitulo int que recoge la fecha de expedición del título del Usuario Titulado.
@@ -62,96 +69,80 @@ public class Titulado extends Usuario{
 		this.Fecha_titulo=fechaTitulo;
 		this.Titulo_img=tituloImg;
 	}
-
+	
+	/**
+	 * Método Get del parámetro Titulo_estudios, como todo método Get, devuelve el valor del parámetro en cuestión. 
+	 * @return devuelve el valor del parámetro Titulo_estudios.
+	 */
 	public String getTitulo_estudios() {
 		return Titulo_estudios;
 	}
-
+	
+	/**
+	 * Método Set del parámetro Titulo_estudios, como todo método Set, establece el valor del parámetro en cuestión.
+	 * @param titulo_estudios String cuyo valor se establecerá sobre Titulo_estudios.
+	 */
 	public void setTitulo_estudios(String titulo_estudios) {
 		Titulo_estudios = titulo_estudios;
 	}
-
+	
+	/**
+	 * @see getTitulo_estudios()
+	 */
 	public String getLugar_titulo() {
 		return Lugar_titulo;
 	}
-
+	
+	/**
+	 * @see setTitulo_Estudios()
+	 */
 	public void setLugar_titulo(String lugar_titulo) {
 		Lugar_titulo = lugar_titulo;
 	}
-
+	
+	/**
+	 * @see getTitulo_estudios()
+	 */
 	public int getFecha_titulo() {
 		return Fecha_titulo;
 	}
-
+	
+	/**
+	 * @see setTitulo_estudios()
+	 */
 	public void setFecha_titulo(int fecha_titulo) {
 		Fecha_titulo = fecha_titulo;
 	}
-
+	
+	/**
+	 * @see getTitulo_estudios()
+	 */
 	public String getTitulo_img() {
 		return Titulo_img;
 	}
-
+	
+	/**
+	 * @see setTitulo_estudios()
+	 */
 	public void setTitulo_img(String titulo_img) {
 		Titulo_img = titulo_img;
 	}
 	
+	/**
+	 * Método que permite Modificar los valores de los parámetros de un titulado, 
+	 * para ello llama al métoo modificarTitulado() de la clase DaoTitulado y le pasará un objeto Titulado con los valores y un long con la ID del titulado a modificar que se usará para buscarlo  
+	 * @param T Titulado que contiene los valores que se modificarán.
+	 * @param ID long que servirá para buscar al titulado que se modificará. 
+	 * @throws ClassNotFoundException si no encuentra la clase DaoComentario lanzará un error.
+	 * @throws SQLException si no puede conectar con la base de datos SQL o si hay un error de comunicación lanzará un error. 
+	 */
 	public void modificarTitulado(Titulado T, long ID) throws ClassNotFoundException, SQLException {
 		
 		DaoTitulado aux = new DaoTitulado();
 		aux.modificarTitulado(T, ID);
 		
 	}
-	/**
-	 * Método que permite al Titulado eliminar su cuenta (es decir, 
-	 * los datos almacenados en la base de datos)
-	 * @return baja Boleano que recoge si la eliminación de los datos se ha realizado con éxito,
-	 * 		   si así ha sido devolverá true, si no, devolverá false.
-	 */
-	public boolean solicitarBaja() {
-		boolean baja=false;
-		
-		return baja;
-	}
-	/**
-	 * Método que permite al Titulado cerrar sesión, es decir, no aparecer con su nombre de usuario ni poder hacer lo correspondiente.
-	 * @return close Boleano que recoge si el cierre de sesión se ha efectuado o no, en caso de que se haya efectuado el cierre, devolverá true, 
-	 * 		   en caso contrario devolverá false.
-	 */
-	public boolean cerrarSesion() {
-		boolean close=false;
-		
-		return close;
-	}
-	/**
-	 * Método que genera un comentario en la obra correspondiente llamando al método constructor de la clase Comentario.
-	 * @return coment Boleano que recoge si la creación del comentario se ha realizado con éxito, 
-	 * 		   si así ha sido, devolverá true, en caso contrario devolverá false.
-	 */
-	public boolean comentar() {
-		boolean coment=false;
-		
-		return coment;
-	}
-	/**
-	 * Método que permite modificar un comentario ya existente y que ha sido generado por el mismo Titulado que lo modifica. 
-	 * @return modif Boleano que recoge si la modificacion del comentario se ha realizado con éxito, si así ha sido devolverá true, 
-	 * 		   en caso de que no se haya podido modificar, sea por la razón que fuere, devolverá false.
-	 */
-	public boolean modificarComentario() {
-		boolean modif=false;
-		
-		return modif;
-	}
-	/**
-	 * Método que genera una respuesta, a un comentario o respuesta preexistente, llamando al método constructor de la clase Respuesta.
-	 * @return answer Boleano que recoge si la creacion de la respuesta se ha realizado con éxito, si así ha sido, devolverá true, 
-	 * 		   en caso contrario devolverá false.
-	 */
-	public boolean responder() {
-		boolean answer=false;
-		
-		return answer;
-	}
+	
 	/**
 	 * Método toString() que muestra por pantalla todos los valores del objeto Titulado correspondiente, en caso de ser necesario.
 	 */

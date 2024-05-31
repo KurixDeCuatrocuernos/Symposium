@@ -3,8 +3,9 @@ package modelo;
 import java.time.LocalDate;
 
 /**
-	 * Esta clase permite a un Estudiante generar una solicitud para ser "ascendido" a Titulado, 
+	 * Esta clase permite generar una solicitud que recogerá los valores (parámetros) necesarios para que un estudiante pueda ser ascendido a Titulado,
 	 * que un Admin debe confirmar o denegar.  
+	 * @see Titulado
 	 * @author Alejandro Moreno
 	 * @version 1.0
 	 */
@@ -23,10 +24,10 @@ public class SolicitudAscenso {
 	}
 	/**
 	 * Método constructor con todos los atributos.
-	 * @param idUsuario Int que recoge la id de usuario del solicitante.
+	 * @param idUsuario long que recoge la id de usuario del solicitante.
 	 * @param titulo_estudios String que recoge el nombre del título de los estudios del solicitante. 
 	 * @param lugar_estudios String que recoge el nombre del lugar donde se expidió el título del solicitante. 
-	 * @param fecha_titulo Int que recoge la fecha de expedición del título del solicitante.
+	 * @param fecha_titulo LocalDate que recoge la fecha de expedición del título del solicitante.
 	 * @param titulo_img String que recoge la ruta de la imagen del título, que sirve al Admin 
 	 * 		  correspondiente para cotejar los datos introducidos.
 	 */
@@ -42,10 +43,10 @@ public class SolicitudAscenso {
 	
 	/**
 	 * Método Constructor sin el parámetro titulo_img.
-	 * @param idUsuario Int que recoge la id de usuario del solicitante.
+	 * @param idUsuario long que recoge la id de usuario del solicitante.
 	 * @param titulo_estudios String que recoge el nombre del título de los estudios del solicitante. 
 	 * @param lugar_estudios String que recoge el nombre del lugar donde se expidió el título del solicitante. 
-	 * @param fecha_titulo Int que recoge la fecha de expedición del título del solicitante.
+	 * @param fecha_titulo LocalDate que recoge la fecha de expedición del título del solicitante.
 	 */
 
 	public SolicitudAscenso(long idUsuario, String titulo_estudios, String lugar_estudios, LocalDate fecha_titulo) {
@@ -55,62 +56,69 @@ public class SolicitudAscenso {
 		Lugar_estudios = lugar_estudios;
 		Fecha_titulo = fecha_titulo;
 	}
+	/**
+	 * Método Get del parámetro IdUsuario, como todo método Get, devuelve el valor del parámetro en cuestión. 
+	 * @return devuelve el valor del parámetro IdUsuario.
+	 */
 	public long getIdUsuario() {
 		return IdUsuario;
 	}
-
+	/**
+	 * Método Set del parámetro IdUsuario, como todo método Set, establece el valor del parámetro en cuestión.
+	 * @param idUsuario long cuyo valor se establecerá sobre IdUsuario.
+	 */
 	public void setIdUsuario(long idUsuario) {
 		IdUsuario = idUsuario;
 	}
-
+	/**
+	 * @see getIdUsuario()
+	 */
 	public String getTitulo_estudios() {
 		return Titulo_estudios;
 	}
-
+	/**
+	 * @see setIdUsuario()
+	 */
 	public void setTitulo_estudios(String titulo_estudios) {
 		Titulo_estudios = titulo_estudios;
 	}
-
+	 /**
+	  * @see getIdUsuario()
+	  */
 	public String getLugar_estudios() {
 		return Lugar_estudios;
 	}
-
+	/**
+	 * @see setIdUsuario()
+	 */
 	public void setLugar_estudios(String lugar_estudios) {
 		Lugar_estudios = lugar_estudios;
 	}
-
+	/**
+	 * @see getIdUsuario()
+	 */
 	public LocalDate getFecha_titulo() {
 		return Fecha_titulo;
 	}
-
+	/**
+	 * @see setIdUsuario()
+	 */
 	public void setFecha_titulo(LocalDate fecha_titulo) {
 		Fecha_titulo = fecha_titulo;
 	}
-
+	/**
+	 * @see getIdUsuario()
+	 */
 	public String getTitulo_img() {
 		return Titulo_img;
 	}
-
+	/**
+	 * @see setIdUsuario()
+	 */
 	public void setTitulo_img(String titulo_img) {
 		Titulo_img = titulo_img;
 	}
 	
-	/**
-	 * Método que verifica si el admin concede o no el ascenso al solicitante. 
-	 * @return confirm Boleano que verifica si la confirmación ha tenido éxito, 
-	 * 		   si es así, devolverá true, en caso contrario, devolverá false.
-	 */
-	public boolean confirmarAscenso() {
-		boolean confirm=false;
-		//revisa la decision del admin
-		//si dice que sí
-			//conecta con la bd
-			//busca al usuario con esa id
-			//genera un usuario-Titulado nuevo con la información del usuario antiguo + la proporcionada por la solicitud
-		//si dice que no
-			//genera un mensaje con el motivo de la denegación
-		return confirm;
-	}
 	
 	/**
 	 * Método toString() que muestra por pantalla toda la informacion de la SolicitudAscenso, en caso de que fuese necesario. 

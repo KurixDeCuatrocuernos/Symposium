@@ -1,7 +1,6 @@
 package controlador;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -107,17 +106,12 @@ public class GestionSolicitud extends HttpServlet {
 				break;
 			}
 			case 3: { //listar Solicitudes
-				long idUser=0;
+				
 				String respuesta="";
-				try {
-					idUser=Long.parseLong(request.getParameter("id"));
-				} catch (NumberFormatException NFEx) {
-					System.out.println("No se ha podido recoger la id, revisa el fetch y/o el tpo de información");
-				}
 						
 				try {
 					aux= new DaoSolicitud();
-					respuesta=aux.listarJson(idUser);
+					respuesta=aux.listarJson();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

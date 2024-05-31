@@ -197,7 +197,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			if(respuesta===true){
 				comprobarComentario();
 			} else {
-				pintarOpcionComentar()
+				pintarOpcionComentar();
 			}
 		})
 	}

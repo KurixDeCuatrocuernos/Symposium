@@ -1,102 +1,122 @@
 package modelo;
+
+import java.time.LocalDateTime;
+
 /**
- * Esta clase permite generar objetos Respuesta, aunque necesite del Id del usuario que escribe el comentario y dependa del comentario 
- * o respuesta a la que responde.
+ * Esta clase permite generar objetos Respuesta a partir de los p.
  * @author Alejandro Moreno
  * @version 1.0
- * @deprecated
+ * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee hacerlo.
  */
 public class Respuesta {
-	private int Fecha_respuesta=0;
-	private int Id_respuesta=0;
+	private LocalDateTime Fecha_respuesta;
+	private long Id_respuesta=0;
 	private String Texto="";
+	private long Id_autor=0;
+	private long Id_obra=0;
 	/**
 	 * Método constructor vacío.
 	 */
 	public Respuesta() {
 		
 	}
+
 	/**
-	 * Método constructor con todos los atributos.
-	 * @param fecha_respuesta Int que recoge la fecha en que se crea el objeto Respuesta.
-	 * @param id_respuesta Int que recoge un número único (autoincremental) para identificar la respuesta inequivocamente.
-	 * @param valor_respuesta Int que se inicializa a 0, porque depende de las valoraciones posteriores (aunque es un elemento que forma parte del objeto).
+	 * Método constructor con todos los parámetros: fecha_respuesta, id_respuesta, texto, id_autor e id_obra.
+	 * @param fecha_respuesta LocalDateTime que recoge la fecha y hora en que se crea el objeto Respuesta.
+	 * @param id_respuesta long que recoge un número único para identificar la respuesta inequivocamente.
 	 * @param texto String que recoge el contenido de la respuesta (su extensión puede ser considerable).
+	 * @param id_autor long que recoge la id del usuario que responde.
+	 * @param id_obra long que recoge la ISBN o ISSN de la obra en la que se encuentra el comentario al que responde la respuesta.
 	 */
-	public Respuesta(int fecha_respuesta, int id_respuesta, String texto) {
+	public Respuesta(LocalDateTime fecha_respuesta, long id_respuesta, String texto, long id_autor, long id_obra) {
 		super();
 		Fecha_respuesta = fecha_respuesta;
 		Id_respuesta = id_respuesta;
 		Texto = texto;
+		Id_autor = id_autor;
+		Id_obra = id_obra;
 	}
-
-	public int getFecha_respuesta() {
+	
+	/**
+	 * Método Get del parámetro Fecha_respuesta, como todo método Get, devuelve el valor del parámetro en cuestión. 
+	 * @return devuelve el valor del parámetro Fecha_respuesta.
+	 */
+	public LocalDateTime getFecha_respuesta() {
 		return Fecha_respuesta;
 	}
-
-	public void setFecha_respuesta(int fecha_respuesta) {
+	
+	/**
+	 * Método Set del parámetro Fecha_respuesta, como todo método Set, establece el valor del parámetro en cuestión.
+	 * @param fecha_respuesta LocalDateTime cuyo valor se establecerá sobre Fecha_respuesta.
+	 */
+	public void setFecha_respuesta(LocalDateTime fecha_respuesta) {
 		Fecha_respuesta = fecha_respuesta;
 	}
-
-	public int getId_respuesta() {
+	
+	/**
+	 * @see getFecha_respuesta()
+	 */
+	public long getId_respuesta() {
 		return Id_respuesta;
 	}
-
-	public void setId_respuesta(int id_respuesta) {
+	
+	/**
+	 * @see setFecha_respuesta()
+	 */
+	public void setId_respuesta(long id_respuesta) {
 		Id_respuesta = id_respuesta;
 	}
-
+	
+	/**
+	 * @see getFecha_respuesta()
+	 */
 	public String getTexto() {
 		return Texto;
 	}
-
+	
+	/**
+	 * @see setFecha_respuesta()
+	 */
 	public void setTexto(String texto) {
 		Texto = texto;
 	}
 	
 	/**
-	 * Método que permite introducir una Respuesta en la Base de datos, 
-	 * llamando al método ----- del DAO.
-	 * @return insert Boleano que recoge si se ha insertado la Respuesta en la Base de datos con éxito, 
-	 * 		   de ser así, devolverá true, en caso contrario, devolverá false.
+	 * @see getFecha_respuesta()
 	 */
-	public boolean insertarRespuesta() {
-		boolean insert=false;
-		
-		return insert;
-	}
-	/**
-	 * Método que permite  modificar un comentario preexistente en la Base de datos, 
-	 * llamando al método ----- del DAO. Este método NO SE USA, pero lo he dejado, 
-	 * en caso de que se quiera usar en un futuro.
-	 * @return modif Boleano que recoge si se ha modificado la Respuesta en la Base de datos con éxito, 
-	 * 		   de ser así, devolverá true, en caso contrario, devolverá false.
-	 */
-	public boolean modificarRespuesta() {
-		boolean modif=false;
-		
-		return modif;
-	}
-	/**
-	 * Método que permite eliminar una Respuesta preexistente en la Base de datos, 
-	 * llamando al método ----- del DAO.
-	 * @return delete Boleano que recoge si se ha eliminado la Respuesta de la Base de datos con éxito, 
-	 * 		   de ser así, devolverá true, en caso contrario (por la razón que fuere), devolverá false.
-	 */
-	public boolean borrarRespuesta() {
-		boolean delete=false;
-		
-		return delete;
+	public long getId_autor() {
+		return Id_autor;
 	}
 	
+	/**
+	 * @see setFecha_respuesta()
+	 */
+	public void setId_autor(long id_autor) {
+		Id_autor = id_autor;
+	}
+	
+	/**
+	 * @see getFecha_respuesta()
+	 */
+	public long getId_obra() {
+		return Id_obra;
+	}
+	
+	/**
+	 * @see setFecha_respuesta()
+	 */
+	public void setId_obra(long id_obra) {
+		Id_obra = id_obra;
+	}
+
 	/**
 	 * Método toString() que muestra por pantalla toda la información de una Respuesta, en caso de que fuera necesario.
 	 */
 	@Override
 	public String toString() {
-		return "Respuesta [Fecha_respuesta=" + Fecha_respuesta + "\n Id_respuesta=" 
-	+ Id_respuesta + "\n Texto=" + Texto + "]";
+		return "Respuesta [Id_respuesta= " + Id_respuesta + "\n Fecha_respuesta=" + Fecha_respuesta + "\n Texto=" + Texto
+				+ "\n Id_autor=" + Id_autor + "\n Id_obra=" + Id_obra + "]";
 	}
-	
-	
+
 }

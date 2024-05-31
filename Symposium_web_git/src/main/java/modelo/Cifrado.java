@@ -5,10 +5,10 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 /**
  * Esta Clase permite cifrar la contraseña que se le introduzca y también descifrarla. 
- * Emplea un algoritmo que siempre se repite con cada cifrado y descifrado, el cual se modifica en función de una palabra clave,
+ * Emplea un algoritmo que siempre se repite con cada cifrado y descifrado, el cual se modifica en función de la palabra clave estatica: KEY (su valor),
  * que se le puede modificar de modo estático, pero que siempre ha de ser la misma (o su resultado será distinto).
  * Quiero añadir que casi todo el método está creado por ChatGPT, salvo pequeñas modificaciones que hice a posteriori para que case con el resto del proyecto.
- * @author ChatGPT
+ * @author Alejandro Moreno, ChatGPT
  * @version 1.1
  */
 public class Cifrado {
@@ -35,7 +35,7 @@ public class Cifrado {
 	    }
 /**
  * Este método recibe un String y devuelve el resultado de su desencriptación.
- * @param encryptedValue
+ * @param encryptedValue String que recoge el valor que se desencriptará.
  * @return Devuelve la desencriptación del String recibido.
  */
 	    public static String desencriptar(String encryptedValue) {

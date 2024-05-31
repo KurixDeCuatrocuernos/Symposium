@@ -42,6 +42,14 @@ window.addEventListener("DOMContentLoaded", function() {
 		
 	}
 	
+	function pedirSugerencias(str){
+		if(str.length==0){
+			document.getElementById("sugerencias").innerHTML="";
+		} else {
+			peticion(str);
+		}
+	}
+
 	function mostrar(event){
 		let datos = event.target;
 		let html="";
@@ -65,14 +73,6 @@ window.addEventListener("DOMContentLoaded", function() {
 				redir(dir);
 			});
 		})
-	}
-	
-	function pedirSugerencias(str){
-		if(str.length==0){
-			document.getElementById("sugerencias").innerHTML="";
-		} else {
-			peticion(str);
-		}
 	}
 	
 	function recogerUsuario(){
