@@ -3,11 +3,12 @@ package modelo;
 import java.util.ArrayList;
 
 /**
- * Esta clase permite crear ArrayList de objetos de la clase "Respuesta" y trabajar con ellos, es decir,
- * introducir nuevas respuestas, mostrarlas por pantalla, borrar una "Respuesta" concreta o vaciar la lista generada.
+ * Esta clase permite crear ArrayList de objetos de la clase Respuesta y trabajar con ellos, es decir,
+ * introducir nuevas respuestas, mostrarlas por pantalla, borrar una Respuesta concreta, vaciar la lista generada, etc.
+ * @see Respuesta
  * @author Alejandro Moreno
  * @version 1.0
- * @deprecated No se ha llegado a implementar, pero está creada enm caso de que en un futuro se desee implementar.
+ * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee hacerlo.
  */
 public class ListaRespuesta {
 
@@ -20,17 +21,15 @@ public class ListaRespuesta {
 	}
 	
 	/**
-	 * Este método añade objetos "Respuesta" a un array "respuestas" (y una vez añadido amplia el tamaño de dicho array). 
-	 * @param obra "Respuesta" que recibe los parámetros que necesita dicha clase para crear un objeto y 
-	 * 		  los inserta como un objeto de la clase "Respuesta" en el array "respuestas". 
+	 * Este método añade un objeto Respuesta al Array. 
+	 * @param obra Respuesta que se insertará en el array.
 	 */
 	public void addRespuestaLista(Respuesta ans) {
 		respuestas.add(ans);
 	}
 	
 	/**
-	 * Este método genera una lista con los objetos "Respuesta" que se han añadido al array "respuestas" 
-	 * y los muestra por pantalla.
+	 * Este método genera una lista con los objetos Respuesta que se han insertado en el array y los muestra por pantalla.
 	 */
 	public void listarRespuestas() {
 		for(Respuesta obj:respuestas) {
@@ -39,13 +38,12 @@ public class ListaRespuesta {
 	}
 	
 	/**
-	 * Este método permite buscar un "Respuesta" concreta en el array, comparando el Id_respuesta, 
-	 * proporcionada con la ID_respuesta de los objetos "Respuesta" introducidos en el array "respuestas".
-	 * @param id Int que que sirve para buscar la "Respuesta" concreta en el array comparándola con
-	 * 		  el Id_respuesta de los objetos "Respuesta" insertados en el array.
-	 * @return res Devuelve un objeto "Respuesta".
+	 * Este método permite buscar un Respuesta concreta en el array, comparando el Id_respuesta, 
+	 * proporcionada con la ID_respuesta de los objetos Respuesta introducidos en el array.
+	 * @param id long que recoge la ID que servirá para buscar la Respuesta concreta en el array.
+	 * @return Devuelve un objeto "Respuesta".
 	 */
-	public Respuesta buscarRespuestaConcreta(int id) {
+	public Respuesta buscarRespuestaConcreta(long id) {
 		Respuesta res= new Respuesta();
 		boolean cell=false;
 		for (Respuesta obj:respuestas) {
@@ -61,20 +59,18 @@ public class ListaRespuesta {
 	}
 	
 	/**
-	 * Este método elimina completamente los objetos "Respuesta" que hay dentro del array "respuestas".
+	 * Este método elimina completamente los objetos Respuesta que haya dentro del array.
 	 */
 	public void borrarListaCompleta() {
 		respuestas.clear();
 	}
 	
 	/**
-	 * Este método elimina una "Respuesta" concreta del array "respuestas" buscando la Id_respuesta, 
+	 * Este método elimina una Respuesta concreta del array comparando la id que recibe con la Id_respuesta de los objetos Respuesta del array, 
 	 * manda un mensaje por pantalla tanto si se ha podido eliminar, como si no.
-	 * @param id Int que recoge la Id_respuesta de la "Respuesta", que sirve para buscar la "Respuesta" 
-	 * 		  concreta en el array comparándolo con el Id_respuesta de los objetos "Respuesta" insertados 
-	 * 		  en el array.
+	 * @param id long que recoge la Id_respuesta, que sirve para buscar la Respuesta concreta en el array. 
 	 */
-	public void eliminarRespuesta(int id) {
+	public void eliminarRespuesta(long id) {
 		boolean cell=false;
 		for (Respuesta obj:respuestas) {
 			if (obj.getId_respuesta()==id) {

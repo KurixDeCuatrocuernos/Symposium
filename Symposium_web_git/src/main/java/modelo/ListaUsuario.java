@@ -2,11 +2,12 @@ package modelo;
 
 import java.util.ArrayList;
 /**
- * Esta clase permite crear ArrayList de objetos de la clase "Usuario" y trabajar con ellos,
- * introducirlos, mostrarlos por pantalla, borrar un Articulo concreto o vaciar la lista generada.
+ * Esta clase permite crear ArrayList de objetos de la clase Usuario y trabajar con ellos, es decir,
+ * introducirlos, mostrarlos por pantalla, borrar un Usario concreto, vaciar la lista generada, etc.
+ * @see Usuario
  * @author Alejandro Moreno
  * @version 1.0
- * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee implementar.
+ * @deprecated No se ha llegado a implementar, pero está creada en caso de que en un futuro se desee hacerlo.
  */
 public class ListaUsuario {
 	
@@ -19,16 +20,15 @@ public class ListaUsuario {
 		usuarios=new ArrayList <Usuario>();
 	}
 	/**
-	 * Este método añade objetos "Usuario" a un array "usuarios" (y una vez añadido amplia el tamaño de dicho array). 
-	 * @param user "Usuario" que recibe los parámetros que necesita dicha clase para crear un objeto y 
-	 * 		  los inserta como un objeto de la clase "Usuario" en el array "usuarios". 
+	 * Este método inserta un objeto Usuario que recibe, en el array. 
+	 * @param user Usuario que se insertará en el array. 
 	 */
 	public void addUsuarioLista(Usuario user) {
 		usuarios.add(user);
 	}
 	
 	/**
-	 * Este método genera una lista con los objetos "Usuario" que se han añadido al array "usuarios" 
+	 * Este método genera una lista con los objetos Usuario que se han añadido al array, 
 	 * y los muestra por pantalla.
 	 */
 	public void listarUsuarios() {
@@ -46,13 +46,11 @@ public class ListaUsuario {
 	}
 	
 	/**
-	 * Este método permite buscar un "Usuario" concreto en el array, comparando el Id, 
-	 * proporcionado con la Id de los objetos "Usuario" introducidos en el array "usuarios".
-	 * @param id Int que que sirve para buscar el "Usuario" concreto en el array comparándola con
-	 * 		  la Id de los objetos "Usuario" insertados en el array.
-	 * @return user Devuelve un objeto "Usuario".
+	 * Este método permite buscar un Usuario concreto en el array, mediante una Id, comparándola con las presentes en el array.
+	 * @param id long que recoge el número que sirve para buscar el Usuario concreto en el array. 
+	 * @return devuelve un objeto Usuario (si lo encuentra, tendrá valores en sus parámetros si no, estarán vacíos).
 	 */
-	public Usuario buscarUsuarioConcreto(int id) {
+	public Usuario buscarUsuarioConcreto(long id) {
 		Usuario user=new Usuario();
 		boolean cell=false;
 		for (Usuario obj:usuarios) {
@@ -68,18 +66,16 @@ public class ListaUsuario {
 	}
 	
 	/**
-	 * Este método elimina completamente los objetos "Usuario" que hay dentro del array "usuarios".
+	 * Este método elimina completamente los objetos que hay dentro del array.
 	 */
 	public void borrarListaCompleta() {
 		usuarios.clear();
 	}
 	
 	/**
-	 * Este método elimina una "Respuesta" concreta del array "respuestas" buscando la Id_respuesta, 
+	 * Este método elimina una Respuesta concreta del array buscando la Id_respuesta mediante la id que recibe, 
 	 * manda un mensaje por pantalla tanto si se ha podido eliminar, como si no.
-	 * @param id Int que recoge la Id_respuesta de la "Respuesta", que sirve para buscar la "Respuesta" 
-	 * 		  concreta en el array comparándolo con el Id_respuesta de los objetos "Respuesta" insertados 
-	 * 		  en el array.
+	 * @param id long que recoge la Id_respuesta que sirve para buscar la Respuesta concreta en el array.
 	 */
 	public void eliminarUsuario(int id) {
 		boolean cell=false;
