@@ -151,11 +151,12 @@ public class GestionComentarioInsertar extends HttpServlet {
 					break;
 				}
 				case 3: {//modificar comentario
-					
+					boolean cell=true;
 					try {
 						idAutor= (long) sesion2.getAttribute("ide");
 						ide= Long.parseLong(request.getParameter("obra")); 
 					} catch (NumberFormatException numEx) {
+						cell=false;
 						numEx.printStackTrace();
 					}
 					String titl=""; String content=""; int value=0; int year=0; int mes=0; int day=0; int hora=0; int min=0; int sec=0;
@@ -172,22 +173,21 @@ public class GestionComentarioInsertar extends HttpServlet {
 						sec=Integer.parseInt(request.getParameter("sec"));
 						fecha=LocalDateTime.of(year, mes, day, hora, min, sec);
 					} catch (Exception ex) {
+						cell=false;
 						ex.printStackTrace();
 					}
-					/*Comentario(LocalDateTime fecha_comentario, String titulo, String texto, int valoracion_obra, long idAutorComentario,
-					long iSBN_obra)*/
+					
 					Comentario C=new Comentario(fecha, titl, content, value, idAutor, ide);
-
 					
 					try {
 						DaoComentario aux = new DaoComentario();
 						aux.modificarComentario(C);
 					} catch (ClassNotFoundException | SQLException e) {
-						// TODO Auto-generated catch block
+						cell=false;
 						e.printStackTrace();
 					}
 					
-					
+					out.print(cell);
 					break;
 				}
 				case 4: { //listar comentarios de estudiantes

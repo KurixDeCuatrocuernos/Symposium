@@ -186,7 +186,6 @@ public class DaoEstudiante {
 	public void insertarEstudiante(Estudiante e, String Pass) throws SQLException {
 		System.out.println("Estoy en DaoEstudiante --> insertarEstudiante()");
 		e.setId(generarId());
-		String Cont =(Pass);
 	
 		if (con != null) {
 			String sql = "INSERT INTO symposium.usuarios (ID, Nivel, Nombre, Apellidos, Edad, Email, Pass_word) values(?,?,?,?,?,?,?)";	
@@ -199,7 +198,7 @@ public class DaoEstudiante {
 			ps.setString(4, e.getApellidos());
 			ps.setInt(5, e.getEdad());
 			ps.setString(6, e.getEmail());
-			ps.setString(7, Cont);
+			ps.setString(7, Pass);
 			
 			System.out.println("Se va a ejecutar el comando : "+ps);
 

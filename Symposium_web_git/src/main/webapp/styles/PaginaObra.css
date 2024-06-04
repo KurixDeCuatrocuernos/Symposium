@@ -110,6 +110,10 @@
     background-color: inherit;
 }
 
+#botonInicioSesion{
+	background-color: inherit;
+}
+
 #usuarioType{
     color:whitesmoke;
     font-size: medium;

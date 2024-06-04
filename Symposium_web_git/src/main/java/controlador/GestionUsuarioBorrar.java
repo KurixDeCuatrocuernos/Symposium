@@ -52,6 +52,7 @@ public class GestionUsuarioBorrar extends HttpServlet {
 			} else {
 				//borramos los comentarios, solicitudes y valoraciones de ese usuario.
 				try {
+					borrar=true;
 					DaoComentario auxc=new DaoComentario();
 					auxc.borrarComentariosUser(ide);
 					DaoValoracion auxv=new DaoValoracion();

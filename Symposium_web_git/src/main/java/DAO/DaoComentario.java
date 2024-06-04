@@ -277,7 +277,7 @@ public class DaoComentario {
 		if (con!= null) {
 			String sql = "DELETE FROM symposium.comentarios WHERE ID=? AND ISBN=?";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1,"");
+			//ps.setString(1,"");
 			ps.setLong(1, id);
 			ps.setLong(2, isbn);
 			int filas= ps.executeUpdate();

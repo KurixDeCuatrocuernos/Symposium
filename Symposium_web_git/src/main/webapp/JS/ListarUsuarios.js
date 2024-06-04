@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", function(){
 	
 	// Encabezado y navbar
-	let iniS= document.getElementById("InicioSesion");
+	
 	let home= document.getElementById("logo");
 	let dir="";
 	
@@ -9,16 +9,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		dir="http://localhost:8080/Symposium_web/Index.html";
 		redir(dir);
 	});
-
-	iniS.addEventListener("click", function redir1(){
-		dir="http://localhost:8080/Symposium_web/IniciarSesion.html"
-		redir(dir);
-	})
 	
 	recogerUsuario();
 	avisoAdmin();
 	pintarAscensoEs();
-	pintarCierre();
+	pintarSesion();
 	
 		let buscador = document.getElementById("buscar");
 	
@@ -109,7 +104,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		})
 	}
 	
-	function pintarCierre() {
+	function pintarSesion() {
 		fetch('GestionInicioSesion?op=9', {method:'POST'})
 		.then(response => response.json())
 		.then(devuelto => {
@@ -123,6 +118,27 @@ window.addEventListener("DOMContentLoaded", function(){
 				cerS.addEventListener("click", function closeSes(){
 					cerrarSesion();
 				})
+				
+				html="";
+				
+				document.getElementById("botonInicioSesion").innerHTML=html;
+				
+			} else {
+				
+				html="<strong id=InicioSesion>Iniciar Sesión</strong>";
+				
+				document.getElementById("botonInicioSesion").innerHTML=html;
+				
+				let iniS= document.getElementById("InicioSesion");
+				iniS.addEventListener("click", function redir1(){
+					dir="http://localhost:8080/Symposium_web/IniciarSesion.html"
+					redir(dir);
+				});
+				
+				html="";
+				
+				document.getElementById("botonCerrarSesion").innerHTML=html;
+				
 			}
 		})
 		
